@@ -1,0 +1,38 @@
+@import './config.scss';
+
+.App {
+  max-width: 670px;
+  margin: 32px auto;
+}
+
+.header {
+  @include txt-header();
+  margin-bottom: 16px;
+}
+
+.field > *+* { margin-top: 8px; }
+.fieldLabel { @include txt-base(); }
+.fieldItem { @include txt-body(); }
+
+.stats {
+  display: grid;
+  grid-auto-flow: column;
+  justify-content: start;
+  gap: 16px;
+}
+
+.overview {
+  padding: 32px 0;
+  border-bottom: 2px dotted $color-dark;
+}
+
+.entries {
+  padding: 32px 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(64px, 100px)) auto repeat(3, 48px);
+  gap: 16px;
+}
+
+.startBtn {
+  grid-column: span 3;
+}

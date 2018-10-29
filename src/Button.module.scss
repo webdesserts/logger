@@ -1,0 +1,45 @@
+@import './config.scss';
+
+.Button {
+  position: relative;
+  @include txt-base();
+  transition: background-color 100ms ease, height 100ms linear, margin 100ms linear;
+  background-color: transparent;
+  height: 32px;
+  color: $color-light;
+  width: 100%;
+  border: none;
+  border-top: 2px solid $color-dark;
+  border-bottom: 2px solid $color-dark;
+  cursor: pointer;
+
+  &::after {
+    display: block;
+    content: '';
+    position: absolute;
+    top:0; left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background-color: $color-dark;
+    transition: top 200ms ease, height 200ms ease;
+  }
+
+  &:hover,
+  &:focus {
+    &::after {
+      top: 2px;
+      height: calc(100% - 4px);
+    }
+  }
+  &:focus {
+    outline: none;
+    border-color: $color-primary;
+  }
+  &:active {
+    border-color: $color-primary;
+    &::after {
+      background-color: $color-primary;
+    }
+  }
+}
