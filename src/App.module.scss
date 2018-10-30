@@ -25,14 +25,3 @@
   padding: 32px 0;
   border-bottom: 2px dotted $color-dark;
 }
-
-.entries {
-  padding: 32px 0;
-  display: grid;
-  grid-template-columns: repeat(2, minmax(64px, 100px)) auto repeat(3, 48px);
-  gap: 16px;
-}
-
-.startBtn {
-  grid-column: span 3;
-}

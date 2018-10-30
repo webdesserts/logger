@@ -1,0 +1,1059 @@
+[
+  {
+    "sector": "Design",
+    "project": "Veracity",
+    "description": "Workflow Patch – OR Timeout",
+    "start": "2018-09-13T15:30:50-05:00",
+    "end": "2018-09-13T15:31:30-05:00"
+  },
+  {
+    "sector": "Design",
+    "project": "Veracity",
+    "description": "Workflow Patch – OR Timeout",
+    "start": "2018-09-13T15:44:13-05:00",
+    "end": "2018-09-13T16:21:18-05:00"
+  },
+  {
+    "sector": "Code",
+    "project": "Blog",
+    "description": "Figuring out routing",
+    "start": "2018-09-13T20:24:19-05:00",
+    "end": "2018-09-13T21:00-05:00"
+  },
+  {
+    "sector": "Manage",
+    "project": "Veracity",
+    "description": "Trello Cards",
+    "start": "2018-09-14T10:05:41-05:00",
+    "end": "2018-09-14T10:06:44-05:00"
+  },
+  {
+    "start": "2018-09-14T10:06:50-05:00",
+    "end": "2018-09-14T10:18:51-05:00",
+    "sector": "Manage",
+    "project": "Veracity",
+    "description": "Trello Cards"
+  },
+  {
+    "start": "2018-09-14T10:19:29-05:00",
+    "end": "2018-09-14T10:20:16-05:00",
+    "sector": "Manage",
+    "project": "Veracity",
+    "description": "Trello Cards"
+  },
+  {
+    "sector": "Design",
+    "project": "Veracity",
+    "description": "Worklfow Patch – OR Timeout",
+    "start": "2018-09-14T13:05:41-05:00",
+    "end": "2018-09-14T13:41:52-05:00"
+  },
+  {
+    "start": "2018-09-14T13:59:06-05:00",
+    "end": "2018-09-14T14:41:17-05:00",
+    "sector": "Design",
+    "project": "Veracity",
+    "description": "Workflow Patch – OR Timeout"
+  },
+  {
+    "start": "2018-09-14T16:05:12-05:00",
+    "end": "2018-09-14T17:02:34-05:00",
+    "sector": "Design",
+    "project": "Veracity",
+    "description": "Workflow Patch – OR Timeout"
+  },
+  {
+    "sector": "Design",
+    "project": "Blog",
+    "description": "Design System",
+    "start": "2018-09-16T13:36:25-05:00",
+    "end": "2018-09-16T14:23:28-05:00"
+  },
+  {
+    "sector": "Design",
+    "project": "Veracity",
+    "description": "Workflow Patch – OR Timeout",
+    "start": "2018-09-17T10:53:15-05:00",
+    "end": "2018-09-17T11:56:40-05:00"
+  },
+  {
+    "sector": "Manage",
+    "project": "Veracity",
+    "description": "Travel",
+    "start": "2018-09-17T13:15:03-05:00",
+    "end": "2018-09-17T14:40:34-05:00"
+  },
+  {
+    "start": "2018-09-17T15:36:42-05:00",
+    "end": "2018-09-17T15:57:52-05:00",
+    "sector": "Manage",
+    "project": "Veracity",
+    "description": "Travel"
+  },
+  {
+    "sector": "Design",
+    "project": "Veracity",
+    "description": "Workflow Patch – Questionnaire",
+    "start": "2018-09-19T09:44:47-05:00",
+    "end": "2018-09-19T10:55:44-05:00"
+  },
+  {
+    "start": "2018-09-19T13:16:50-05:00",
+    "end": "2018-09-19T13:59:33-05:00",
+    "sector": "Design",
+    "project": "Veracity",
+    "description": "Workflow Patch – Questionnaire"
+  },
+  {
+    "start": "2018-09-19T14:41:23-05:00",
+    "end": "2018-09-19T15:06:42-05:00",
+    "sector": "Design",
+    "project": "Veracity",
+    "description": "Workflow Patch – Questionnaire"
+  },
+  {
+    "start": "2018-09-19T15:09:28-05:00",
+    "end": "2018-09-19T15:19:31-05:00",
+    "sector": "Design",
+    "project": "Veracity",
+    "description": "Workflow Patch – Questionnaire"
+  },
+  {
+    "sector": "Manage",
+    "project": "Veracity",
+    "description": "Trello Cards",
+    "start": "2018-09-19T15:32:09-05:00",
+    "end": "2018-09-19T16:00:57-05:00"
+  },
+  {
+    "sector": "Manage",
+    "project": "Veracity",
+    "description": "Trello Cards",
+    "start": "2018-09-21T09:42:56-05:00",
+    "end": "2018-09-21T10:20:36-05:00"
+  },
+  {
+    "sector": "Design",
+    "project": "Veracity",
+    "description": "Veracity Suggests Icon",
+    "start": "2018-09-21T10:21:09-05:00",
+    "end": "2018-09-21T11:22:11-05:00"
+  },
+  {
+    "sector": "Design",
+    "project": "Veracity",
+    "description": "Brand Colors",
+    "start": "2018-09-21T13:32:34-05:00",
+    "end": "2018-09-21T13:41:13-05:00"
+  },
+  {
+    "sector": "Manage",
+    "project": "Veracity",
+    "description": "Travel",
+    "start": "2018-09-21T13:41:52-05:00",
+    "end": "2018-09-21T14:23:16-05:00"
+  },
+  {
+    "sector": "Design",
+    "project": "Veracity",
+    "description": "Brand Colors",
+    "start": "2018-09-21T14:23:48-05:00",
+    "end": "2018-09-21T14:31:23-05:00"
+  },
+  {
+    "sector": "Manage",
+    "project": "Veracity",
+    "description": "Help Chris w/ z-index issue",
+    "start": "2018-09-21T14:32:02-05:00",
+    "end": "2018-09-21T14:36:38-05:00"
+  },
+  {
+    "sector": "Design",
+    "project": "Veracity",
+    "description": "Brand Colors",
+    "start": "2018-09-21T14:36:43-05:00",
+    "end": "2018-09-21T15:21:04-05:00"
+  },
+  {
+    "start": "2018-09-21T15:40:13-05:00",
+    "end": "2018-09-21T15:52:24-05:00",
+    "sector": "Design",
+    "project": "Veracity",
+    "description": "Brand Colors"
+  },
+  {
+    "start": "2018-09-21T15:58:15-05:00",
+    "end": "2018-09-21T16:42:48-05:00",
+    "sector": "Design",
+    "project": "Veracity",
+    "description": "Brand Colors"
+  },
+  {
+    "sector": "Manage",
+    "project": "Veracity",
+    "description": "Travel",
+    "start": "2018-09-24T09:15-05:00",
+    "end": "2018-09-24T10:10-05:00"
+  },
+  {
+    "sector": "Manage",
+    "project": "Veracity",
+    "description": "OR Timeout Discussion",
+    "start": "2018-09-24T10:22:35-05:00",
+    "end": "2018-09-24T10:38:54-05:00"
+  },
+  {
+    "sector": "Manage",
+    "project": "Veracity",
+    "description": "Veracity Recommendation Icon",
+    "start": "2018-09-24T10:39:27-05:00",
+    "end": "2018-09-24T11:07:06-05:00"
+  },
+  {
+    "sector": "Manage",
+    "project": "Veracity",
+    "description": "Travel",
+    "start": "2018-09-24T12:30-05:00",
+    "end": "2018-09-24T13:00:31-05:00"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "Convert ZDS color scheme",
+    "start": "2018-09-24T13:37:53-05:00",
+    "end": "2018-09-24T14:26:16-05:00"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "Convert ZDS color scheme",
+    "start": "2018-09-24T15:30:38-05:00",
+    "end": "2018-09-24T16:40-05:00"
+  },
+  {
+    "sector": "Design",
+    "project": "Web Desserts",
+    "description": "Design System",
+    "start": "2018-09-24T19:15:49-05:00",
+    "end": "2018-09-24T20:33:37-05:00"
+  },
+  {
+    "sector": "Manage",
+    "project": "Veracity",
+    "description": "Trello Catchup",
+    "start": "2018-09-25T12:47:37-05:00",
+    "end": "2018-09-25T14:17:18-05:00"
+  },
+  {
+    "sector": "Manage",
+    "project": "Veracity",
+    "description": "Convert ZDS color scheme",
+    "start": "2018-09-26T10:12:47-05:00",
+    "end": "2018-09-26T10:30:10-05:00"
+  },
+  {
+    "sector": "Design",
+    "project": "Veracity",
+    "description": "Convert ZDS color scheme",
+    "start": "2018-09-26T10:30:27-05:00",
+    "end": "2018-09-26T10:34:17-05:00"
+  },
+  {
+    "start": "2018-09-26T10:41:24-05:00",
+    "end": "2018-09-26T11:07:49-05:00",
+    "sector": "Design",
+    "project": "Veracity",
+    "description": "Convert ZDS color scheme"
+  },
+  {
+    "start": "2018-09-26T13:35:55-05:00",
+    "end": "2018-09-26T13:47:19-05:00",
+    "sector": "Design",
+    "project": "Veracity",
+    "description": "Convert ZDS color scheme"
+  },
+  {
+    "start": "2018-09-26T14:09:21-05:00",
+    "end": "2018-09-26T14:26:56-05:00",
+    "sector": "Design",
+    "project": "Veracity",
+    "description": "Convert ZDS color scheme"
+  },
+  {
+    "start": "2018-09-26T14:39:17-05:00",
+    "end": "2018-09-26T14:50:10-05:00",
+    "sector": "Design",
+    "project": "Veracity",
+    "description": "Convert ZDS color scheme"
+  },
+  {
+    "start": "2018-09-26T15:03:41-05:00",
+    "end": "2018-09-26T15:12:46-05:00",
+    "sector": "Design",
+    "project": "Veracity",
+    "description": "Convert ZDS color scheme"
+  },
+  {
+    "start": "2018-09-26T15:33:56-05:00",
+    "end": "2018-09-26T16:01:33-05:00",
+    "sector": "Design",
+    "project": "Veracity",
+    "description": "Convert ZDS color scheme"
+  },
+  {
+    "start": "2018-09-26T16:12:28-05:00",
+    "end": "2018-09-26T16:20:38-05:00",
+    "sector": "Design",
+    "project": "Veracity",
+    "description": "Convert ZDS color scheme"
+  },
+  {
+    "start": "2018-09-26T16:35:48-05:00",
+    "end": "2018-09-26T16:36:48-05:00",
+    "sector": "Design",
+    "project": "Veracity",
+    "description": "Convert ZDS color scheme"
+  },
+  {
+    "sector": "Manage",
+    "project": "Veracity",
+    "description": "Conversation w/ Chris",
+    "start": "2018-09-26T16:37:16-05:00",
+    "end": "2018-09-26T16:48:41-05:00"
+  },
+  {
+    "sector": "Design",
+    "project": "Veracity",
+    "description": "QA Diverged Answers notification",
+    "start": "2018-09-26T16:49:37-05:00",
+    "end": "2018-09-26T17:08:52-05:00"
+  },
+  {
+    "sector": "Manage",
+    "project": "Veracity",
+    "description": "Trello Conversations",
+    "start": "2018-09-27T09:40-05:00",
+    "end": "2018-09-27T10:15:46-05:00"
+  },
+  {
+    "sector": "Design",
+    "project": "Veracity",
+    "description": "QA Diverged Answers notification",
+    "start": "2018-09-27T10:40:07-05:00",
+    "end": "2018-09-27T11:07:11-05:00"
+  },
+  {
+    "sector": "Manage",
+    "project": "Veracity",
+    "description": "Email Anja",
+    "start": "2018-09-28T12:04:03-05:00",
+    "end": "2018-09-28T12:43:40-05:00"
+  },
+  {
+    "sector": "Design",
+    "project": "Veracity",
+    "description": "Experiment with ZDS layout",
+    "start": "2018-09-30T13:29:34-05:00",
+    "end": "2018-09-30T13:51:06-05:00"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "Implement ZDS color changes",
+    "start": "2018-09-30T18:19:38-05:00",
+    "end": "2018-09-30T20:08:58-05:00"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "Implement ZDS color changes",
+    "start": "2018-09-30T21:20:18-05:00",
+    "end": "2018-09-30T22:10-05:00"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "Implement ZDS color changes",
+    "start": "2018-10-01T07:15:18-05:00",
+    "end": "2018-10-01T07:48:01-05:00"
+  },
+  {
+    "sector": "Manage",
+    "project": "Veracity",
+    "description": "Trello",
+    "start": "2018-10-01T07:48:17-05:00",
+    "end": "2018-10-01T08:03:17-05:00"
+  },
+  {
+    "sector": "Design",
+    "project": "Veracity",
+    "description": "Revise Named Variables",
+    "start": "2018-10-01T10:25:33-05:00",
+    "end": "2018-10-01T11:10-05:00"
+  },
+  {
+    "start": "2018-10-01T12:14:19-05:00",
+    "end": "2018-10-01T12:52:15-05:00",
+    "sector": "Design",
+    "project": "Veracity",
+    "description": "Revise Named Variables"
+  },
+  {
+    "start": "2018-10-01T14:04:52-05:00",
+    "end": "2018-10-01T14:13:10-05:00",
+    "sector": "Design",
+    "project": "Veracity",
+    "description": "Revise Named Variables"
+  },
+  {
+    "start": "2018-10-01T14:18:26-05:00",
+    "end": "2018-10-01T15:06:17-05:00",
+    "sector": "Design",
+    "project": "Veracity",
+    "description": "Revise Named Variables"
+  },
+  {
+    "start": "2018-10-01T15:32:01-05:00",
+    "end": "2018-10-01T15:49:47-05:00",
+    "sector": "Design",
+    "project": "Veracity",
+    "description": "Revise Named Variables"
+  },
+  {
+    "start": "2018-10-01T16:48:34-05:00",
+    "end": "2018-10-01T17:35-05:00",
+    "sector": "Design",
+    "project": "Veracity",
+    "description": "Revise Named Variables"
+  },
+  {
+    "start": "2018-10-02T12:25:30-05:00",
+    "end": "2018-10-02T13:21:36-05:00",
+    "sector": "Design",
+    "project": "Veracity",
+    "description": "Revise Named Variables"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "Patient Layout Cleanup",
+    "start": "2018-10-02T13:21:49-05:00",
+    "end": "2018-10-02T14:08:36-05:00"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "Patient Layout cleanup",
+    "start": "2018-10-02T14:55:31-05:00",
+    "end": "2018-10-02T16:04:03-05:00"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "Patient Layout cleanup",
+    "start": "2018-10-02T16:19:51-05:00",
+    "end": "2018-10-02T16:57:39-05:00"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "Patient Layout cleanup",
+    "start": "2018-10-02T17:08:30-05:00",
+    "end": "2018-10-02T18:20:57-05:00"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "Patient Layout cleanup",
+    "start": "2018-10-02T23:39:18-05:00",
+    "end": "2018-10-03T00:29:41-05:00"
+  },
+  {
+    "start": "2018-10-03T00:43:15-05:00",
+    "end": "2018-10-03T01:42:25-05:00",
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "Patient Layout cleanup"
+  },
+  {
+    "start": "2018-10-03T02:30-05:00",
+    "end": "2018-10-03T04:00-05:00",
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "Patient Dashboard rework"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "React Common color updates",
+    "start": "2018-10-03T11:05:33-05:00",
+    "end": "2018-10-03T11:45:41-05:00"
+  },
+  {
+    "sector": "Design",
+    "project": "Veracity",
+    "description": "Rethinking color variables",
+    "start": "2018-10-05T11:35:37-05:00",
+    "end": "2018-10-05T12:39:41-05:00"
+  },
+  {
+    "start": "2018-10-05T14:23:40-05:00",
+    "end": "2018-10-05T15:10:57-05:00",
+    "sector": "Design",
+    "project": "Veracity",
+    "description": "Rethinking color variables"
+  },
+  {
+    "start": "2018-10-05T15:32:09-05:00",
+    "end": "2018-10-05T17:52:50-05:00",
+    "sector": "Design",
+    "project": "Veracity",
+    "description": "Rethinking color variables"
+  },
+  {
+    "sector": "Design",
+    "project": "Veracity",
+    "description": "Rethinking color variables",
+    "start": "2018-10-07T17:58:19-05:00",
+    "end": "2018-10-07T18:27:01-05:00"
+  },
+  {
+    "start": "2018-10-07T18:37:18-05:00",
+    "end": "2018-10-07T19:19:39-05:00",
+    "sector": "Design",
+    "project": "Veracity",
+    "description": "Rethinking color variables"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "Updating v2 Layout",
+    "start": "2018-10-08T10:47:47-05:00",
+    "end": "2018-10-08T11:08:22-05:00"
+  },
+  {
+    "start": "2018-10-08T11:36:27-05:00",
+    "end": "2018-10-08T11:56:06-05:00",
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "Updating v2 Layout"
+  },
+  {
+    "start": "2018-10-08T12:42:37-05:00",
+    "end": "2018-10-08T13:09:09-05:00",
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "Updating v2 Layout"
+  },
+  {
+    "start": "2018-10-08T13:20-05:00",
+    "end": "2018-10-08T13:44:52-05:00",
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "Updating v2 Layout"
+  },
+  {
+    "start": "2018-10-08T14:00-05:00",
+    "end": "2018-10-08T14:37:58-05:00",
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "Updating v2 Layout"
+  },
+  {
+    "start": "2018-10-08T15:39:20-05:00",
+    "end": "2018-10-08T15:53:02-05:00",
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "Updating v2 Layout"
+  },
+  {
+    "start": "2018-10-08T16:08:19-05:00",
+    "end": "2018-10-08T16:52:58-05:00",
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "Updating v2 Layout"
+  },
+  {
+    "start": "2018-10-08T17:15-05:00",
+    "end": "2018-10-08T17:48:29-05:00",
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "Updating v2 Layout"
+  },
+  {
+    "start": "2018-10-08T17:53:53-05:00",
+    "end": "2018-10-08T18:18:03-05:00",
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "Updating v2 Layout"
+  },
+  {
+    "sector": "Manage",
+    "project": "Veracity",
+    "description": "Slack from Chris",
+    "start": "2018-10-09T11:33:26-05:00",
+    "end": "2018-10-09T11:42:16-05:00"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "Updating v2 Layout",
+    "start": "2018-10-09T11:42:43-05:00",
+    "end": "2018-10-09T13:18:27-05:00"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "update sass-common peers",
+    "start": "2018-10-09T13:38:46-05:00",
+    "end": "2018-10-09T13:39:18-05:00"
+  },
+  {
+    "start": "2018-10-09T14:10:41-05:00",
+    "end": "2018-10-09T14:33:54-05:00",
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "update sass-common peers"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "react-common redesign",
+    "start": "2018-10-09T14:45-05:00",
+    "end": "2018-10-09T16:11:57-05:00"
+  },
+  {
+    "start": "2018-10-09T16:15-05:00",
+    "end": "2018-10-09T17:42:42-05:00",
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "react-common redesign"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "react-common buttons",
+    "start": "2018-10-09T17:59:14-05:00",
+    "end": "2018-10-09T18:13:48-05:00"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "react-common button-groups",
+    "start": "2018-10-09T18:14:02-05:00",
+    "end": "2018-10-09T19:26:06-05:00"
+  },
+  {
+    "start": "2018-10-10T09:09:53-05:00",
+    "end": "2018-10-10T10:11:28-05:00",
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "react-common button-groups"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "react-common inputs",
+    "start": "2018-10-10T10:47:09-05:00",
+    "end": "2018-10-10T11:39:19-05:00"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "react-common pick-lists",
+    "start": "2018-10-10T11:39:32-05:00",
+    "end": "2018-10-10T12:14:40-05:00"
+  },
+  {
+    "start": "2018-10-10T14:20-05:00",
+    "end": "2018-10-10T15:24:18-05:00",
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "react-common pick-lists"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "react-common radios & checkboxes",
+    "start": "2018-10-10T15:39:07-05:00",
+    "end": "2018-10-10T16:24:46-05:00"
+  },
+  {
+    "sector": "Manage",
+    "project": "Veracity",
+    "description": "mostly pointless meeting",
+    "start": "2018-10-11T09:00-05:00",
+    "end": "2018-10-11T10:30-05:00"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "react-common radios & checkboxes",
+    "start": "2018-10-12T03:06:26-05:00",
+    "end": "2018-10-12T04:06:05-05:00"
+  },
+  {
+    "sector": "Manage",
+    "project": "Veracity",
+    "description": "Craig's question",
+    "start": "2018-10-12T04:20:53-05:00",
+    "end": "2018-10-12T05:09:03-05:00"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "react-common radio buttons",
+    "start": "2018-10-12T13:13:14-05:00",
+    "end": "2018-10-12T13:44:53-05:00"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "react-common radio/checkbox hover",
+    "start": "2018-10-12T13:57:21-05:00",
+    "end": "2018-10-12T14:16-05:00"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "react-common picklist colors",
+    "start": "2018-10-12T14:16:22-05:00",
+    "end": "2018-10-12T14:24:07-05:00"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "react-common hover styles",
+    "start": "2018-10-12T14:30:40-05:00",
+    "end": "2018-10-12T15:09:41-05:00"
+  },
+  {
+    "sector": "Manage",
+    "project": "Veracity",
+    "description": "Danny Qs - Questionnaire Back button & OR design updates",
+    "start": "2018-10-12T15:10:33-05:00",
+    "end": "2018-10-12T15:55-05:00"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "react-common tables",
+    "start": "2018-10-12T16:08:52-05:00",
+    "end": "2018-10-12T16:33:28-05:00"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "react-common - fix fieldset button alignment",
+    "start": "2018-10-12T17:09:35-05:00",
+    "end": "2018-10-12T17:13:33-05:00"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "react-common - fix checkbox and radio margins",
+    "start": "2018-10-12T17:13:41-05:00",
+    "end": "2018-10-12T17:19:45-05:00"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "test react-common changes",
+    "start": "2018-10-12T17:25:21-05:00",
+    "end": "2018-10-12T17:38:28-05:00"
+  },
+  {
+    "sector": "Manage",
+    "project": "Veracity",
+    "description": "Respond to Anja",
+    "start": "2018-10-13T13:43:19-05:00",
+    "end": "2018-10-13T14:09:20-05:00"
+  },
+  {
+    "sector": "Manage",
+    "project": "Veracity",
+    "description": "Respond to Ante",
+    "start": "2018-10-13T14:29:29-05:00",
+    "end": "2018-10-13T14:45:32-05:00"
+  },
+  {
+    "sector": "Manage",
+    "project": "Veracity",
+    "description": "Plan out weekend work",
+    "start": "2018-10-13T15:16:51-05:00",
+    "end": "2018-10-13T15:32:04-05:00"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "react-common - default table styling",
+    "start": "2018-10-13T15:37:35-05:00",
+    "end": "2018-10-13T15:56:39-05:00"
+  },
+  {
+    "start": "2018-10-13T16:00:32-05:00",
+    "end": "2018-10-13T16:04:58-05:00",
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "react-common - default table styling"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "react-common - fix tests",
+    "start": "2018-10-13T16:05:07-05:00",
+    "end": "2018-10-13T16:18-05:00"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "react-common - picklist padding",
+    "start": "2018-10-13T16:30:18-05:00",
+    "end": "2018-10-13T16:41:40-05:00"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "react-common - fields & fieldsets",
+    "start": "2018-10-13T16:43:35-05:00",
+    "end": "2018-10-13T17:03:22-05:00"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "react-common editable picklists",
+    "start": "2018-10-14T14:05:33-05:00",
+    "end": "2018-10-14T14:31:28-05:00"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "react-common input borders",
+    "start": "2018-10-14T14:36:30-05:00",
+    "end": "2018-10-14T16:12:57-05:00"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "react-common clean up theme mixins",
+    "start": "2018-10-14T20:04:07-05:00",
+    "end": "2018-10-14T20:24:14-05:00"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "react-common input borders",
+    "start": "2018-10-14T20:33:42-05:00",
+    "end": "2018-10-14T20:48:40-05:00"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "react-common - textbox tweaks",
+    "start": "2018-10-14T21:13:52-05:00",
+    "end": "2018-10-14T21:21:40-05:00"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "react-common - dropdown tweaks",
+    "start": "2018-10-14T21:36:53-05:00",
+    "end": "2018-10-14T21:48:13-05:00"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "react-common - picklist tweaks",
+    "start": "2018-10-14T21:48:22-05:00",
+    "end": "2018-10-14T22:17:33-05:00"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "react-common - picklist tweaks",
+    "start": "2018-10-14T22:02-05:00",
+    "end": "2018-10-14T22:32:56-05:00"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "release react-common",
+    "start": "2018-10-15T12:04:36-05:00",
+    "end": "2018-10-15T12:28:39-05:00"
+  },
+  {
+    "sector": "Manage",
+    "project": "Veracity",
+    "description": "Answer some of Anya's quesitons",
+    "start": "2018-10-15T12:29:03-05:00",
+    "end": "2018-10-15T12:37:07-05:00"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "react-common 9 migration",
+    "start": "2018-10-15T12:42:18-05:00",
+    "end": "2018-10-15T13:50:14-05:00"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "prep react-common 9 for Danny",
+    "start": "2018-10-15T15:12:48-05:00",
+    "end": "2018-10-15T15:15:03-05:00"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "Work in Progress rc-9 updates",
+    "start": "2018-10-15T15:15:33-05:00",
+    "end": "2018-10-15T16:08:17-05:00"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "V-Note Center",
+    "start": "2018-10-15T17:37:45-05:00",
+    "end": "2018-10-15T18:01:57-05:00"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "Surgery Day Summary rc-9",
+    "start": "2018-10-15T18:07:19-05:00",
+    "end": "2018-10-15T18:38:44-05:00"
+  },
+  {
+    "sector": "Manage",
+    "project": "Veracity",
+    "description": "Update Kyle",
+    "start": "2018-10-17T20:10:11-05:00",
+    "end": "2018-10-17T20:42:32-05:00"
+  },
+  {
+    "sector": "Manage",
+    "project": "Veracity",
+    "description": "UX Talk Notes",
+    "start": "2018-10-17T20:53:03-05:00",
+    "end": "2018-10-17T23:18:17-05:00"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "Push a hot mess to master",
+    "start": "2018-10-17T23:53:21-05:00",
+    "end": "2018-10-18T00:30-05:00"
+  },
+  {
+    "sector": "Manage",
+    "project": "Veracity",
+    "description": "Meeting w/ Anja",
+    "start": "2018-10-18T01:56:44-05:00",
+    "end": "2018-10-18T10:30-05:00"
+  },
+  {
+    "sector": "Manage",
+    "project": "Veracity",
+    "description": "Trello",
+    "start": "2018-10-23T10:59:50-05:00",
+    "end": "2018-10-23T11:36:34-05:00"
+  },
+  {
+    "sector": "Manage",
+    "project": "Veracity",
+    "description": "Trello",
+    "start": "2018-10-23T13:16:47-05:00",
+    "end": "2018-10-23T14:07:36-05:00"
+  },
+  {
+    "sector": "Manage",
+    "project": "Veracity",
+    "description": "Trello",
+    "start": "2018-10-23T14:15-05:00",
+    "end": "2018-10-23T15:23:30-05:00"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "k-popup background colors",
+    "start": "2018-10-24T10:54:07-05:00",
+    "end": "2018-10-24T11:40:29-05:00"
+  },
+  {
+    "start": "2018-10-24T12:06:16-05:00",
+    "end": "2018-10-24T13:07:34-05:00",
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "k-popup background colors"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "adjust input visibility",
+    "start": "2018-10-26T10:23:34-05:00",
+    "end": "2018-10-26T11:22:04-05:00"
+  },
+  {
+    "start": "2018-10-26T12:05:21-05:00",
+    "end": "2018-10-26T13:52:16-05:00",
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "adjust input visibility"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "adjust input visibility",
+    "start": "2018-10-27T05:35:15-05:00",
+    "end": "2018-10-27T07:03:06-05:00"
+  },
+  {
+    "sector": "Manage",
+    "project": "Veracity",
+    "description": "review Barrett TK feedback",
+    "start": "2018-10-29T09:43:28-05:00",
+    "end": "2018-10-29T10:15:57-05:00"
+  },
+  {
+    "sector": "Manage",
+    "project": "Veracity",
+    "description": "Germany trip debreifing w/ Tammy",
+    "start": "2018-10-29T10:20-05:00",
+    "end": "2018-10-29T10:52:19-05:00"
+  },
+  {
+    "sector": "Manage",
+    "project": "Veracity",
+    "description": "Post-AAO Plan & Prioritize",
+    "start": "2018-10-29T12:37:45-05:00",
+    "end": "2018-10-29T13:04:48-05:00"
+  },
+  {
+    "sector": "Manage",
+    "project": "Veracity",
+    "description": "Post-AAO Plan & Prioritize",
+    "start": "2018-10-29T13:13:44-05:00",
+    "end": "2018-10-29T13:31:10-05:00"
+  },
+  {
+    "start": "2018-10-29T13:46:44-05:00",
+    "end": "2018-10-29T14:09:27-05:00",
+    "sector": "Manage",
+    "project": "Veracity",
+    "description": "Post-AAO Plan & Prioritize"
+  },
+  {
+    "sector": "Design",
+    "project": "Veracity",
+    "description": "Perceived Lightness breakdown",
+    "start": "2018-10-29T14:30-05:00",
+    "end": "2018-10-29T15:18:33-05:00"
+  },
+  {
+    "sector": "Code",
+    "project": "Personal",
+    "description": "Dashboard",
+    "start": "2018-10-29T17:05:52-05:00",
+    "end": null
+  }
+]

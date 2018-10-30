@@ -1,0 +1,1058 @@
+[
+  {
+    "sector": "Design",
+    "project": "Veracity",
+    "description": "Workflow Patch – OR Timeout",
+    "start": "5b9ac8fa",
+    "end": "5b9ac922"
+  },
+  {
+    "sector": "Design",
+    "project": "Veracity",
+    "description": "Workflow Patch – OR Timeout",
+    "start": "5b9acc1d",
+    "end": "5b9ad4ce"
+  },
+  {
+    "sector": "Code",
+    "project": "Blog",
+    "description": "Figuring out routing",
+    "start": "5b9b0dc3",
+    "end": "5b9b1620"
+  },
+  {
+    "sector": "Manage",
+    "project": "Veracity",
+    "description": "Trello Cards",
+    "start": "5b9bce45",
+    "end": "5b9bce84"
+  },
+  {
+    "start": "5b9bce8a",
+    "end": "5b9bd15b",
+    "sector": "Manage",
+    "project": "Veracity",
+    "description": "Trello Cards"
+  },
+  {
+    "start": "5b9bd181",
+    "end": "5b9bd1b0",
+    "sector": "Manage",
+    "project": "Veracity",
+    "description": "Trello Cards"
+  },
+  {
+    "sector": "Design",
+    "project": "Veracity",
+    "description": "Worklfow Patch – OR Timeout",
+    "start": "5b9bf875",
+    "end": "5b9c00f0"
+  },
+  {
+    "start": "5b9c04fa",
+    "end": "5b9c0edd",
+    "sector": "Design",
+    "project": "Veracity",
+    "description": "Workflow Patch – OR Timeout"
+  },
+  {
+    "start": "5b9c2288",
+    "end": "5b9c2ffa",
+    "sector": "Design",
+    "project": "Veracity",
+    "description": "Workflow Patch – OR Timeout"
+  },
+  {
+    "sector": "Design",
+    "project": "Blog",
+    "description": "Design System",
+    "start": "5b9ea2a9",
+    "end": "5b9eadb0"
+  },
+  {
+    "sector": "Design",
+    "project": "Veracity",
+    "description": "Workflow Patch – OR Timeout",
+    "start": "5b9fcdeb",
+    "end": "5b9fdcc8"
+  },
+  {
+    "sector": "Manage",
+    "project": "Veracity",
+    "description": "Travel",
+    "start": "5b9fef27",
+    "end": "5ba00332"
+  },
+  {
+    "start": "5ba0105a",
+    "end": "5ba01550",
+    "sector": "Manage",
+    "project": "Veracity",
+    "description": "Travel"
+  },
+  {
+    "sector": "Design",
+    "project": "Veracity",
+    "description": "Workflow Patch – Questionnaire",
+    "start": "5ba260df",
+    "end": "5ba27180"
+  },
+  {
+    "start": "5ba29292",
+    "end": "5ba29c95",
+    "sector": "Design",
+    "project": "Veracity",
+    "description": "Workflow Patch – Questionnaire"
+  },
+  {
+    "start": "5ba2a663",
+    "end": "5ba2ac52",
+    "sector": "Design",
+    "project": "Veracity",
+    "description": "Workflow Patch – Questionnaire"
+  },
+  {
+    "start": "5ba2acf8",
+    "end": "5ba2af53",
+    "sector": "Design",
+    "project": "Veracity",
+    "description": "Workflow Patch – Questionnaire"
+  },
+  {
+    "sector": "Manage",
+    "project": "Veracity",
+    "description": "Trello Cards",
+    "start": "5ba2b249",
+    "end": "5ba2b909"
+  },
+  {
+    "sector": "Manage",
+    "project": "Veracity",
+    "description": "Trello Cards",
+    "start": "5ba50370",
+    "end": "5ba50c44"
+  },
+  {
+    "sector": "Design",
+    "project": "Veracity",
+    "description": "Veracity Suggests Icon",
+    "start": "5ba50c65",
+    "end": "5ba51ab3"
+  },
+  {
+    "sector": "Design",
+    "project": "Veracity",
+    "description": "Brand Colors",
+    "start": "5ba53942",
+    "end": "5ba53b49"
+  },
+  {
+    "sector": "Manage",
+    "project": "Veracity",
+    "description": "Travel",
+    "start": "5ba53b70",
+    "end": "5ba54524"
+  },
+  {
+    "sector": "Design",
+    "project": "Veracity",
+    "description": "Brand Colors",
+    "start": "5ba54544",
+    "end": "5ba5470b"
+  },
+  {
+    "sector": "Manage",
+    "project": "Veracity",
+    "description": "Help Chris w/ z-index issue",
+    "start": "5ba54732",
+    "end": "5ba54846"
+  },
+  {
+    "sector": "Design",
+    "project": "Veracity",
+    "description": "Brand Colors",
+    "start": "5ba5484b",
+    "end": "5ba552b0"
+  },
+  {
+    "start": "5ba5572d",
+    "end": "5ba55a08",
+    "sector": "Design",
+    "project": "Veracity",
+    "description": "Brand Colors"
+  },
+  {
+    "start": "5ba55b67",
+    "end": "5ba565d8",
+    "sector": "Design",
+    "project": "Veracity",
+    "description": "Brand Colors"
+  },
+  {
+    "sector": "Manage",
+    "project": "Veracity",
+    "description": "Travel",
+    "start": "5ba8f164",
+    "end": "5ba8fe48"
+  },
+  {
+    "sector": "Manage",
+    "project": "Veracity",
+    "description": "OR Timeout Discussion",
+    "start": "5ba9013b",
+    "end": "5ba9050e"
+  },
+  {
+    "sector": "Manage",
+    "project": "Veracity",
+    "description": "Veracity Recommendation Icon",
+    "start": "5ba9052f",
+    "end": "5ba90baa"
+  },
+  {
+    "sector": "Manage",
+    "project": "Veracity",
+    "description": "Travel",
+    "start": "5ba91f18",
+    "end": "5ba9263f"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "Convert ZDS color scheme",
+    "start": "5ba92f01",
+    "end": "5ba93a58"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "Convert ZDS color scheme",
+    "start": "5ba9496e",
+    "end": "5ba959b0"
+  },
+  {
+    "sector": "Design",
+    "project": "Web Desserts",
+    "description": "Design System",
+    "start": "5ba97e35",
+    "end": "5ba99071"
+  },
+  {
+    "sector": "Manage",
+    "project": "Veracity",
+    "description": "Trello Catchup",
+    "start": "5baa74b9",
+    "end": "5baa89be"
+  },
+  {
+    "sector": "Manage",
+    "project": "Veracity",
+    "description": "Convert ZDS color scheme",
+    "start": "5baba1ef",
+    "end": "5baba602"
+  },
+  {
+    "sector": "Design",
+    "project": "Veracity",
+    "description": "Convert ZDS color scheme",
+    "start": "5baba613",
+    "end": "5baba6f9"
+  },
+  {
+    "start": "5baba8a4",
+    "end": "5babaed5",
+    "sector": "Design",
+    "project": "Veracity",
+    "description": "Convert ZDS color scheme"
+  },
+  {
+    "start": "5babd18b",
+    "end": "5babd437",
+    "sector": "Design",
+    "project": "Veracity",
+    "description": "Convert ZDS color scheme"
+  },
+  {
+    "start": "5babd961",
+    "end": "5babdd80",
+    "sector": "Design",
+    "project": "Veracity",
+    "description": "Convert ZDS color scheme"
+  },
+  {
+    "start": "5babe065",
+    "end": "5babe2f2",
+    "sector": "Design",
+    "project": "Veracity",
+    "description": "Convert ZDS color scheme"
+  },
+  {
+    "start": "5babe61d",
+    "end": "5babe83e",
+    "sector": "Design",
+    "project": "Veracity",
+    "description": "Convert ZDS color scheme"
+  },
+  {
+    "start": "5babed34",
+    "end": "5babf3ad",
+    "sector": "Design",
+    "project": "Veracity",
+    "description": "Convert ZDS color scheme"
+  },
+  {
+    "start": "5babf63c",
+    "end": "5babf826",
+    "sector": "Design",
+    "project": "Veracity",
+    "description": "Convert ZDS color scheme"
+  },
+  {
+    "start": "5babfbb4",
+    "end": "5babfbf0",
+    "sector": "Design",
+    "project": "Veracity",
+    "description": "Convert ZDS color scheme"
+  },
+  {
+    "sector": "Manage",
+    "project": "Veracity",
+    "description": "Conversation w/ Chris",
+    "start": "5babfc0c",
+    "end": "5babfeb9"
+  },
+  {
+    "sector": "Design",
+    "project": "Veracity",
+    "description": "QA Diverged Answers notification",
+    "start": "5babfef1",
+    "end": "5bac0374"
+  },
+  {
+    "sector": "Manage",
+    "project": "Veracity",
+    "description": "Trello Conversations",
+    "start": "5bacebc0",
+    "end": "5bacf422"
+  },
+  {
+    "sector": "Design",
+    "project": "Veracity",
+    "description": "QA Diverged Answers notification",
+    "start": "5bacf9d7",
+    "end": "5bad002f"
+  },
+  {
+    "sector": "Manage",
+    "project": "Veracity",
+    "description": "Email Anja",
+    "start": "5bae5f03",
+    "end": "5bae684c"
+  },
+  {
+    "sector": "Design",
+    "project": "Veracity",
+    "description": "Experiment with ZDS layout",
+    "start": "5bb1160e",
+    "end": "5bb11b1a"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "Implement ZDS color changes",
+    "start": "5bb15a0a",
+    "end": "5bb173aa"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "Implement ZDS color changes",
+    "start": "5bb18462",
+    "end": "5bb19008"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "Implement ZDS color changes",
+    "start": "5bb20fd6",
+    "end": "5bb21781"
+  },
+  {
+    "sector": "Manage",
+    "project": "Veracity",
+    "description": "Trello",
+    "start": "5bb21791",
+    "end": "5bb21b15"
+  },
+  {
+    "sector": "Design",
+    "project": "Veracity",
+    "description": "Revise Named Variables",
+    "start": "5bb23c6d",
+    "end": "5bb246d8"
+  },
+  {
+    "start": "5bb255eb",
+    "end": "5bb25ecf",
+    "sector": "Design",
+    "project": "Veracity",
+    "description": "Revise Named Variables"
+  },
+  {
+    "start": "5bb26fd4",
+    "end": "5bb271c6",
+    "sector": "Design",
+    "project": "Veracity",
+    "description": "Revise Named Variables"
+  },
+  {
+    "start": "5bb27302",
+    "end": "5bb27e39",
+    "sector": "Design",
+    "project": "Veracity",
+    "description": "Revise Named Variables"
+  },
+  {
+    "start": "5bb28441",
+    "end": "5bb2886b",
+    "sector": "Design",
+    "project": "Veracity",
+    "description": "Revise Named Variables"
+  },
+  {
+    "start": "5bb29632",
+    "end": "5bb2a114",
+    "sector": "Design",
+    "project": "Veracity",
+    "description": "Revise Named Variables"
+  },
+  {
+    "start": "5bb3aa0a",
+    "end": "5bb3b730",
+    "sector": "Design",
+    "project": "Veracity",
+    "description": "Revise Named Variables"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "Patient Layout Cleanup",
+    "start": "5bb3b73d",
+    "end": "5bb3c234"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "Patient Layout cleanup",
+    "start": "5bb3cd33",
+    "end": "5bb3dd43"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "Patient Layout cleanup",
+    "start": "5bb3e0f7",
+    "end": "5bb3e9d3"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "Patient Layout cleanup",
+    "start": "5bb3ec5e",
+    "end": "5bb3fd59"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "Patient Layout cleanup",
+    "start": "5bb447f6",
+    "end": "5bb453c5"
+  },
+  {
+    "start": "5bb456f3",
+    "end": "5bb464d1",
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "Patient Layout cleanup"
+  },
+  {
+    "start": "5bb46ff8",
+    "end": "5bb48510",
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "Patient Dashboard rework"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "React Common color updates",
+    "start": "5bb4e8cd",
+    "end": "5bb4f235"
+  },
+  {
+    "sector": "Design",
+    "project": "Veracity",
+    "description": "Rethinking color variables",
+    "start": "5bb792d9",
+    "end": "5bb7a1dd"
+  },
+  {
+    "start": "5bb7ba3c",
+    "end": "5bb7c551",
+    "sector": "Design",
+    "project": "Veracity",
+    "description": "Rethinking color variables"
+  },
+  {
+    "start": "5bb7ca49",
+    "end": "5bb7eb42",
+    "sector": "Design",
+    "project": "Veracity",
+    "description": "Rethinking color variables"
+  },
+  {
+    "sector": "Design",
+    "project": "Veracity",
+    "description": "Rethinking color variables",
+    "start": "5bba8f8b",
+    "end": "5bba9645"
+  },
+  {
+    "start": "5bba98ae",
+    "end": "5bbaa29b",
+    "sector": "Design",
+    "project": "Veracity",
+    "description": "Rethinking color variables"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "Updating v2 Layout",
+    "start": "5bbb7c23",
+    "end": "5bbb80f6"
+  },
+  {
+    "start": "5bbb878b",
+    "end": "5bbb8c26",
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "Updating v2 Layout"
+  },
+  {
+    "start": "5bbb970d",
+    "end": "5bbb9d45",
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "Updating v2 Layout"
+  },
+  {
+    "start": "5bbb9fd0",
+    "end": "5bbba5a4",
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "Updating v2 Layout"
+  },
+  {
+    "start": "5bbba930",
+    "end": "5bbbb216",
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "Updating v2 Layout"
+  },
+  {
+    "start": "5bbbc078",
+    "end": "5bbbc3ae",
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "Updating v2 Layout"
+  },
+  {
+    "start": "5bbbc743",
+    "end": "5bbbd1ba",
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "Updating v2 Layout"
+  },
+  {
+    "start": "5bbbd6e4",
+    "end": "5bbbdebd",
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "Updating v2 Layout"
+  },
+  {
+    "start": "5bbbe001",
+    "end": "5bbbe5ab",
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "Updating v2 Layout"
+  },
+  {
+    "sector": "Manage",
+    "project": "Veracity",
+    "description": "Slack from Chris",
+    "start": "5bbcd856",
+    "end": "5bbcda68"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "Updating v2 Layout",
+    "start": "5bbcda83",
+    "end": "5bbcf0f3"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "update sass-common peers",
+    "start": "5bbcf5b6",
+    "end": "5bbcf5d6"
+  },
+  {
+    "start": "5bbcfd31",
+    "end": "5bbd02a2",
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "update sass-common peers"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "react-common redesign",
+    "start": "5bbd053c",
+    "end": "5bbd199d"
+  },
+  {
+    "start": "5bbd1a54",
+    "end": "5bbd2ee2",
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "react-common redesign"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "react-common buttons",
+    "start": "5bbd32c2",
+    "end": "5bbd362c"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "react-common button-groups",
+    "start": "5bbd363a",
+    "end": "5bbd471e"
+  },
+  {
+    "start": "5bbe0831",
+    "end": "5bbe16a0",
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "react-common button-groups"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "react-common inputs",
+    "start": "5bbe1efd",
+    "end": "5bbe2b37"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "react-common pick-lists",
+    "start": "5bbe2b44",
+    "end": "5bbe3380"
+  },
+  {
+    "start": "5bbe50e0",
+    "end": "5bbe5ff2",
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "react-common pick-lists"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "react-common radios & checkboxes",
+    "start": "5bbe636b",
+    "end": "5bbe6e1e"
+  },
+  {
+    "sector": "Manage",
+    "project": "Veracity",
+    "description": "mostly pointless meeting",
+    "start": "5bbf5760",
+    "end": "5bbf6c78"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "react-common radios & checkboxes",
+    "start": "5bc05602",
+    "end": "5bc063fd"
+  },
+  {
+    "sector": "Manage",
+    "project": "Veracity",
+    "description": "Craig's question",
+    "start": "5bc06775",
+    "end": "5bc072bf"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "react-common radio buttons",
+    "start": "5bc0e43a",
+    "end": "5bc0eba5"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "react-common radio/checkbox hover",
+    "start": "5bc0ee91",
+    "end": "5bc0f2f0"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "react-common picklist colors",
+    "start": "5bc0f306",
+    "end": "5bc0f4d7"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "react-common hover styles",
+    "start": "5bc0f660",
+    "end": "5bc0ff85"
+  },
+  {
+    "sector": "Manage",
+    "project": "Veracity",
+    "description": "Danny Qs - Questionnaire Back button & OR design updates",
+    "start": "5bc0ffb9",
+    "end": "5bc10a24"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "react-common tables",
+    "start": "5bc10d64",
+    "end": "5bc11328"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "react-common - fix fieldset button alignment",
+    "start": "5bc11b9f",
+    "end": "5bc11c8d"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "react-common - fix checkbox and radio margins",
+    "start": "5bc11c95",
+    "end": "5bc11e01"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "test react-common changes",
+    "start": "5bc11f51",
+    "end": "5bc12264"
+  },
+  {
+    "sector": "Manage",
+    "project": "Veracity",
+    "description": "Respond to Anja",
+    "start": "5bc23cc7",
+    "end": "5bc242e0"
+  },
+  {
+    "sector": "Manage",
+    "project": "Veracity",
+    "description": "Respond to Ante",
+    "start": "5bc24799",
+    "end": "5bc24b5c"
+  },
+  {
+    "sector": "Manage",
+    "project": "Veracity",
+    "description": "Plan out weekend work",
+    "start": "5bc252b3",
+    "end": "5bc25644"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "react-common - default table styling",
+    "start": "5bc2578f",
+    "end": "5bc25c07"
+  },
+  {
+    "start": "5bc25cf0",
+    "end": "5bc25dfa",
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "react-common - default table styling"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "react-common - fix tests",
+    "start": "5bc25e03",
+    "end": "5bc26108"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "react-common - picklist padding",
+    "start": "5bc263ea",
+    "end": "5bc26694"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "react-common - fields & fieldsets",
+    "start": "5bc26707",
+    "end": "5bc26baa"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "react-common editable picklists",
+    "start": "5bc3937d",
+    "end": "5bc39990"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "react-common input borders",
+    "start": "5bc39abe",
+    "end": "5bc3b159"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "react-common clean up theme mixins",
+    "start": "5bc3e787",
+    "end": "5bc3ec3e"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "react-common input borders",
+    "start": "5bc3ee76",
+    "end": "5bc3f1f8"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "react-common - textbox tweaks",
+    "start": "5bc3f7e0",
+    "end": "5bc3f9b4"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "react-common - dropdown tweaks",
+    "start": "5bc3fd45",
+    "end": "5bc3ffed"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "react-common - picklist tweaks",
+    "start": "5bc3fff6",
+    "end": "5bc406cd"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "react-common - picklist tweaks",
+    "start": "5bc40328",
+    "end": "5bc40a68"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "release react-common",
+    "start": "5bc4c8a4",
+    "end": "5bc4ce47"
+  },
+  {
+    "sector": "Manage",
+    "project": "Veracity",
+    "description": "Answer some of Anya's quesitons",
+    "start": "5bc4ce5f",
+    "end": "5bc4d043"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "react-common 9 migration",
+    "start": "5bc4d17a",
+    "end": "5bc4e166"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "prep react-common 9 for Danny",
+    "start": "5bc4f4c0",
+    "end": "5bc4f547"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "Work in Progress rc-9 updates",
+    "start": "5bc4f565",
+    "end": "5bc501c1"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "V-Note Center",
+    "start": "5bc516b9",
+    "end": "5bc51c65"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "Surgery Day Summary rc-9",
+    "start": "5bc51da7",
+    "end": "5bc52504"
+  },
+  {
+    "sector": "Manage",
+    "project": "Veracity",
+    "description": "Update Kyle",
+    "start": "5bc7dd73",
+    "end": "5bc7e508"
+  },
+  {
+    "sector": "Manage",
+    "project": "Veracity",
+    "description": "UX Talk Notes",
+    "start": "5bc7e77f",
+    "end": "5bc80989"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "Push a hot mess to master",
+    "start": "5bc811c1",
+    "end": "5bc81a58"
+  },
+  {
+    "sector": "Manage",
+    "project": "Veracity",
+    "description": "Meeting w/ Anja",
+    "start": "5bc82eac",
+    "end": "5bc8a6f8"
+  },
+  {
+    "sector": "Manage",
+    "project": "Veracity",
+    "description": "Trello",
+    "start": "5bcf4576",
+    "end": "5bcf4e12"
+  },
+  {
+    "sector": "Manage",
+    "project": "Veracity",
+    "description": "Trello",
+    "start": "5bcf658f",
+    "end": "5bcf7178"
+  },
+  {
+    "sector": "Manage",
+    "project": "Veracity",
+    "description": "Trello",
+    "start": "5bcf7334",
+    "end": "5bcf8342"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "k-popup background colors",
+    "start": "5bd0959f",
+    "end": "5bd0a07d"
+  },
+  {
+    "start": "5bd0a688",
+    "end": "5bd0b4e6",
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "k-popup background colors"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "adjust input visibility",
+    "start": "5bd33176",
+    "end": "5bd33f2c"
+  },
+  {
+    "start": "5bd34951",
+    "end": "5bd36260",
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "adjust input visibility"
+  },
+  {
+    "sector": "Code",
+    "project": "Veracity",
+    "description": "adjust input visibility",
+    "start": "5bd43f63",
+    "end": "5bd453fa"
+  },
+  {
+    "sector": "Manage",
+    "project": "Veracity",
+    "description": "review Barrett TK feedback",
+    "start": "5bd71c90",
+    "end": "5bd7242d"
+  },
+  {
+    "sector": "Manage",
+    "project": "Veracity",
+    "description": "Germany trip debreifing w/ Tammy",
+    "start": "5bd72520",
+    "end": "5bd72cb3"
+  },
+  {
+    "sector": "Manage",
+    "project": "Veracity",
+    "description": "Post-AAO Plan & Prioritize",
+    "start": "5bd74569",
+    "end": "5bd74bc0"
+  },
+  {
+    "sector": "Manage",
+    "project": "Veracity",
+    "description": "Post-AAO Plan & Prioritize",
+    "start": "5bd74dd8",
+    "end": "5bd751ee"
+  },
+  {
+    "start": "5bd75594",
+    "end": "5bd75ae7",
+    "sector": "Manage",
+    "project": "Veracity",
+    "description": "Post-AAO Plan & Prioritize"
+  },
+  {
+    "sector": "Design",
+    "project": "Veracity",
+    "description": "Perceived Lightness breakdown",
+    "start": "5bd75fb8",
+    "end": "5bd76b19"
+  },
+  {
+    "sector": "Code",
+    "project": "Personal",
+    "description": "Dashboard",
+    "start": "5bd78440"
+  }
+]
