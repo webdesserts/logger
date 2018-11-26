@@ -10,12 +10,21 @@
   width: 100%;
   box-shadow: inset 0 28px 0 0 $color-light-alt;
   transition: box-shadow 300ms ease, border-color 200ms ease;
-  &:hover {
+  &:hover:not(:read-only) {
     border-color: $color-dark;
   }
-  &:focus {
+  &:focus:not(:read-only) {
     box-shadow: inset 0 32px 0 0 $color-light-alt;
     border-color: $color-primary;
     outline: none;
+  }
+}
+
+.Textbox_shy {
+  background-color: transparent;
+  box-shadow: none;
+  border-color: transparent;
+  &:focus:not(:read-only) {
+    box-shadow: none;
   }
 }

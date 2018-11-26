@@ -1,23 +1,22 @@
 import React from 'react';
 import classes from './App.module.scss';
 import { Counter } from './Counter';
-import { DateTime } from 'luxon';
-import { Entry } from './logs'
+import { DateTime, Duration } from 'luxon';
+import { ActiveEntry } from './store/active_entry';
+import { Entry } from './store/entries';
 
 type DayOverviewProps = {
   day: DateTime,
   entries: Array<Entry>
+  active_entry: ActiveEntry
 }
 
-function DayOverview ({ day, entries } : DayOverviewProps) {
-  let hours = entries.reduce((total, { start, end }) => {
-    if (end) total += end.diff(start).as('hours')
+function DayOverview ({ day, entries, active_entry } : DayOverviewProps) {
+  let duration = entries.reduce((total, { start, end }) => {
+    if (end) total.plus(end.diff(start))
     return total
-  }, 0)
-  let active = entries.find((entry) => !entry.end)
-  let rounded = Math.round(hours * 100) / 100
-  let logs = entries.length
-  let per_log = rounded ? Math.round(rounded/logs* 100) / 100 : 0
+  }, Duration.fromMillis(0))
+  let hours = Math.round(duration.as('hours') * 100) / 100
 
   return (
     <div className={classes.overview}>
@@ -26,7 +25,7 @@ function DayOverview ({ day, entries } : DayOverviewProps) {
         <div className={classes.field}>
           <div className={classes.fieldLabel}>Day</div>
           <div className={classes.fieldItem}>
-            {active ? <Counter add={rounded} date={active.start}/> : rounded} hrs | {logs} logs | {per_log} hrs/log
+            {active_entry.start ? <Counter start={active_entry.start} add={duration} displayUnit='hours'/> : hours} hrs | {entries.length} logs
           </div>
         </div>
         <div className={classes.field}>

@@ -1,13 +1,18 @@
 import React from 'react';
 import classes from './Textbox.module.scss';
 
-interface Props extends React.HTMLAttributes<HTMLInputElement> {
+export interface TextboxProps extends React.InputHTMLAttributes<HTMLInputElement> {
+  shy?: boolean
 }
 
-export function Textbox ({ className: userClassName, ...props }: Props) {
-  let classNames = [classes.Textbox]
-  if (userClassName) { classNames.push(userClassName) }
-  return (
-    <input type="text" className={classNames.join(' ')} {...props} />
-  )
-}
+export const Textbox = React.forwardRef<HTMLInputElement, TextboxProps>(
+  function Textbox(props, ref) {
+    let { className: userClassName, shy, ...otherProps } = props
+    let classNames = [classes.Textbox]
+    if (shy) { classNames.push(classes.Textbox_shy) }
+    if (userClassName) { classNames.push(userClassName) }
+    return (
+      <input ref={ref} type="text" className={classNames.join(' ')} {...otherProps} />
+    )
+  }
+)
