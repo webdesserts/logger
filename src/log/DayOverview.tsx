@@ -1,5 +1,5 @@
 import React from 'react';
-import classes from './App.module.scss';
+import classes from './Log.module.scss';
 import { Counter } from './Counter';
 import { DateTime, Duration } from 'luxon';
 import { ActiveEntry } from './store/active_entry';

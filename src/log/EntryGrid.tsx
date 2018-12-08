@@ -1,10 +1,10 @@
 import React from 'react';
-import { Textbox } from './controls/Textbox'
-import { Durationbox } from './controls/Durationbox'
+import { Textbox } from '../controls/Textbox'
+import { Durationbox } from '../controls/Durationbox'
 import { DateTime, Interval, Duration } from 'luxon';
 import { Entry, EntryData } from './store/entries'
 import classes from './EntryGrid.module.scss'
-import { Timebox } from './controls/Timebox';
+import { Timebox } from '../controls/Timebox';
 
 type EntryGridProps = {
   day: Interval,
@@ -42,6 +42,7 @@ function EntryRow (props: EntryRowProps) {
   let handleUpdate: AnyChangeHandler = (prop, event) => {
     onUpdate(entry.id, { [prop]: event.target.value })
   }
+
   let handleDurationChange = (dur: Duration) => {
     let end = entry.start.plus(dur)
     onUpdate(entry.id, { end })

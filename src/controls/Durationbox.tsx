@@ -1,10 +1,11 @@
-import React, { ChangeEventHandler, FocusEventHandler } from 'react'
+import React, { ChangeEventHandler, FocusEventHandler, DOMAttributes } from 'react'
 import { Textbox } from './Textbox'
 import { Duration } from 'luxon';
 
 export interface DurationboxProps {
+  id?: string,
   value: Duration,
-  shy: boolean,
+  shy?: boolean,
   onChange: (dur: Duration) => void
 }
 
@@ -31,6 +32,10 @@ function renderDuration(duration: Duration) : string {
 }
 
 export class Durationbox extends React.Component<DurationboxProps, DurationboxState> {
+  static defaultProps = {
+    shy: false
+  }
+
   state = { value: renderDuration(this.props.value) }
 
   handleChange: ChangeEventHandler<HTMLInputElement> = ({ target }) => {
@@ -48,9 +53,8 @@ export class Durationbox extends React.Component<DurationboxProps, DurationboxSt
   }
 
   render () {
-    let { shy } = this.props
-    let { value } = this.state
+    let { value, onChange, shy, ...otherProps } = this.props
 
-    return <Textbox shy={shy} value={value} onChange={this.handleChange} onBlur={this.handleBlur}/>
+    return <Textbox shy={shy} value={this.state.value} onChange={this.handleChange} onBlur={this.handleBlur} {...otherProps}/>
   }
 }

@@ -1,7 +1,8 @@
 import { Reducer } from 'redux'
 import { DateTime } from 'luxon'
 import { createAction } from 'typesafe-actions'
-import { ExtractActions, Optional, Drop } from './types'
+import { ExtractActions } from '../../store'
+import { Optional, Drop } from '../../types'
 import produce from 'immer'
 import nanoid from 'nanoid'
 

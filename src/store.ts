@@ -1,3 +1,12 @@
+import { StateType } from 'typesafe-actions'
+import { createStore, combineReducers, applyMiddleware } from 'redux'
+import { createLogger } from 'redux-logger';
+import * as log from './log/store';
+
+/*=======*\
+*  Types  *
+\*=======*/
+
 // A Redux Action with Flux-style payloads
 export type Action<T = string, P = {}> = { type: T, payload: P }
 
@@ -10,22 +19,20 @@ export type ExtractActions<C extends ActionCreators<Action>> = C extends ActionC
 // Extracts the Action Type from an Action Creator
 export type ExtractType<A> = A extends Action<infer T> ? T : never;
 
-// drops properties from the definition
-export type Drop<P extends keyof T, T> = {
-  [K in Exclude<keyof T, P>]: T[K]
-}
+/*=========*\
+*  Reducer  *
+\*=========*/
 
-// these properties should not be defined
-export type Empty<P extends keyof T, T> =
-  { [K in P]?: undefined } &
-  { [K in keyof Drop<P, T>]: T[K] }
+const reducer = combineReducers({
+  log: log.reducer,
+})
 
-// allows certain properties to be null
-export type Nullable<P extends keyof T, T> = {
-  [K in keyof T]: K extends P ? T[K] | null : T[K]
-}
+/*=======*\
+*  Store  *
+\*=======*/
 
-// allows certain properties to be optional
-export type Optional<P extends keyof T, T> =
-  { [K in P]?: T[K] } &
-  { [K in keyof Drop<P, T>]: T[K] }
+export type AppState = StateType<typeof reducer>
+export const store = createStore(
+  reducer,
+  applyMiddleware(createLogger({ collapsed: true }))
+)

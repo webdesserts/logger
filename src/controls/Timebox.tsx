@@ -3,8 +3,9 @@ import { Textbox } from './Textbox'
 import { DateTime } from 'luxon';
 
 export interface TimeboxProps {
+  id?: string,
   time: DateTime,
-  shy: boolean,
+  shy?: boolean,
   onChange: (time: DateTime) => void
 }
 
@@ -14,6 +15,10 @@ function renderTime(time: DateTime) : string {
 
 export class Timebox extends React.Component<TimeboxProps> {
   needsReselect : 'hour' | 'minute' | null = null
+
+  static defaultProps = {
+    shy: false
+  }
 
   selectMinute($box: HTMLInputElement) {
     $box.setSelectionRange(3,5)
@@ -126,7 +131,7 @@ export class Timebox extends React.Component<TimeboxProps> {
   }
 
   render () {
-    let { shy, time } = this.props
+    let { shy, time, onChange, ...otherProps } = this.props
 
     let props = {
       shy,
@@ -135,6 +140,7 @@ export class Timebox extends React.Component<TimeboxProps> {
       onKeyPress: this.handleKeyPress,
       onSelect: this.handleSelect,
       onChange: () => {},
+      ...otherProps
     }
 
     return <Textbox {...props} />

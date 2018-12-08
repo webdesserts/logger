@@ -1,0 +1,12 @@
+@import '../config';
+
+.DesignSystem {
+  display: grid;
+  grid-gap: 16px;
+  justify-content: start;
+
+  section {
+    display: grid;
+    grid-gap: 16px;
+  }
+}

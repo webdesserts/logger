@@ -1,6 +1,6 @@
 import React from 'react';
-import { Textbox } from './controls/Textbox';
-import { Button } from './controls/Button';
+import { Textbox } from '../controls/Textbox';
+import { Button } from '../controls/Button';
 import { DateTime } from 'luxon';
 import { Counter } from './Counter';
 import { EntryData, Entry } from './store/entries'
