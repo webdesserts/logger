@@ -2,7 +2,7 @@ import React from 'react';
 import { Textbox } from '../controls/Textbox'
 import { Durationbox } from '../controls/Durationbox'
 import { DateTime, Interval, Duration } from 'luxon';
-import { Entry, EntryData } from './store/entries'
+import { Entry, EntryData } from './models/entries'
 import classes from './EntryGrid.module.scss'
 import { Timebox } from '../controls/Timebox';
 

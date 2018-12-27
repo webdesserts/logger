@@ -3,13 +3,13 @@ import { Textbox } from '../controls/Textbox';
 import { Button } from '../controls/Button';
 import { DateTime } from 'luxon';
 import { Counter } from './Counter';
-import { EntryData, Entry } from './store/entries'
-import { ActiveEntry } from './store/active_entry'
+import { EntryData, Entry } from './models/entries'
+import { ActiveEntryState } from './models/active_entry'
 import classes from './EntryGrid.module.scss'
 
 type Props = {
-  entry: ActiveEntry
-  onChange: (entry: Partial<ActiveEntry>) => void
+  active_entry: ActiveEntryState
+  onChange: (entry: Partial<ActiveEntryState>) => void
   onEnd: (entry: Entry) => void
 }
 
@@ -28,19 +28,15 @@ class EntryForm extends React.Component<Props> {
   }
 
   handleStart = () => {
-    let times = { start: DateTime.local() }
-    let newEntry = Object.assign({}, this.state, times)
-
-    this.props.onChange(newEntry)
+    this.props.onChange({ start: DateTime.local() })
   }
 
   handleChange = (prop: keyof EntryData, event: React.ChangeEvent<HTMLInputElement>) => {
-    let changes = { [prop]: event.target.value }
-    this.props.onChange(changes)
+    this.props.onChange({ [prop]: event.target.value })
   }
 
   handleStop = () => {
-    let { entry } = this.props
+    let { active_entry: entry } = this.props
     if (entry.start) {
       let completeEntry = { ...entry, end: DateTime.local() } as Entry
       console.log(completeEntry)
@@ -51,7 +47,7 @@ class EntryForm extends React.Component<Props> {
   }
 
   render() {
-    let { entry } = this.props;
+    let { active_entry: entry } = this.props;
 
     return (
       <>
@@ -60,7 +56,9 @@ class EntryForm extends React.Component<Props> {
         <Textbox value={entry.description} onChange={this.handleChange.bind(this, 'description')} placeholder="description" ref={this.descriptionBox} />
         {entry.start ? <>
           <Textbox readOnly value={entry.start.toLocaleString(DateTime.TIME_24_SIMPLE)} />
-          <Button autoFocus className={classes.stopBtn} onClick={this.handleStop}><Counter start={entry.start} /></Button>
+          <Button autoFocus className={classes.stopBtn} onClick={this.handleStop}>
+            <Counter start={entry.start} />
+          </Button>
         </> : <>
           <Button className={classes.startBtn} onClick={this.handleStart}>Start</Button>
         </>}

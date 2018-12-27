@@ -2,13 +2,13 @@ import React from 'react';
 import classes from './Log.module.scss';
 import { Counter } from './Counter';
 import { DateTime, Duration } from 'luxon';
-import { ActiveEntry } from './store/active_entry';
-import { Entry } from './store/entries';
+import { ActiveEntryState } from './models/active_entry';
+import { EntriesState } from './models/entries';
 
 type DayOverviewProps = {
   day: DateTime,
-  entries: Array<Entry>
-  active_entry: ActiveEntry
+  entries: EntriesState,
+  active_entry: ActiveEntryState
 }
 
 function DayOverview ({ day, entries, active_entry } : DayOverviewProps) {

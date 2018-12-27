@@ -1,7 +1,7 @@
 import { StateType } from 'typesafe-actions'
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 import { createLogger } from 'redux-logger';
-import * as log from './log/store';
+import * as commands from './commands'
 
 /*=======*\
 *  Types  *
@@ -24,7 +24,7 @@ export type ExtractType<A> = A extends Action<infer T> ? T : never;
 \*=========*/
 
 const reducer = combineReducers({
-  log: log.reducer,
+  context: commands.reducer
 })
 
 /*=======*\

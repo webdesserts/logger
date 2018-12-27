@@ -1,0 +1,97 @@
+@import '../config';
+
+
+.Palette {
+  display: grid;
+  grid-auto-flow: row;
+  grid-gap: 16px;
+  background-color: $color-dark;
+  color: $color-light;
+  padding: 32px;
+  width: 408px;
+  ::selection {
+    background-color: $color-light;
+    color: $color-dark;
+  }
+}
+
+.Contexts {
+  display: flex;
+  flex-flow: column-reverse nowrap;
+  align-items: end;
+  justify-items: start;
+  height: 32px; 
+  overflow: visible;
+  & > *+* {
+    margin-bottom: 4px;
+  }
+}
+
+.Context {
+  @include txt-body;
+  background-color: $color-dark-alt;
+  padding: 2px 4px;
+  &:not(:first-child) {
+    opacity: .5;
+  }
+
+  &:first-child {
+    padding: 2px 8px;
+    font: inherit;
+  }
+}
+
+.Line {
+  @include txt-title();
+  display: flex;
+  border-bottom: 2px solid $color-dark-alt;
+  background-color: $color-dark;
+  padding-bottom: 4px;
+  caret-color: $color-primary;
+  transition: border-color 200ms ease;
+
+  &:hover {
+    border-bottom-color: $color-light-alt;
+  }
+
+  &:focus-within {
+    border-bottom-color: $color-primary;
+  }
+}
+
+.Chevron {
+  font-size: 1.5em;
+  color: $color-medium;
+  padding: 0 8px;
+}
+
+.Input {
+  @extend .Line;
+  background-color: transparent;
+  border: none;
+  color: inherit;
+  font: inherit;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.Commands {
+  display: grid;
+}
+
+.Command {
+  display: grid;
+  padding: 8px;
+  cursor: pointer;
+}
+
+.Command_selected {
+  background-color: $color-dark-alt;
+}
+
+
+.CommandContext { color: $color-medium; margin-left: 8px; }
+.CommandName { @include txt-base }
+.CommandDescription { @include txt-caption; color: $color-medium; }

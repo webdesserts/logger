@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import classes from './DesignSystem.module.scss'
 import { DateTime, Duration } from 'luxon'
 import { RouteComponentProps } from '@reach/router'
@@ -7,7 +7,16 @@ import { Textbox } from '../controls/Textbox'
 import { Timebox } from '../controls/Timebox'
 import { Durationbox } from '../controls/Durationbox'
 import { Selectable, MultiSelectable } from '../controls/Selectable'
+import { CommandPalette } from '../commands/CommandPalette'
 
+let exampleCommands = [
+  { context: "Entry", name: "Edit", description: "Edit the details of this Entry" },
+  { context: "Entry", name: "Delete", description: "Delete this Entry" },
+  { context: "Entry", name: "Stop", description: "Stops the timer for this Entry" },
+  { context: "Entry", name: "Start", description: "Creates a new entry with the same details as this Entry" },
+  { context: "Log", name: "Start", description: "Start a new entry" },
+  { context: "Log", name: "Stop", description: "Stops the Active Entry" }
+]
 
 type Props = RouteComponentProps
 type State = {
@@ -54,6 +63,10 @@ export default class DesignSystem extends React.Component<Props, State> {
             (bkg, isSelected, triggerSelect) => (
               <span key={bkg} style={isSelected ? { backgroundColor: bkg, fontWeight: 'bold' } : {}} onClick={triggerSelect}>{bkg}</span>
             )}/>
+        </section>
+        <section>
+          <CommandPalette contexts={['Log', 'Entry']} commands={exampleCommands} >
+          </CommandPalette>
         </section>
       </div>
     )
