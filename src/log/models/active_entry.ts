@@ -1,7 +1,7 @@
 import { Nullable, Empty } from '../../types'
 import { Entry } from './entries'
 import nanoid from 'nanoid'
-import { Model } from './model';
+import { Model } from '../../model';
 
 /*=======*\
 *  Types  *

@@ -18,8 +18,6 @@ We need to keep track of a few things. We need a place to store the context and 
 
 # Triggering a Context
 
-If we used a **Hook** it might look like this...
-
 ```tsx
 function useCommandContext(name, ref) {
   handleFocus() {
@@ -92,29 +90,4 @@ This isn't too far from a routing system, though these contexts aren't necessari
     <SchedulerCommands />
     <GlobalCommands />
   </CommandPalette>
-```
-
-# Consuming State in general
-
-```tsx
-import { EntriesProvider } from './entries'
-
-function Root() {
-  return (
-    <EntriesProvider store={[]}>
-      <App />
-    </EntriesProvider>
-  )
-}
-```
-
-```tsx
-import { useEntries } from './entries'
-
-function Entries() {
-  let entries = useEntries()
-  return <>
-    {entries.state.map((entry) => <div onClick={() => entries.remove(entry.id)}>{entry}</div>)}
-  </>
-}
 ```

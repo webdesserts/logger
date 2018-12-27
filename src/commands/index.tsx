@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-export { reducer } from './store'
+export * from './model'
 
 function linkContext() {}
 function unlinkContext() {}

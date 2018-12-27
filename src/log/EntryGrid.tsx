@@ -33,7 +33,6 @@ type EntryRowProps = {
 }
 
 type AnyChangeHandler<P extends keyof EntryData = keyof EntryData> = (prop: P, event: React.ChangeEvent<HTMLInputElement>) => void
-type ChangeHandler= (event: React.ChangeEvent<HTMLInputElement>) => void
 
 function EntryRow (props: EntryRowProps) {
   let { entry, onUpdate } = props

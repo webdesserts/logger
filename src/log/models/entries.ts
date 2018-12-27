@@ -1,7 +1,7 @@
 import { DateTime } from 'luxon'
 import { Optional, Drop } from '../../types'
 import nanoid from 'nanoid'
-import { Model } from './model'
+import { Model } from '../../model'
 
 /*=======*\
 *  Types  *
