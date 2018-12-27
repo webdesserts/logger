@@ -8,27 +8,29 @@ import { EntriesProvider, Entry, EntryData, useEntries } from './models/entries'
 import { ActiveEntryProvider, ActiveEntryState, useActiveEntry } from './models/active_entry';
 import { RouteComponentProps } from '@reach/router'
 
+export { Log, LogProvider }
+
 type Props = RouteComponentProps
 
 function getInterval(entry: Entry) : Interval {
   return Interval.fromDateTimes(entry.start, entry.end || DateTime.local())
 }
 
-export function Log (props: Props) {
+function Log (props: Props) {
   let active_entry = useActiveEntry()
   let entries = useEntries()
   if (!entries) return <div>Loading...</div>;
 
-  let handleActiveEntryChange = (change: Partial<ActiveEntryState>) => {
+  function handleActiveEntryChange (change: Partial<ActiveEntryState>) {
     active_entry.update(change)
   }
 
-  let handleActiveEntryComplete = (data: Entry) => {
+  function handleActiveEntryComplete (data: Entry) {
     entries.create(data)
     active_entry.reset()
   }
 
-  let handleEntryUpdate = (id: string, change: Partial<EntryData>) => {
+  function handleEntryUpdate (id: string, change: Partial<EntryData>) {
     entries.update(id, change)
   }
 
@@ -39,7 +41,7 @@ export function Log (props: Props) {
   return (
     <div className={classes.Log}>
       <DayOverview day={day_start} entries={day_log} active_entry={active_entry.state} />
-      <EntryGrid day={day} entries={entries.state} onUpdate={handleEntryUpdate}>
+      <EntryGrid entries={entries.state} onUpdate={handleEntryUpdate}>
         <EntryForm active_entry={active_entry.state} onChange={handleActiveEntryChange} onEnd={handleActiveEntryComplete} />
       </EntryGrid>
     </div>
@@ -50,7 +52,7 @@ type ProviderProps = {
   children: React.ReactChild
 }
 
-export function LogProvider({ children }: ProviderProps) {
+function LogProvider({ children }: ProviderProps) {
   return (
     <EntriesProvider>
       <ActiveEntryProvider>

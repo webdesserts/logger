@@ -1,13 +1,14 @@
 import React from 'react';
 import { Textbox } from '../controls/Textbox'
 import { Durationbox } from '../controls/Durationbox'
-import { DateTime, Interval, Duration } from 'luxon';
+import { DateTime, Duration } from 'luxon';
 import { Entry, EntryData } from './models/entries'
 import classes from './EntryGrid.module.scss'
 import { Timebox } from '../controls/Timebox';
 
+export { EntryGrid };
+
 type EntryGridProps = {
-  day: Interval,
   entries: Entry[]
   children: React.ReactNode
   onUpdate: (id: string, changes: Partial<EntryData>) => void
@@ -26,28 +27,26 @@ function EntryGrid (props: EntryGridProps) {
     </div>
   )
 }
-    
+
 type EntryRowProps = {
   entry: Entry
   onUpdate: (id: string, changes: Partial<EntryData>) => void
 }
 
-type AnyChangeHandler<P extends keyof EntryData = keyof EntryData> = (prop: P, event: React.ChangeEvent<HTMLInputElement>) => void
-
 function EntryRow (props: EntryRowProps) {
   let { entry, onUpdate } = props
   let dur = entry.end.diff(entry.start)
 
-  let handleUpdate: AnyChangeHandler = (prop, event) => {
+  function handleUpdate (prop: keyof EntryData, event: React.ChangeEvent<HTMLInputElement>) {
     onUpdate(entry.id, { [prop]: event.target.value })
   }
 
-  let handleDurationChange = (dur: Duration) => {
+  function handleDurationChange (dur: Duration) {
     let end = entry.start.plus(dur)
     onUpdate(entry.id, { end })
   }
 
-  let handleTimeChange = (prop: 'start' | 'end', time: DateTime) => {
+   function handleTimeChange (prop: 'start' | 'end', time: DateTime) {
     onUpdate(entry.id, { [prop]: time })
   }
 
@@ -60,5 +59,3 @@ function EntryRow (props: EntryRowProps) {
     <Durationbox shy value={dur} onChange={handleDurationChange} />
   </>
 }
-
-export { EntryGrid };

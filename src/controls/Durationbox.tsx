@@ -1,16 +1,12 @@
-import React, { ChangeEventHandler, FocusEventHandler, DOMAttributes } from 'react'
+import React, { useState } from 'react'
 import { Textbox } from './Textbox'
 import { Duration } from 'luxon';
 
 export interface DurationboxProps {
   id?: string,
   value: Duration,
-  shy?: boolean,
+  shy: boolean,
   onChange: (dur: Duration) => void
-}
-
-export interface DurationboxState {
-  value: string
 }
 
 function isValidDuration(string: string) {
@@ -31,30 +27,27 @@ function renderDuration(duration: Duration) : string {
   return (Math.round(duration.as('hours') * 100) / 100).toString()
 }
 
-export class Durationbox extends React.Component<DurationboxProps, DurationboxState> {
-  static defaultProps = {
-    shy: false
-  }
+export function Durationbox(props: DurationboxProps) {
+  let { value, onChange, shy, ...otherProps } = props
+  let [ state, setState ] = useState({ value: renderDuration(props.value) })
 
-  state = { value: renderDuration(this.props.value) }
-
-  handleChange: ChangeEventHandler<HTMLInputElement> = ({ target }) => {
+  function handleChange ({ target }: React.ChangeEvent<HTMLInputElement>) {
     if (containsInvalidCharacters(target.value)) return;
-    this.setState({ value: target.value })
+    setState({ value: target.value })
 
     if (isValidDuration(target.value)) {
-      this.props.onChange(parseDuration(target.value))
+      props.onChange(parseDuration(target.value))
     }
   }
 
-  handleBlur: FocusEventHandler = ({ target }) => {
-    let string = renderDuration(this.props.value)
-    this.setState({ value: string })
+  function handleBlur ({ target }: React.FocusEvent<HTMLInputElement>) {
+    let string = renderDuration(props.value)
+    setState({ value: string })
   }
 
-  render () {
-    let { value, onChange, shy, ...otherProps } = this.props
+  return <Textbox shy={shy} value={state.value} onChange={handleChange} onBlur={handleBlur} {...otherProps} />
+}
 
-    return <Textbox shy={shy} value={this.state.value} onChange={this.handleChange} onBlur={this.handleBlur} {...otherProps}/>
-  }
+Durationbox.defaultProps = {
+  shy: false
 }

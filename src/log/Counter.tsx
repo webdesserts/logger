@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { DateTime, Duration } from 'luxon'
 
 export { Counter, displayDuration };
@@ -23,41 +23,19 @@ function displayDuration(duration: Duration, displayUnit: 'hours' | 'minutes'): 
   }
 }
 
-class Counter extends React.Component<Props> {
-  static defaultProps = {
-    displayUnit: 'minutes'
-  }
+function Counter(props: Props) {
+  let [ now, setNow ] = useState(DateTime.local())
 
-  int: number = 0;
+  useEffect(() => {
+    let int = window.setInterval(() => setNow(DateTime.local()), 1000)
+    return () => window.clearInterval(int)
+  })
 
-  componentDidMount() {
-    this.int = window.setInterval(this.forceUpdate.bind(this), 1000)
-  }
+  let duration = props.add ? now.diff(props.start).plus(props.add) : now.diff(props.start)
 
-  componentWillUnmount() {
-    window.clearInterval(this.int)
-  }
+  return <>{displayDuration(duration, props.displayUnit)}</>
+}
 
-  static displayDuration(duration: Duration, displayUnit: 'hours' | 'minutes') : string {
-    duration = duration.shiftTo('hours', 'minutes', 'seconds')
-    switch(displayUnit) {
-      case 'hours': {
-        let hours = duration.as('hours')
-        let rounded = Math.round(hours * 10) / 10
-        return `${rounded}`;
-      }
-      case 'minutes': {
-        return duration.toFormat('h:mm:ss').replace(/^0:/,'')
-      }
-    }
-  }
-
-  render () {
-    let { start, add, displayUnit } = this.props
-
-    let now = DateTime.local()
-    let duration = add ? now.diff(start).plus(add) : now.diff(start)
-
-    return <>{displayDuration(duration, displayUnit)}</>
-  }
+Counter.defaultProps = {
+  displayUnit: 'minutes'
 }

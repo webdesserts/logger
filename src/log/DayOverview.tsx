@@ -5,6 +5,8 @@ import { DateTime, Duration } from 'luxon';
 import { ActiveEntryState } from './models/active_entry';
 import { EntriesState } from './models/entries';
 
+export { DayOverview };
+
 type DayOverviewProps = {
   day: DateTime,
   entries: EntriesState,
@@ -36,5 +38,3 @@ function DayOverview ({ day, entries, active_entry } : DayOverviewProps) {
     </div>
   )
 }
-
-export { DayOverview };

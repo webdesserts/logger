@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useLayoutEffect } from 'react';
 import { Textbox } from '../controls/Textbox';
 import { Button } from '../controls/Button';
 import { DateTime } from 'luxon';
@@ -7,64 +7,60 @@ import { EntryData, Entry } from './models/entries'
 import { ActiveEntryState } from './models/active_entry'
 import classes from './EntryGrid.module.scss'
 
+export { EntryForm };
+
 type Props = {
   active_entry: ActiveEntryState
   onChange: (entry: Partial<ActiveEntryState>) => void
   onEnd: (entry: Entry) => void
 }
 
-class EntryForm extends React.Component<Props> {
-  static defaultProps = {
-    onChange: () => {},
-    onEnd: () => {}
-  }
+function EntryForm(props: Props) {
+  let {
+    active_entry,
+    onChange = () => {},
+    onEnd = () => {}
+  } = props
 
-  sectorBox = React.createRef<HTMLInputElement>()
-  descriptionBox = React.createRef<HTMLInputElement>()
+  let sectorBox = React.useRef<HTMLInputElement>(null)
+  let descriptionBox = React.useRef<HTMLInputElement>(null)
 
-  componentDidMount () {
-    let $sector = this.sectorBox.current
+  useLayoutEffect(() => {
+    let $sector = sectorBox.current
     if ($sector) $sector.focus()
+  }, [active_entry.id])
+
+  let handleStart = () => {
+    onChange({ start: DateTime.local() })
   }
 
-  handleStart = () => {
-    this.props.onChange({ start: DateTime.local() })
+  let handleChange = (prop: keyof EntryData, event: React.ChangeEvent<HTMLInputElement>) => {
+    onChange({ [prop]: event.target.value })
   }
 
-  handleChange = (prop: keyof EntryData, event: React.ChangeEvent<HTMLInputElement>) => {
-    this.props.onChange({ [prop]: event.target.value })
-  }
-
-  handleStop = () => {
-    let { active_entry: entry } = this.props
-    if (entry.start) {
-      let completeEntry = { ...entry, end: DateTime.local() } as Entry
+  let handleStop = () => {
+    if (active_entry.start) {
+      let completeEntry = { ...active_entry, end: DateTime.local() } as Entry
       console.log(completeEntry)
-      this.props.onEnd(completeEntry)
+      onEnd(completeEntry)
     }
-    let $description = this.descriptionBox.current
+    let $description = descriptionBox.current
     if ($description) $description.focus()
   }
 
-  render() {
-    let { active_entry: entry } = this.props;
-
-    return (
-      <>
-        <Textbox value={entry.sector} onChange={this.handleChange.bind(this, 'sector')} placeholder="sector" ref={this.sectorBox}/>
-        <Textbox value={entry.project} onChange={this.handleChange.bind(this, 'project')} placeholder="project"/>
-        <Textbox value={entry.description} onChange={this.handleChange.bind(this, 'description')} placeholder="description" ref={this.descriptionBox} />
-        {entry.start ? <>
-          <Textbox readOnly value={entry.start.toLocaleString(DateTime.TIME_24_SIMPLE)} />
-          <Button autoFocus className={classes.stopBtn} onClick={this.handleStop}>
-            <Counter start={entry.start} />
-          </Button>
-        </> : <>
-          <Button className={classes.startBtn} onClick={this.handleStart}>Start</Button>
-        </>}
-      </>
-    )
-  }
+  return (
+    <>
+      <Textbox value={active_entry.sector} onChange={handleChange.bind(null, 'sector')} placeholder="sector" ref={sectorBox}/>
+      <Textbox value={active_entry.project} onChange={handleChange.bind(null, 'project')} placeholder="project"/>
+      <Textbox value={active_entry.description} onChange={handleChange.bind(null, 'description')} placeholder="description" ref={descriptionBox} />
+      {active_entry.start ? <>
+        <Textbox readOnly value={active_entry.start.toLocaleString(DateTime.TIME_24_SIMPLE)} />
+        <Button autoFocus className={classes.stopBtn} onClick={handleStop}>
+          <Counter start={active_entry.start} />
+        </Button>
+      </> : <>
+        <Button className={classes.startBtn} onClick={handleStart}>Start</Button>
+      </>}
+    </>
+  )
 }
-
-export { EntryForm };
