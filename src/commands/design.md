@@ -10,8 +10,8 @@ We need to keep track of a few things. We need a place to store the context and 
 {
   context: [
     { name: 'Log' },
-    { name: 'Log/Entry', data: { id: 'a1b2c3' } },
-    { name: 'Log/Entry', data: { id: 'd4e5f6' } } // This Entry takes precedent
+    { name: 'Log/Entry', id: 'a1b2c3' },
+    { name: 'Log/Entry', id: 'd4e5f6' } // This Entry takes precedent
   ]
 }
 ```
@@ -83,8 +83,8 @@ This isn't too far from a routing system, though these contexts aren't necessari
   // In ma navigation
   <CommandPalette context={[
     { name: 'Log' },
-    { name: 'Log/Entry', data: { id: 'a1b2c3' } },
-    { name: 'Log/Entry', data: { id: 'd4e5f6' } }
+    { name: 'Log/Entry', id: 'a1b2c3' },
+    { name: 'Log/Entry', id: 'd4e5f6' }
   ]}>
     <LoggerCommands />
     <SchedulerCommands />
