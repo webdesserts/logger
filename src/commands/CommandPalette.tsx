@@ -34,7 +34,7 @@ function CommandPalette<T>(props: Props<T>) {
   }
 
   let matchingCommands = commands
-    .filter(matchesContext(subjects))
+    .filter(matchesContext(context.state))
     .filter(matchesSearch(search))
     .sort(sortSubjectsByDepth(context.state))
 
@@ -114,8 +114,10 @@ function sortSubjectsByDepth(context: CommandContextState) {
   }
 }
 
-function matchesContext(subjects: Set<string>) {
-  return (command: Command<any>) => subjects.has(command.subject)
+function matchesContext(context: CommandContextState) {
+  return (command: Command<any>) => (
+    context.some((subject) => subject.name == command.subject)
+  )
 }
 
 function matchesSearch(value: string) {
