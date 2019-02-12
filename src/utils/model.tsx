@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import produce, { Draft, Produced, PatchListener } from 'immer'
 
 export { Model }
@@ -9,29 +9,25 @@ type ModelClass<T> = { new(...args: any[]) : T }
 
 class Model<S> {
   readonly state: S;
-  protected setState: (state: S) => void;
-  constructor(state: S, setState: (state: S) => void) {
+  protected setState: (state: (state: S) => S) => void;
+  constructor(state: S, setState: (state: (state: S) => S ) => void) {
     this.state = state;
     this.setState = setState;
   }
 
   protected produceState(recipe: (draft: Draft<S>) => S | void) {
-    let produced = produce(this.state, recipe) as S
-    this.setState(produced);
-  }
-
-  private refresh(state: S, setState: (state: S) => void) {
-    (this.state as S) = state
-    this.setState = setState
+    this.setState((state: S) => {
+      return produce(state, recipe) as S
+    });
   }
 
   static createContext<S, T extends Model<S>>(this: ModelClass<T>, initialState: S): [Provider<S>, () => T] {
     let self = this;
-    let inst = new self(initialState, () => { });
-    const Context = React.createContext(inst);
+    let defaultInst = new self(initialState, () => { });
+    const Context = React.createContext(defaultInst);
 
     function Provider(props: ProviderProps<S>) {
-      let [state, setState] = React.useState(props.state || initialState);
+      let [state, setState] = useState(props.state || initialState);
 
       let inst = new self(state, setState);
 
