@@ -1,16 +1,21 @@
+@import '../config.scss';
+
 .entries {
+  display: grid;
   padding: 32px 0;
+  gap: 8px 4px;
+}
+
+.row {
   display: grid;
   grid-template-columns: repeat(2, minmax(64px, 100px)) auto repeat(3, 56px);
-  align-items: center;
-  gap: 8px 4px;
-  & > div { padding: 8 8px; }
+  align-items: baseline;
 }
 
-.startBtn {
-  grid-column: span 3;
+.row_active {
+  composes: row;
 }
 
-.stopBtn {
-  grid-column: span 2;
+.field {
+  padding: 8px;
 }

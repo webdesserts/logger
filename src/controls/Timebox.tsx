@@ -5,7 +5,8 @@ import { DateTime } from 'luxon';
 export interface TimeboxProps {
   id?: string,
   time: DateTime,
-  shy?: boolean,
+  shy: boolean,
+  readOnly: boolean,
   onChange: (time: DateTime) => void
 }
 
@@ -17,7 +18,9 @@ export class Timebox extends React.Component<TimeboxProps> {
   needsReselect : 'hour' | 'minute' | null = null
 
   static defaultProps = {
-    shy: false
+    shy: false,
+    readOnly: false,
+    onChange: () => {}
   }
 
   selectMinute($box: HTMLInputElement) {

@@ -1,15 +1,16 @@
 import { DateTime } from 'luxon'
-import { Optional, Drop } from '../../types'
+import { Optional, Drop } from '../../utils/types'
 import nanoid from 'nanoid'
-import { Model } from '../../model'
+import { Model } from '../../utils/model'
+import { busyDay } from './fixtures';
 
 /*=======*\
 *  Types  *
 \*=======*/
 
-export type EntriesState = Entry[]
+export interface EntriesState extends Array<Entry> {}
 
-export type Entry = {
+export interface Entry {
   id: string,
   project: string,
   sector: string,
@@ -51,5 +52,5 @@ export class EntriesModel extends Model<Entry[]> {
   }
 }
 
-let initialState: Entry[] = []
+let initialState: Entry[] = busyDay
 export let [ EntriesProvider, useEntries ] = EntriesModel.createContext(initialState)

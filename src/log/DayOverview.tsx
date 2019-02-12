@@ -1,9 +1,9 @@
 import React from 'react';
 import classes from './Log.module.scss';
-import { Counter } from './Counter';
 import { DateTime, Duration } from 'luxon';
 import { ActiveEntryState } from './models/active_entry';
 import { EntriesState } from './models/entries';
+import { Counter } from './Counter';
 
 export { DayOverview };
 
@@ -27,7 +27,7 @@ function DayOverview ({ day, entries, active_entry } : DayOverviewProps) {
         <div className={classes.field}>
           <div className={classes.fieldLabel}>Day</div>
           <div className={classes.fieldItem}>
-            {active_entry.start ? <Counter start={active_entry.start} add={duration} displayUnit='hours'/> : hours} hrs | {entries.length} logs
+            {active_entry.start ? <Counter since={active_entry.start} plus={duration} displayUnit='hours'/> : hours} hrs | {entries.length} logs
           </div>
         </div>
         <div className={classes.field}>

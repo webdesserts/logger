@@ -18,7 +18,7 @@
 .Contexts {
   display: flex;
   flex-flow: column-reverse nowrap;
-  align-items: end;
+  align-items: flex-end;
   justify-items: start;
   height: 32px; 
   overflow: visible;

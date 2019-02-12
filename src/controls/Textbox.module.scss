@@ -18,6 +18,9 @@
     border-color: $color-primary;
     outline: none;
   }
+  &:read-only {
+    cursor: inherit;
+  }
 }
 
 .Textbox_shy {

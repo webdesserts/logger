@@ -1,0 +1,17 @@
+@import '../config.scss';
+
+.block {
+  cursor: pointer;
+  border-left: 2px solid $color-light-alt;
+  transition: border-color 200ms ease, background-color 200ms ease;
+
+  &:focus {
+    outline: none;
+    border-color: $color-primary;
+    background-color: $color-light-alt;
+  }
+
+  &:hover:not(:focus) {
+    border-color: $color-dark-alt;
+  }
+}

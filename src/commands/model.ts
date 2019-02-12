@@ -1,36 +1,36 @@
-import { Model } from '../model';
+import { Model } from '../utils/model';
 
 /*=======*\
 *  Types  *
 \*=======*/
 
-export type ContextsState = Context[]
-export type Context = { path: string, id?: string }
+export type CommandContextState = Subject[]
+export type Subject = { name: string, id?: string }
 
 /*=======*\
 *  Model  *
 \*=======*/
 
-export class ContextsModel extends Model<ContextsState> {
-  match(search: Context) {
-    return this.state.find((context: Context) => (
-      context.path === search.path &&
-      context.id === search.id
-    ))
-  }
-  add(context: Context) {
-    let match = this.match(context)
+function matches(search: Subject) {
+  return (subject: Subject) => (
+    subject.name === search.name &&
+    subject.id === search.id
+  )
+}
+
+export class CommandContextModel extends Model<CommandContextState> {
+  add(subject: Subject) {
     this.produceState((draft) => {
-      if (!match) draft.push(context)
+      let match = draft.findIndex(matches(subject)) > -1
+      if (!match) draft.push(subject)
     })
   }
-  remove(context: Context) {
-    let match = this.match(context)
+  remove(subject: Subject) {
     this.produceState((draft) => {
-      if (match) draft.splice(draft.indexOf(match), 1)
+      draft.splice(draft.findIndex(matches(subject)), 1)
     })
   }
 }
 
-const initialState: ContextsState = []
-export const [ ContextsProvider, useContexts ] = ContextsModel.createContext(initialState)
+const initialState: CommandContextState = []
+export const [ CommandContextProvider, useCommandContext ] = CommandContextModel.createContext(initialState)

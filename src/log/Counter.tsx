@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import { DateTime, Duration } from 'luxon'
 
-export { Counter, displayDuration };
+export { Counter, durationToString };
 
 type Props = {
-  start: DateTime,
-  add?: Duration,
+  since: DateTime,
+  plus: Duration,
   displayUnit: 'hours' | 'minutes'
 }
 
-function displayDuration(duration: Duration, displayUnit: 'hours' | 'minutes'): string {
+function durationToString(duration: Duration, displayUnit: 'hours' | 'minutes'): string {
   duration = duration.shiftTo('hours', 'minutes', 'seconds')
   switch (displayUnit) {
     case 'hours': {
@@ -24,6 +24,16 @@ function displayDuration(duration: Duration, displayUnit: 'hours' | 'minutes'): 
 }
 
 function Counter(props: Props) {
+  let duration = useCounter(props.since, props.plus)
+  return <>{durationToString(duration, props.displayUnit)}</>
+}
+
+Counter.defaultProps = {
+  displayUnit: 'minutes',
+  plus: Duration.fromMillis(0)
+}
+
+function useCounter(since: DateTime, plus = Duration.fromMillis(0)) : Duration {
   let [ now, setNow ] = useState(DateTime.local())
 
   useEffect(() => {
@@ -31,11 +41,5 @@ function Counter(props: Props) {
     return () => window.clearInterval(int)
   })
 
-  let duration = props.add ? now.diff(props.start).plus(props.add) : now.diff(props.start)
-
-  return <>{displayDuration(duration, props.displayUnit)}</>
-}
-
-Counter.defaultProps = {
-  displayUnit: 'minutes'
+  return now.diff(since).plus(plus)
 }

@@ -6,6 +6,7 @@ export interface DurationboxProps {
   id?: string,
   value: Duration,
   shy: boolean,
+  readOnly: boolean,
   onChange: (dur: Duration) => void
 }
 
@@ -49,5 +50,7 @@ export function Durationbox(props: DurationboxProps) {
 }
 
 Durationbox.defaultProps = {
-  shy: false
+  shy: false,
+  readOnly: false,
+  onChange: () => {}
 }

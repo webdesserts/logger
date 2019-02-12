@@ -18,7 +18,7 @@ html {
 
 body {
   margin: 0;
-  padding: 32px;
+  padding: 0;
 }
 
 code {
@@ -27,3 +27,9 @@ code {
 
 p { margin: 0; }
 h1, h2, h3, h4, h5, h6 { margin: 0; }
+
+#root {
+  display: grid;
+  grid-auto-flow: column;
+  align-items: start;
+}

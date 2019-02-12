@@ -1,61 +1,74 @@
 import React from 'react';
 import { Textbox } from '../controls/Textbox'
 import { Durationbox } from '../controls/Durationbox'
-import { DateTime, Duration } from 'luxon';
-import { Entry, EntryData } from './models/entries'
+import { Entry, EntriesState } from './models/entries'
 import classes from './EntryGrid.module.scss'
 import { Timebox } from '../controls/Timebox';
+import { ActiveEntryState } from './models/active_entry';
+import { Interactable } from '../commands/Interactable'
+import { Counter } from './Counter';
 
 export { EntryGrid };
 
-type EntryGridProps = {
-  entries: Entry[]
-  children: React.ReactNode
-  onUpdate: (id: string, changes: Partial<EntryData>) => void
+interface EntryGridProps {
+  activeEntry: ActiveEntryState
+  entries: EntriesState
 }
 
 function EntryGrid (props: EntryGridProps) {
-  let { entries, children, onUpdate } = props
+  let { activeEntry, entries } = props
   let rows = entries.map((entry) => (
-    <EntryRow key={entry.id} entry={entry} onUpdate={onUpdate}/>
+    <EntryRow key={entry.id} entry={entry} />
   ))
 
   return (
     <div className={classes.entries}>
-      {children}
+      <ActiveEntryRow key={activeEntry.id} entry={activeEntry} />
       {rows}
     </div>
   )
 }
 
-type EntryRowProps = {
+interface ActiveEntryRowProps {
+  entry: ActiveEntryState
+}
+
+function ActiveEntryRow (props: ActiveEntryRowProps) {
+  let { entry } = props
+
+  if (entry.start) {
+    return (
+      <Interactable subject={{ name: "Entry (Active)" }} className={classes.row_active}>
+        <Textbox shy readOnly value={entry.sector} />
+        <Textbox shy readOnly value={entry.project} />
+        <Textbox shy readOnly value={entry.description} />
+        <Timebox shy readOnly time={entry.start} />
+        <div className={classes.field}>
+          <Counter since={entry.start} />
+        </div>
+      </Interactable>
+    )
+  } else {
+    return null
+  }
+}
+
+interface EntryRowProps {
   entry: Entry
-  onUpdate: (id: string, changes: Partial<EntryData>) => void
 }
 
 function EntryRow (props: EntryRowProps) {
-  let { entry, onUpdate } = props
+  let { entry } = props
   let dur = entry.end.diff(entry.start)
 
-  function handleUpdate (prop: keyof EntryData, event: React.ChangeEvent<HTMLInputElement>) {
-    onUpdate(entry.id, { [prop]: event.target.value })
-  }
-
-  function handleDurationChange (dur: Duration) {
-    let end = entry.start.plus(dur)
-    onUpdate(entry.id, { end })
-  }
-
-   function handleTimeChange (prop: 'start' | 'end', time: DateTime) {
-    onUpdate(entry.id, { [prop]: time })
-  }
-
-  return <>
-    <Textbox shy value={entry.sector} onChange={handleUpdate.bind(null, 'sector')}/>
-    <Textbox shy value={entry.project} onChange={handleUpdate.bind(null, 'project')}/>
-    <Textbox shy value={entry.description} onChange={handleUpdate.bind(null, 'description')}/>
-    <Timebox shy time={entry.start} onChange={handleTimeChange.bind(null, 'start')} />
-    <Timebox shy time={entry.end} onChange={handleTimeChange.bind(null, 'end')} />
-    <Durationbox shy value={dur} onChange={handleDurationChange} />
-  </>
+  return (
+    <Interactable subject={{ name: "Entry", id: entry.id }} className={classes.row}>
+      <Textbox shy readOnly value={entry.sector} />
+      <Textbox shy readOnly value={entry.project} />
+      <Textbox shy readOnly value={entry.description} />
+      <Timebox shy readOnly time={entry.start} />
+      <Timebox shy readOnly time={entry.end} />
+      <Durationbox shy readOnly value={dur} />
+    </Interactable>
+  )
 }

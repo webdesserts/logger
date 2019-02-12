@@ -1,5 +1,5 @@
 import React from 'react'
-import produce, { Draft } from 'immer'
+import produce, { Draft, Produced, PatchListener } from 'immer'
 
 export { Model }
 
@@ -16,7 +16,13 @@ class Model<S> {
   }
 
   protected produceState(recipe: (draft: Draft<S>) => S | void) {
-    this.setState(produce(this.state, recipe));
+    let produced = produce(this.state, recipe) as S
+    this.setState(produced);
+  }
+
+  private refresh(state: S, setState: (state: S) => void) {
+    (this.state as S) = state
+    this.setState = setState
   }
 
   static createContext<S, T extends Model<S>>(this: ModelClass<T>, initialState: S): [Provider<S>, () => T] {
