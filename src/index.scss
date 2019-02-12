@@ -9,6 +9,10 @@
   color: $color-light;
 }
 
+html, body, #root {
+  height: 100%;
+}
+
 html {
   @include txt-body;
   color: $color-dark;
@@ -31,5 +35,4 @@ h1, h2, h3, h4, h5, h6 { margin: 0; }
 #root {
   display: grid;
   grid-auto-flow: column;
-  align-items: start;
 }

@@ -9,6 +9,8 @@
   color: $color-light;
   padding: 32px;
   width: 408px;
+  align-items: start;
+  align-content: start;
   ::selection {
     background-color: $color-light;
     color: $color-dark;
@@ -16,6 +18,7 @@
 }
 
 .Contexts {
+  @include txt-caption;
   display: flex;
   flex-flow: column-reverse nowrap;
   align-items: flex-end;
@@ -28,7 +31,6 @@
 }
 
 .Context {
-  @include txt-body;
   background-color: $color-dark-alt;
   padding: 2px 4px;
   &:not(:first-child) {
