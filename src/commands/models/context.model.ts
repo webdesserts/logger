@@ -1,4 +1,4 @@
-import { Model } from '../utils/model';
+import { Model } from '../../utils/model';
 
 /*=======*\
 *  Types  *
@@ -11,7 +11,7 @@ export type Subject = { name: string, id?: string }
 *  Model  *
 \*=======*/
 
-function matches(search: Subject) {
+export function matches(search: Subject) {
   return (subject: Subject) => (
     subject.name === search.name &&
     subject.id === search.id
@@ -19,6 +19,10 @@ function matches(search: Subject) {
 }
 
 export class CommandContextModel extends Model<CommandContextState> {
+  init() {
+    console.log('context:', this.state.map((subject) => subject.name))
+  }
+
   add(subject: Subject) {
     this.produceState((draft) => {
       let match = draft.findIndex(matches(subject)) > -1
@@ -27,7 +31,8 @@ export class CommandContextModel extends Model<CommandContextState> {
   }
   remove(subject: Subject) {
     this.produceState((draft) => {
-      draft.splice(draft.findIndex(matches(subject)), 1)
+      let index = draft.findIndex(matches(subject))
+      if (index > -1) draft.splice(index, 1)
     })
   }
 }

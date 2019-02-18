@@ -1,6 +1,7 @@
-import React, { useState, ChangeEventHandler, KeyboardEvent, } from 'react'
+import React, { useState, ChangeEventHandler, KeyboardEvent, useRef, useEffect, RefObject, useImperativeHandle, Ref, } from 'react'
 import classes from './CommandPalette.module.scss'
-import { useCommandContext, CommandContextState } from './model';
+import { useCommandContext, CommandContextState } from './models/context.model';
+import { useContextTriggers } from './models/triggers.model';
 
 export { CommandPalette }
 
@@ -15,8 +16,13 @@ type Props<T> = {
 }
 
 function CommandPalette<T>(props: Props<T>) {
+  let blockRef = useRef(null)
+  let lineRef = useRef(null) as RefObject<LineRef>
   let context = useCommandContext()
-  console.log('context:', context.state)
+  useContextTriggersManager(blockRef, () => {
+    if (lineRef.current) lineRef.current.focus()
+  })
+
   let subjects = new Set<string>();
   let commands = [] as Command<T>[];
   let [search, setSearch] = useState("")
@@ -52,8 +58,8 @@ function CommandPalette<T>(props: Props<T>) {
   }
 
   return (
-    <div className={classes.Palette} onKeyDown={handleKeyDown}>
-      <Line context={context.state} value={search} onChange={handleValueChange} />
+    <div ref={blockRef} className={classes.Palette} onKeyDown={handleKeyDown}>
+      <Line ref={lineRef} context={context.state} value={search} onChange={handleValueChange} />
       <div className={classes.Commands}>
         {matchingCommands.map((command, i) => {
           let classNames = [classes.Command]
@@ -83,8 +89,16 @@ type LineProps = {
   onChange: (value: string) => void
 }
 type InputEventHandler = ChangeEventHandler<HTMLInputElement>
+type LineRef = { focus: () => void }
 
-function Line(props: LineProps) {
+let Line = React.forwardRef(function Line(props: LineProps, ref: Ref<LineRef>) {
+  let inputRef = useRef(null) as RefObject<HTMLInputElement>
+  useImperativeHandle(ref, () => ({
+    focus: () => {
+      if (inputRef.current) inputRef.current.focus();
+    }
+  }));
+
   let handleChange: InputEventHandler = ({ target }) => {
     props.onChange(target.value)
   }
@@ -92,15 +106,15 @@ function Line(props: LineProps) {
   return (
     <div className={classes.Line}>
       <div className={classes.Contexts}>
-        {Array.from(props.context).reverse().map((context) => (
-          <div key={`${context.name}+${context.id || ''}`} className={classes.Context}>{context.name}</div>
+        {Array.from(props.context).reverse().map((subject) => (
+          <div key={`${subject.name}+${subject.id || ''}`} className={classes.Context}>{subject.name}</div>
         ))}
       </div>
       <div className={classes.Chevron}>&rsaquo;</div>
-      <input autoFocus className={classes.Input} value={props.value} placeholder="Command" onChange={handleChange}/>
+      <input ref={inputRef} autoFocus className={classes.Input} value={props.value} placeholder="Command" onChange={handleChange}/>
     </div>
   )
-}
+})
 
 /*=========*\
 *  Helpers  *
@@ -143,4 +157,34 @@ interface CommandSetProps<T> {
 
 export function CommandSet<T>(props: CommandSetProps<T>) {
   return null
+}
+
+function useContextTriggersManager(palette: RefObject<HTMLElement>, onContextFocus: () => void) {
+  let triggers = useContextTriggers()
+  let context = useCommandContext()
+
+  function isWithinPalette($target: HTMLElement) {
+    return palette.current && ($target === palette.current || palette.current.contains($target))
+  }
+
+  function handleClickOrFocus(event: Event) {
+    let $target = event.target as HTMLElement
+    for (let trigger of triggers.state) {
+      if ($target === trigger.$node || trigger.$node.contains($target)) {
+        context.add(trigger.subject)
+        if (event.type === 'click') onContextFocus()
+      } else if (!isWithinPalette($target)) {
+        context.remove(trigger.subject)
+      }
+    }
+  }
+
+  useEffect(() => {
+    document.addEventListener('click', handleClickOrFocus)
+    document.addEventListener('focus', handleClickOrFocus, { capture: true })
+    return () => {
+      document.removeEventListener('click', handleClickOrFocus)
+      document.removeEventListener('focus', handleClickOrFocus, { capture: true })
+    }
+  }) 
 }

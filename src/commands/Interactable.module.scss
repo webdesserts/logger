@@ -5,13 +5,13 @@
   border-left: 2px solid $color-light-alt;
   transition: border-color 200ms ease, background-color 200ms ease;
 
-  &:focus {
-    outline: none;
-    border-color: $color-primary;
-    background-color: $color-light-alt;
-  }
-
-  &:hover:not(:focus) {
+  &:hover:not(.block_inContext) {
     border-color: $color-dark-alt;
   }
+}
+
+.block_inContext {
+  outline: none;
+  border-left-color: $color-primary;
+  background-color: $color-light-alt;
 }

@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import produce, { Draft, Produced, PatchListener } from 'immer'
+import { initialState } from '../log/models/active_entry';
 
 export { Model }
 
@@ -7,15 +8,19 @@ type Provider<S> = React.FunctionComponent<ProviderProps<S>>
 type ProviderProps<S> = { state?: S, children: React.ReactChild }
 type ModelClass<T> = { new(...args: any[]) : T }
 
+type StateCallback<S> = ((state: S) => S | void)
+
 class Model<S> {
   readonly state: S;
-  protected setState: (state: (state: S) => S) => void;
-  constructor(state: S, setState: (state: (state: S) => S ) => void) {
+  protected setState: (state: StateCallback<S>) => void;
+  protected init() {}
+  constructor(state: S, setState: (state: StateCallback<S>) => void) {
     this.state = state;
     this.setState = setState;
+    this.init()
   }
 
-  protected produceState(recipe: (draft: Draft<S>) => S | void) {
+  protected produceState(recipe: (draft: S) => S | void) {
     this.setState((state: S) => {
       return produce(state, recipe) as S
     });
