@@ -4,12 +4,12 @@ import { Model } from '../../utils/model';
 *  Types  *
 \*=======*/
 
-export type CommandContextState = Subject[]
+export type PaletteContextState = Subject[]
 export type Subject = { name: string, id?: string }
 
-/*=======*\
-*  Model  *
-\*=======*/
+/*=========*\
+*  Helpers  *
+\*=========*/
 
 export function matches(search: Subject) {
   return (subject: Subject) => (
@@ -18,7 +18,11 @@ export function matches(search: Subject) {
   )
 }
 
-export class CommandContextModel extends Model<CommandContextState> {
+/*=======*\
+*  Model  *
+\*=======*/
+
+export class PaletteContextModel extends Model<PaletteContextState> {
   init() {
     console.log('context:', this.state.map((subject) => subject.name))
   }
@@ -37,5 +41,5 @@ export class CommandContextModel extends Model<CommandContextState> {
   }
 }
 
-const initialState: CommandContextState = []
-export const [ CommandContextProvider, useCommandContext ] = CommandContextModel.createContext(initialState)
+const initialState: PaletteContextState = []
+export const [ PaletteContextProvider, usePaletteContext ] = PaletteContextModel.createContext(initialState)

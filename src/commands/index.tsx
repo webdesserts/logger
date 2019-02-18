@@ -1,3 +1,3 @@
-export * from './models/context.model'
-export * from './Interactable'
-export * from './CommandPalette'
+export * from './PaletteTrigger'
+export * from './Palette'
+export * from './Provider'

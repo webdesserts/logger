@@ -5,7 +5,7 @@ import { matches as matchesSubject, Subject } from './context.model';
 *  Types  *
 \*=======*/
 
-export type ContextTriggersState = Trigger[]
+export type TriggersState = Trigger[]
 export type Trigger = { $node: HTMLElement, subject: Subject }
 
 /*=======*\
@@ -19,7 +19,7 @@ function matches(search: Trigger) {
   )
 }
 
-export class ContextTriggersModel extends Model<ContextTriggersState> {
+export class TriggersModel extends Model<TriggersState> {
   init() {
     console.log('triggers:', this.state.map((trigger) => trigger.subject.name))
   }
@@ -40,5 +40,5 @@ export class ContextTriggersModel extends Model<ContextTriggersState> {
   }
 }
 
-const initialState: ContextTriggersState = []
-export const [ ContextTriggersProvider, useContextTriggers ] = ContextTriggersModel.createContext(initialState)
+const initialState: TriggersState = []
+export const [ TriggersProvider, useTriggers ] = TriggersModel.createContext(initialState)

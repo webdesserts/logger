@@ -1,18 +1,16 @@
 import React from 'react'
 import { Router } from '@reach/router'
 import { Log, LogProvider } from './log/Log'
-import { CommandContextProvider } from './commands'
+import { PaletteProvider } from './commands'
 import DesignSystem from './design-system/DesignSystem'
-import { CommandPalette, CommandSet } from './commands/CommandPalette';
+import { Palette, CommandSet } from './commands/Palette';
 import { ActiveEntryModel } from './log/models/active_entry';
-import { ContextTriggersProvider } from './commands/models/triggers.model';
 
 export function App() {
   return (
-    <CommandContextProvider>
-      <ContextTriggersProvider>
+    <PaletteProvider>
         <LogProvider>
-          <CommandPalette>
+          <Palette>
             <CommandSet<ActiveEntryModel> subject="Entry (Active)" commands={[
               {
                 name: 'start',
@@ -24,13 +22,12 @@ export function App() {
                 onSubmit(active_entry) { active_entry.stop() }
               },
             ]} />
-          </CommandPalette>
+          </Palette>
           <Router>
             <Log path="/" />
             <DesignSystem path="/design" />
           </Router>
         </LogProvider>
-      </ContextTriggersProvider>
-    </CommandContextProvider>
+      </PaletteProvider>
   )
 }

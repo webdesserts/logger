@@ -5,7 +5,7 @@ import { Entry, EntriesState } from './models/entries'
 import classes from './EntryGrid.module.scss'
 import { Timebox } from '../controls/Timebox';
 import { ActiveEntryState } from './models/active_entry';
-import { Interactable } from '../commands/Interactable'
+import { Trigger } from '../commands/PaletteTrigger'
 import { Counter } from './Counter';
 
 export { EntryGrid };
@@ -38,7 +38,7 @@ function ActiveEntryRow (props: ActiveEntryRowProps) {
 
   if (entry.start) {
     return (
-      <Interactable subject={{ name: "Entry (Active)" }} className={classes.row_active}>
+      <Trigger subject={{ name: "Entry (Active)" }} className={classes.row_active}>
         <Textbox shy readOnly value={entry.sector} />
         <Textbox shy readOnly value={entry.project} />
         <Textbox shy readOnly value={entry.description} />
@@ -46,7 +46,7 @@ function ActiveEntryRow (props: ActiveEntryRowProps) {
         <div className={classes.field}>
           <Counter since={entry.start} />
         </div>
-      </Interactable>
+      </Trigger>
     )
   } else {
     return null
@@ -62,13 +62,13 @@ function EntryRow (props: EntryRowProps) {
   let dur = entry.end.diff(entry.start)
 
   return (
-    <Interactable subject={{ name: "Entry", id: entry.id }} className={classes.row}>
+    <Trigger subject={{ name: "Entry", id: entry.id }} className={classes.row}>
       <Textbox shy readOnly value={entry.sector} />
       <Textbox shy readOnly value={entry.project} />
       <Textbox shy readOnly value={entry.description} />
       <Timebox shy readOnly time={entry.start} />
       <Timebox shy readOnly time={entry.end} />
       <Durationbox shy readOnly value={dur} />
-    </Interactable>
+    </Trigger>
   )
 }

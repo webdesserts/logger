@@ -1,9 +1,9 @@
-import React, { useState, ChangeEventHandler, KeyboardEvent, useRef, useEffect, RefObject, useImperativeHandle, Ref, } from 'react'
-import classes from './CommandPalette.module.scss'
-import { useCommandContext, CommandContextState } from './models/context.model';
-import { useContextTriggers } from './models/triggers.model';
+import React, { useState, ChangeEventHandler, KeyboardEvent, useRef, RefObject, useImperativeHandle, Ref, } from 'react'
+import classes from './Palette.module.scss'
+import { usePaletteContext, PaletteContextState } from './models/context.model';
+import { useTriggersManager } from './PaletteTrigger';
 
-export { CommandPalette }
+export { Palette }
 
 /*================*\
 *  CommandPalette  *
@@ -15,11 +15,11 @@ type Props<T> = {
   children?: CommandSetElement<T> | CommandSetElement<T>[]
 }
 
-function CommandPalette<T>(props: Props<T>) {
+function Palette<T>(props: Props<T>) {
   let blockRef = useRef(null)
   let lineRef = useRef(null) as RefObject<LineRef>
-  let context = useCommandContext()
-  useContextTriggersManager(blockRef, () => {
+  let context = usePaletteContext()
+  useTriggersManager(blockRef, () => {
     if (lineRef.current) lineRef.current.focus()
   })
 
@@ -85,7 +85,7 @@ function CommandPalette<T>(props: Props<T>) {
 
 type LineProps = {
   value: string,
-  context: CommandContextState,
+  context: PaletteContextState,
   onChange: (value: string) => void
 }
 type InputEventHandler = ChangeEventHandler<HTMLInputElement>
@@ -120,7 +120,7 @@ let Line = React.forwardRef(function Line(props: LineProps, ref: Ref<LineRef>) {
 *  Helpers  *
 \*=========*/
 
-function sortSubjectsByDepth(context: CommandContextState) {
+function sortSubjectsByDepth(context: PaletteContextState) {
   return (a: Command<any>, b: Command<any>) => {
     let ia = context.findIndex((subject) => subject.name == a.subject)
     let ib = context.findIndex((subject) => subject.name == b.subject)
@@ -128,7 +128,7 @@ function sortSubjectsByDepth(context: CommandContextState) {
   }
 }
 
-function matchesContext(context: CommandContextState) {
+function matchesContext(context: PaletteContextState) {
   return (command: Command<any>) => (
     context.some((subject) => subject.name == command.subject)
   )
@@ -157,34 +157,4 @@ interface CommandSetProps<T> {
 
 export function CommandSet<T>(props: CommandSetProps<T>) {
   return null
-}
-
-function useContextTriggersManager(palette: RefObject<HTMLElement>, onContextFocus: () => void) {
-  let triggers = useContextTriggers()
-  let context = useCommandContext()
-
-  function isWithinPalette($target: HTMLElement) {
-    return palette.current && ($target === palette.current || palette.current.contains($target))
-  }
-
-  function handleClickOrFocus(event: Event) {
-    let $target = event.target as HTMLElement
-    for (let trigger of triggers.state) {
-      if ($target === trigger.$node || trigger.$node.contains($target)) {
-        context.add(trigger.subject)
-        if (event.type === 'click') onContextFocus()
-      } else if (!isWithinPalette($target)) {
-        context.remove(trigger.subject)
-      }
-    }
-  }
-
-  useEffect(() => {
-    document.addEventListener('click', handleClickOrFocus)
-    document.addEventListener('focus', handleClickOrFocus, { capture: true })
-    return () => {
-      document.removeEventListener('click', handleClickOrFocus)
-      document.removeEventListener('focus', handleClickOrFocus, { capture: true })
-    }
-  }) 
 }

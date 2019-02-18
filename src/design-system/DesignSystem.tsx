@@ -7,7 +7,6 @@ import { Textbox } from '../controls/Textbox'
 import { Timebox } from '../controls/Timebox'
 import { Durationbox } from '../controls/Durationbox'
 import { Selectable, MultiSelectable } from '../controls/Selectable'
-import { CommandPalette } from '../commands'
 
 type Props = RouteComponentProps
 type State = {
