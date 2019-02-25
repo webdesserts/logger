@@ -3,31 +3,41 @@ import { Router } from '@reach/router'
 import { Log, LogProvider } from './log/Log'
 import { PaletteProvider } from './commands'
 import DesignSystem from './design-system/DesignSystem'
-import { Palette, CommandSet } from './commands/Palette';
-import { ActiveEntryModel } from './log/models/active_entry';
+import { Palette, Subject } from './commands/Palette';
+import { useActiveEntry } from './log/models/active_entry';
+import { useEntries } from './log/models/entries';
 
 export function App() {
+  let active_entry = useActiveEntry()
+  let entries = useEntries()
   return (
-    <PaletteProvider>
-        <LogProvider>
-          <Palette>
-            <CommandSet<ActiveEntryModel> subject="Entry (Active)" commands={[
-              {
-                name: 'start',
-                description: 'starts the log',
-                onSubmit(active_entry) { active_entry.start() }
-              }, {
-                name: 'stop',
-                description: 'stops the log',
-                onSubmit(active_entry) { active_entry.stop() }
-              },
-            ]} />
-          </Palette>
-          <Router>
-            <Log path="/" />
-            <DesignSystem path="/design" />
-          </Router>
-        </LogProvider>
-      </PaletteProvider>
+    <>
+      <Palette>
+        <Subject type="Entry (Active)" commands={[
+          {
+            name: 'start',
+            description: 'starts the log',
+            onSubmit() { active_entry.start() }
+          }, {
+            name: 'stop',
+            description: 'stops the log',
+            onSubmit() { active_entry.stop() }
+          },
+        ]} />
+        <Subject collection type="Entry" commands={[
+          {
+            name: 'delete',
+            description: 'deletes an entry',
+            onSubmit(id) {
+              entries.delete(id)
+            }
+          }
+        ]} />
+      </Palette>
+      <Router>
+        <Log path="/" />
+        <DesignSystem path="/design" />
+      </Router>
+    </>
   )
 }

@@ -1,21 +1,23 @@
 import React, { useRef, useEffect, RefObject } from 'react';
 import classes from './PaletteTrigger.module.scss';
-import { usePaletteContext, Subject } from './models/context.model';
+import { usePaletteContext, SubjectPayload } from './models/context.model';
 import { useTriggers } from './models/triggers.model';
 
 interface TriggerProps extends React.HTMLAttributes<HTMLDivElement> {
-  subject: Subject
+  type: string,
+  id?: string
 }
 
-export const Trigger = (props: TriggerProps) => {
-  let { className, onClick, tabIndex, subject, ...otherProps } = props
+export function Trigger(props: TriggerProps) {
+  let { className, onClick, tabIndex, type, id, ...otherProps } = props
 
+  let subject = { type, id }
   let blockRef = useRef(null);
   let context = usePaletteContext()
   useSubject(subject, blockRef)
 
   let classNames = [classes.block, props.className]
-  if (context.state.includes(subject)) {
+  if (context.state.find((s) => s.type === subject.type && s.id === subject.id)) {
     classNames.push(classes.block_inContext)
   }
 
@@ -28,7 +30,7 @@ export const Trigger = (props: TriggerProps) => {
   )
 }
 
-export function useSubject<T extends HTMLElement>(subject: Subject, ref: React.RefObject<T>) {
+export function useSubject<T extends HTMLElement>(subject: SubjectPayload, ref: React.RefObject<T>) {
   let triggers = useTriggers()
 
   useEffect(() => {
@@ -41,12 +43,20 @@ export function useSubject<T extends HTMLElement>(subject: Subject, ref: React.R
         triggers.remove(trigger)
       }
     }
-  }, [ref.current])
+  // Apparently this might not always work as expected?
+  }, [ref])
 }
 
 export function useTriggersManager(palette: RefObject<HTMLElement>, onContextFocus: () => void) {
   let triggers = useTriggers()
   let context = usePaletteContext()
+
+  for (let subject of context.state) {
+    let trigger = triggers.findBySubject(subject)
+    if (!trigger) {
+      context.remove(subject)
+    }
+  }
 
   function isWithinPalette($target: HTMLElement) {
     return palette.current && ($target === palette.current || palette.current.contains($target))

@@ -4,16 +4,16 @@ import { Model } from '../../utils/model';
 *  Types  *
 \*=======*/
 
-export type PaletteContextState = Subject[]
-export type Subject = { name: string, id?: string }
+export type PaletteContextState = SubjectPayload[]
+export type SubjectPayload = { type: string, id?: string  }
 
 /*=========*\
 *  Helpers  *
 \*=========*/
 
-export function matches(search: Subject) {
-  return (subject: Subject) => (
-    subject.name === search.name &&
+export function matches(search: SubjectPayload) {
+  return (subject: SubjectPayload) => (
+    subject.type === search.type &&
     subject.id === search.id
   )
 }
@@ -24,16 +24,16 @@ export function matches(search: Subject) {
 
 export class PaletteContextModel extends Model<PaletteContextState> {
   init() {
-    console.log('context:', this.state.map((subject) => subject.name))
+    console.log('context:', this.state.map((subject) => `${subject.type}+${subject.id || ''}`))
   }
 
-  add(subject: Subject) {
+  add(subject: SubjectPayload) {
     this.produceState((draft) => {
       let match = draft.findIndex(matches(subject)) > -1
       if (!match) draft.push(subject)
     })
   }
-  remove(subject: Subject) {
+  remove(subject: SubjectPayload) {
     this.produceState((draft) => {
       let index = draft.findIndex(matches(subject))
       if (index > -1) draft.splice(index, 1)

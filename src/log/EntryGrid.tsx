@@ -38,7 +38,7 @@ function ActiveEntryRow (props: ActiveEntryRowProps) {
 
   if (entry.start) {
     return (
-      <Trigger subject={{ name: "Entry (Active)" }} className={classes.row_active}>
+      <Trigger type="Entry (Active)" className={classes.row_active}>
         <Textbox shy readOnly value={entry.sector} />
         <Textbox shy readOnly value={entry.project} />
         <Textbox shy readOnly value={entry.description} />
@@ -62,7 +62,7 @@ function EntryRow (props: EntryRowProps) {
   let dur = entry.end.diff(entry.start)
 
   return (
-    <Trigger subject={{ name: "Entry", id: entry.id }} className={classes.row}>
+    <Trigger type="Entry" id={entry.id} className={classes.row}>
       <Textbox shy readOnly value={entry.sector} />
       <Textbox shy readOnly value={entry.project} />
       <Textbox shy readOnly value={entry.description} />

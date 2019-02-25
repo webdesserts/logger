@@ -1,6 +1,6 @@
 import React, { useState, ChangeEventHandler, KeyboardEvent, useRef, RefObject, useImperativeHandle, Ref, } from 'react'
 import classes from './Palette.module.scss'
-import { usePaletteContext, PaletteContextState } from './models/context.model';
+import { usePaletteContext, PaletteContextState, SubjectPayload } from './models/context.model';
 import { useTriggersManager } from './PaletteTrigger';
 
 export { Palette }
@@ -9,13 +9,14 @@ export { Palette }
 *  CommandPalette  *
 \*================*/
 
-type Command<T> = { subject: string, name: string, description: string, onSubmit: (model: T) => void }
-interface CommandSetElement<T> extends React.ReactElement<CommandSetProps<T>, typeof CommandSet> {}
-type Props<T> = {
-  children?: CommandSetElement<T> | CommandSetElement<T>[]
+type Command = { subject: string, collection: true, name: string, description: string, onSubmit: (id: string) => void } |
+               { subject: string, collection: false, name: string, description: string, onSubmit: (id?: string) => void }
+interface SubjectElement extends React.ReactElement<SubjectProps, typeof Subject> {}
+type Props = {
+  children?: SubjectElement | SubjectElement[]
 }
 
-function Palette<T>(props: Props<T>) {
+function Palette(props: Props) {
   let blockRef = useRef(null)
   let lineRef = useRef(null) as RefObject<LineRef>
   let context = usePaletteContext()
@@ -24,18 +25,18 @@ function Palette<T>(props: Props<T>) {
   })
 
   let subjects = new Set<string>();
-  let commands = [] as Command<T>[];
+  let commands = [] as Command[];
   let [search, setSearch] = useState("")
   let [selection, setSelection] = useState(0)
 
-  let children: React.ReactElement<CommandSetProps<T>, typeof CommandSet>[] = []
+  let children: React.ReactElement<SubjectProps, typeof Subject>[] = []
   children = children.concat(props.children || [])
 
   for (let child of children) {
-    let commandSet = child.props
-    subjects.add(commandSet.subject)
-    for (let command of commandSet.commands) {
-      commands.push(Object.assign({ subject: commandSet.subject }, command))
+    let subject = child.props
+    subjects.add(subject.type)
+    for (let command of subject.commands) {
+      commands.push(Object.assign({ subject: subject.type, collection: subject.collection }, command) as Command)
     }
   }
 
@@ -49,7 +50,31 @@ function Palette<T>(props: Props<T>) {
       if (selection > 0) setSelection(--selection)
     } else if (event.key === 'ArrowDown') {
       if (selection < matchingCommands.length - 1) setSelection(++selection)
+    } else if (event.key === 'Enter') {
+      let command = matchingCommands[selection]
+      let subject = matchingSubject(command)
+      submit(command, subject)
     }
+  }
+
+  function submit(command: Command, subject?: SubjectPayload) {
+    if (subject) {
+      if (command.collection && subject.id) {
+        command.onSubmit(subject.id)
+      } else if (!command.collection) {
+        command.onSubmit(subject.id)
+      }
+    }
+  }
+
+  function matchingSubject(command: Command) {
+    return context.state.find((subject) => subject.type === command.subject)
+  }
+
+  function handleClick(command: Command, i: number) {
+    setSelection(i)
+    let subject = matchingSubject(command)
+    submit(command, subject)
   }
 
   function handleValueChange (value: string) {
@@ -65,7 +90,7 @@ function Palette<T>(props: Props<T>) {
           let classNames = [classes.Command]
           if (i === selection) classNames.push(classes.Command_selected)
           return (
-            <div key={command.subject + command.name} className={classNames.join(' ')}>
+            <div key={command.subject + command.name} className={classNames.join(' ')} onClick={handleClick.bind(null, command, i)}>
               <div className={classes.CommandName}>
                 {command.name}
                 <span className={classes.CommandContext}>{command.subject}</span>
@@ -107,7 +132,7 @@ let Line = React.forwardRef(function Line(props: LineProps, ref: Ref<LineRef>) {
     <div className={classes.Line}>
       <div className={classes.Contexts}>
         {Array.from(props.context).reverse().map((subject) => (
-          <div key={`${subject.name}+${subject.id || ''}`} className={classes.Context}>{subject.name}</div>
+          <div key={`${subject.type}+${subject.id || ''}`} className={classes.Context}>{subject.type}</div>
         ))}
       </div>
       <div className={classes.Chevron}>&rsaquo;</div>
@@ -121,22 +146,22 @@ let Line = React.forwardRef(function Line(props: LineProps, ref: Ref<LineRef>) {
 \*=========*/
 
 function sortSubjectsByDepth(context: PaletteContextState) {
-  return (a: Command<any>, b: Command<any>) => {
-    let ia = context.findIndex((subject) => subject.name == a.subject)
-    let ib = context.findIndex((subject) => subject.name == b.subject)
+  return (a: Command, b: Command) => {
+    let ia = context.findIndex((subject) => subject.type == a.subject)
+    let ib = context.findIndex((subject) => subject.type == b.subject)
     return ib - ia
   }
 }
 
 function matchesContext(context: PaletteContextState) {
-  return (command: Command<any>) => (
-    context.some((subject) => subject.name == command.subject)
+  return (command: Command) => (
+    context.some((subject) => Boolean(command.subject === subject.type && !command.collection || (command.collection && subject.id)))
   )
 }
 
 function matchesSearch(value: string) {
   let v = value.toLocaleLowerCase()
-  return (command: Command<any>) => {
+  return (command: Command) => {
     let name = command.name.toLocaleLowerCase()
     return name.startsWith(v)
   }
@@ -146,15 +171,32 @@ function matchesSearch(value: string) {
 *  CommandSet  *
 \*============*/
 
-interface CommandSetProps<T> {
-  subject: string,
+type SubjectRecordProps = {
+  type: string,
+  collection: true,
   commands: Array<{
     name: string,
     description: string,
-    onSubmit: (model: T) => void
+    onSubmit: (id: string) => void
   }>
 }
 
-export function CommandSet<T>(props: CommandSetProps<T>) {
+type SubjectEntityProps = {
+  type: string,
+  collection: false,
+  commands: Array<{
+    name: string,
+    description: string,
+    onSubmit: (id?:string) => void
+  }>
+}
+
+type SubjectProps = SubjectRecordProps | SubjectEntityProps
+
+export function Subject<T>(props: SubjectProps) {
   return null
+}
+
+Subject.defaultProps = {
+  collection: false
 }
