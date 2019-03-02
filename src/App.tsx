@@ -1,6 +1,6 @@
 import React from 'react'
 import { Router } from '@reach/router'
-import { Log, LogProvider } from './log/Log'
+import { Log } from './log/Log'
 import DesignSystem from './design-system/DesignSystem'
 import { Palette, Subject } from './commands/Palette';
 import { useActiveEntry } from './log/models/active_entry';
@@ -12,6 +12,15 @@ export function App() {
   return (
     <>
       <Palette>
+        <Subject type="Log" commands={[
+          {
+            name: 'start',
+            description: 'Starts a new Entry',
+            onSubmit() {
+              active_entry.start()
+            }
+          }
+        ]} />
         <Subject type="Entry (Active)" commands={[
           {
             name: 'stop',
