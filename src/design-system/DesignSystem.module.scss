@@ -1,4 +1,4 @@
-@import '../config';
+@import '../config.scss';
 
 .DesignSystem {
   display: grid;
@@ -8,5 +8,16 @@
   section {
     display: grid;
     grid-gap: 16px;
+    padding: 24px;
+
+    &.darkFrame {
+      background-color: $color-dark;
+      color: $color-light;
+    }
+
+    &.lightFrame {
+      background-color: $color-light;
+      color: $color-dark;
+    }
   }
 }

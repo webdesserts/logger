@@ -34,7 +34,7 @@ export default class DesignSystem extends React.Component<Props, State> {
     return (
       <div className={classes.DesignSystem}>
         <h1>Design System</h1>
-        <section>
+        <section className={classes.lightFrame}>
           <h2>Boxes</h2>
           <label htmlFor="textbox">Textbox</label>
           <Textbox id="textbox" defaultValue="hello" />
@@ -42,6 +42,11 @@ export default class DesignSystem extends React.Component<Props, State> {
           <Timebox id="timebox" time={time} onChange={this.updateTime} />
           <label htmlFor="durationbox">Durationbox</label>
           <Durationbox id="durationbox" value={dur} onChange={this.updateDuration} />
+        </section>
+        <section className={classes.darkFrame}>
+          <h2>Boxes</h2>
+          <label htmlFor="textbox">Textbox</label>
+          <Textbox theme="dark" id="textbox" defaultValue="hello" />
         </section>
         <section>
           <h2>Selectable</h2>
