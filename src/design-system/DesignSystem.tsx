@@ -7,6 +7,7 @@ import { Textbox } from '../controls/Textbox'
 import { Timebox } from '../controls/Timebox'
 import { Durationbox } from '../controls/Durationbox'
 import { Selectable, MultiSelectable } from '../controls/Selectable'
+import { Button } from '../controls/Button';
 
 type Props = RouteComponentProps
 type State = {
@@ -35,18 +36,20 @@ export default class DesignSystem extends React.Component<Props, State> {
       <div className={classes.DesignSystem}>
         <h1>Design System</h1>
         <section className={classes.lightFrame}>
-          <h2>Boxes</h2>
+          <h2>Light Theme</h2>
           <label htmlFor="textbox">Textbox</label>
           <Textbox id="textbox" defaultValue="hello" />
           <label htmlFor="timebox">Timebox</label>
           <Timebox id="timebox" time={time} onChange={this.updateTime} />
           <label htmlFor="durationbox">Durationbox</label>
           <Durationbox id="durationbox" value={dur} onChange={this.updateDuration} />
+          <Button>Submit</Button>
         </section>
         <section className={classes.darkFrame}>
-          <h2>Boxes</h2>
+          <h2>Dark Theme</h2>
           <label htmlFor="textbox">Textbox</label>
           <Textbox theme="dark" id="textbox" defaultValue="hello" />
+          <Button theme="dark">Submit</Button>
         </section>
         <section>
           <h2>Selectable</h2>
