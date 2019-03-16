@@ -23,6 +23,8 @@ function matches(search: TriggerState) {
 }
 
 export class TriggersModel extends Model<TriggersState> {
+  static initialState: TriggersState = []
+
   // init() {
   //   console.log('triggers:', this.state.map((trigger) => trigger.subject.type))
   // }
@@ -53,5 +55,4 @@ export class TriggersModel extends Model<TriggersState> {
   }
 }
 
-const initialState: TriggersState = []
-export const [ TriggersProvider, useTriggers ] = TriggersModel.createContext(initialState)
+export const [ TriggersProvider, useTriggers ] = TriggersModel.createContext(TriggersModel.initialState)

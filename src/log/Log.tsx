@@ -3,8 +3,8 @@ import classes from './Log.module.scss';
 import { EntryGrid } from './EntryGrid';
 import { DayOverview } from './DayOverview'
 import { DateTime, Interval } from 'luxon'
-import { EntriesProvider, Entry, useEntries } from './models/entries';
-import { ActiveEntryProvider, useActiveEntry } from './models/active_entry';
+import { EntriesProvider, Entry, useEntries, EntriesModel } from './models/entries';
+import { ActiveEntryProvider, useActiveEntry, ActiveEntryModel } from './models/active_entry';
 import { RouteComponentProps } from '@reach/router'
 import { AutoTrigger } from '../commands';
 
@@ -39,9 +39,12 @@ type LogProviderProps = {
 }
 
 function LogProvider({ children }: LogProviderProps) {
+  let entries = EntriesModel.use(EntriesModel.initialState)
+  let active_entry = ActiveEntryModel.use(ActiveEntryModel.initialState)
+
   return (
-    <EntriesProvider>
-      <ActiveEntryProvider>
+    <EntriesProvider model={entries}>
+      <ActiveEntryProvider model={active_entry}>
         <>{children}</>
       </ActiveEntryProvider>
     </EntriesProvider>

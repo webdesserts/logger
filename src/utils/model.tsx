@@ -1,11 +1,10 @@
 import React, { useState } from 'react'
-import produce, { Draft, Produced, PatchListener } from 'immer'
-import { initialState } from '../log/models/active_entry';
+import produce from 'immer'
 
 export { Model }
 
 type Provider<S> = React.FunctionComponent<ProviderProps<S>>
-type ProviderProps<S> = { state?: S, children: React.ReactChild }
+type ProviderProps<S> = { model: Model<S>, children: React.ReactChild }
 type ModelClass<T> = { new(...args: any[]) : T }
 
 type StateCallback<S> = ((state: S) => S | void)
@@ -32,12 +31,8 @@ class Model<S> {
     const Context = React.createContext(defaultInst);
 
     function Provider(props: ProviderProps<S>) {
-      let [state, setState] = useState(props.state || initialState);
-
-      let inst = new self(state, setState);
-
       return (
-        <Context.Provider value={inst}>
+        <Context.Provider value={defaultInst}>
           {props.children}
         </Context.Provider>
       )
@@ -48,5 +43,11 @@ class Model<S> {
     }
 
     return [Provider, useHook];
+  }
+
+  static use<S, T extends Model<S>>(this: ModelClass<T>, initialState: S): Model<S> {
+    let self = this;
+    let [ state, setState ] = useState(initialState)
+    return new self(state, setState);
   }
 }

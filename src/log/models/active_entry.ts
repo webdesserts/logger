@@ -17,6 +17,9 @@ export interface ActiveEntryState extends Nullable<'start', Empty<'end', Entry>>
 \*=======*/
 
 export class ActiveEntryModel extends Model<ActiveEntryState> {
+  static initialState: ActiveEntryState = busyWork
+// static initialState: ActiveEntryState = { id: nanoid(8), sector: '', project: '', description: '', start: null }
+
   update(changes: Partial<ActiveEntryState>) {
     this.produceState((draft) => Object.assign(draft, changes))
   }
@@ -34,6 +37,4 @@ export class ActiveEntryModel extends Model<ActiveEntryState> {
   }
 }
 
-export const initialState: ActiveEntryState = busyWork
-// export const initialState: ActiveEntryState = { id: nanoid(8), sector: '', project: '', description: '', start: null }
-export const [ ActiveEntryProvider, useActiveEntry ] = ActiveEntryModel.createContext(initialState)
+export const [ ActiveEntryProvider, useActiveEntry ] = ActiveEntryModel.createContext(ActiveEntryModel.initialState)

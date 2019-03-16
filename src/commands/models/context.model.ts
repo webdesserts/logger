@@ -23,6 +23,8 @@ export function matches(search: SubjectPayload) {
 \*=======*/
 
 export class PaletteContextModel extends Model<PaletteContextState> {
+  static initialState: PaletteContextState = []
+
   init() {
     console.log('context:', this.state.map((subject) => `${subject.type}+${subject.id || ''}`))
   }
@@ -41,5 +43,4 @@ export class PaletteContextModel extends Model<PaletteContextState> {
   }
 }
 
-const initialState: PaletteContextState = []
-export const [ PaletteContextProvider, usePaletteContext ] = PaletteContextModel.createContext(initialState)
+export const [ PaletteContextProvider, usePaletteContext ] = PaletteContextModel.createContext(PaletteContextModel.initialState)

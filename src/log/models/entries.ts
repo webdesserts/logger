@@ -25,6 +25,7 @@ export type EntryData = Drop<'id', Entry>
 \*=======*/
 
 export class EntriesModel extends Model<Entry[]> {
+  static initialState: Entry[] = busyDay
   create(entry: Optional<'id', Entry>) {
     this.produceState((draft) => {
       let {
@@ -52,5 +53,4 @@ export class EntriesModel extends Model<Entry[]> {
   }
 }
 
-let initialState: Entry[] = busyDay
-export let [ EntriesProvider, useEntries ] = EntriesModel.createContext(initialState)
+export let [ EntriesProvider, useEntries ] = EntriesModel.createContext(EntriesModel.initialState)
