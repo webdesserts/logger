@@ -3,6 +3,7 @@ import { Optional, Drop } from '../../utils/types'
 import nanoid from 'nanoid'
 import { Model } from '../../utils/model'
 import { busyDay } from './fixtures';
+import { findDOMNode } from 'react-dom';
 
 /*=======*\
 *  Types  *
@@ -26,6 +27,9 @@ export type EntryData = Drop<'id', Entry>
 
 export class EntriesModel extends Model<Entry[]> {
   static initialState: Entry[] = busyDay
+  find(id: string) {
+    return this.state.find((entry) => entry.id === id)
+  }
   create(entry: Optional<'id', Entry>) {
     this.produceState((draft) => {
       let {

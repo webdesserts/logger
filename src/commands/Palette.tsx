@@ -2,7 +2,7 @@ import React, { useState, ChangeEventHandler, KeyboardEvent, useRef, RefObject, 
 import classes from './Palette.module.scss'
 import { usePaletteContext, PaletteContextState, PaletteContextModel } from './models/context.model';
 import { useTriggersManager } from './PaletteTrigger';
-import { CommandsModel, CommandState, CommandsProvider, CommandParams, DataFromParams, useCommands, CommandWithoutIdState, CommandWithIdState } from './models/commands.model';
+import { CommandsModel, CommandState, CommandsProvider, CommandParams, DataFromParams, useCommands, } from './models/commands.model';
 import { PaletteForm } from './Form';
 import { isEqual } from 'lodash'
 
@@ -39,7 +39,7 @@ function Palette(props: Props) {
   let [selection, setSelection] = useState<CommandState | null>(null)
   let [pendingCommand, setPendingCommand] = useState<CommandState | null>(null)
 
-  function matchingSubject(command: Command) {
+  function matchingSubject<P extends CommandParams>(command: CommandState<P>) {
     return context.state.find((subject) => subject.type === command.subject)
   }
 
@@ -54,11 +54,7 @@ function Palette(props: Props) {
   function submitWithData<P extends CommandParams, C extends CommandState<P>>(command: C, data: DataFromParams<P>) {
     let subject = matchingSubject(command)
     if (subject) {
-      if (command.withId && subject.id) {
-        command.onSubmit(subject.id, data)
-      } else if (!command.withId) {
-        (command as CommandWithoutIdState<P>).onSubmit(subject.id, data)
-      }
+      command.onSubmit(data)
     }
     setPendingCommand(null)
   }
@@ -189,7 +185,7 @@ function sortSubjectsByDepth(context: PaletteContextState) {
 
 function matchesContext(context: PaletteContextState) {
   return (command: CommandState) => (
-    context.some((subject) => Boolean(command.subject === subject.type && !command.withId || (command.withId && subject.id)))
+    context.some((subject) => command.subject === subject.type)
   )
 }
 
@@ -201,27 +197,27 @@ function matchesSearch(value: string) {
   }
 }
 
-
 /*=========*\
 *  Subject  *
 \*=========*/
 
-type CommandElement = React.ReactElement<CommandProps<any>, typeof Command>
-
 type SubjectProps = {
   type: string,
-  children: CommandElement | CommandElement[]
+  children:  React.ReactNode
+}
+
+type SubjectWithIdProps = {
+  type: string,
+  children: (id: string) => React.ReactNode
 }
 
 let SubjectContext = React.createContext<string>('Global')
 
-export function Subject(props: SubjectProps) {
-  console.log('<Subject>')
+function Subject(props: SubjectProps) {
   let { type, children  } = props
   let context = usePaletteContext()
-  let contextHasSubject = context.state.some((subject) => subject.type === type)
-  
-  if (!contextHasSubject) return null
+  let matchingSubject = context.state.reverse().find((subject) => subject.type === type)
+  if (!matchingSubject) return null
 
   return (
     <SubjectContext.Provider value={type}>
@@ -229,6 +225,25 @@ export function Subject(props: SubjectProps) {
     </SubjectContext.Provider>
   )
 }
+
+
+function SubjectWithId(props: SubjectWithIdProps) {
+  let { type, children  } = props
+  let context = usePaletteContext()
+  let matchingSubject = context.state.reverse().find((subject) => subject.type === type)
+  if (!matchingSubject || matchingSubject.id === null) return null
+
+  return (
+    <SubjectContext.Provider value={type}>
+      {children(matchingSubject.id)}
+    </SubjectContext.Provider>
+  )
+}
+
+Subject.WithId = SubjectWithId
+
+export { Subject }
+
 
 /*=========*\
 *  Command  *
@@ -238,24 +253,16 @@ type CommandProps<P extends CommandParams> = {
   name: string,
   description: string,
   params: P,
-  onSubmit(id: string | null, data: DataFromParams<P>) : void 
+  onSubmit(data: DataFromParams<P>) : void 
 }
 
-type CommandWithIdProps<P extends CommandParams> = {
-  name: string,
-  description: string,
-  params: P,
-  onSubmit(id: string, data: DataFromParams<P>) : void 
-}
-
-function Command<P extends CommandParams>(props: CommandProps<P>) {
-  console.log('<Command>')
+export function Command<P extends CommandParams>(props: CommandProps<P>) {
   let subject = useContext(SubjectContext)
   let commands = useCommands()
   useEffect(setCommandEffect, [subject])
 
   function setCommandEffect() {
-    let command: CommandWithoutIdState<P> = { subject, withId: false, ...props }
+    let command: CommandState<P> = { subject, ...props }
     commands.add(command)
     return () => {
       commands.remove(command)
@@ -265,27 +272,6 @@ function Command<P extends CommandParams>(props: CommandProps<P>) {
   return null
 }
 
-function CommandWithId<P extends CommandParams>(props: CommandWithIdProps<P>) {
-  console.log('<CommandWithId>')
-  let subject = useContext(SubjectContext)
-  let commands = useCommands()
-  useEffect(setCommandEffect, [subject])
-
-  function setCommandEffect() {
-    let command: CommandWithIdState<P> = { subject, withId: true, ...props }
-    commands.add(command)
-    return () => {
-      commands.remove(command)
-    }
-  }
-
-  return null
-}
-
-Command.WithId = CommandWithId
-
-export { Command as Command }
-
-Command.defaultProps = CommandWithId.defaultProps = {
-  params: {},
+Command.defaultProps = {
+  params: {}
 }

@@ -6,9 +6,7 @@ import { inherits } from 'util';
 \*=======*/
 
 export type CommandsState = CommandState[]
-export type CommandState<P extends CommandParams = CommandParams> = CommandWithIdState<P> | CommandWithoutIdState<P>
-export type CommandWithIdState<P extends CommandParams = CommandParams> = { subject: string, withId: true, name: string, params: CommandParams, description: string, onSubmit: (id: string, data: DataFromParams<P>) => void }
-export type CommandWithoutIdState<P extends CommandParams = CommandParams> = { subject: string, withId: false, name: string, params: CommandParams, description: string, onSubmit: (id: string | null, data: DataFromParams<P>) => void }
+export type CommandState<P extends CommandParams = CommandParams> = { subject: string, name: string, params: CommandParams, description: string, onSubmit: (data: DataFromParams<P>) => void }
 export type CommandParamTypes = 'string'
 export type CommandParams = {
   [key: string]: {

@@ -17,7 +17,7 @@ export function App() {
             sector: { type: 'string', required: true },
             project: { type: 'string', required: true },
             description: { type: 'string', required: true },
-          }} onSubmit={(id, data) => {
+          }} onSubmit={(data) => {
             active_entry.start(data)
           }}/>
         </Subject>
@@ -29,9 +29,24 @@ export function App() {
           }} />
         </Subject>
 
-        <Subject type="Entry">
-          <Command.WithId name="delete" description="deletes an entry" onSubmit={(id) => entries.delete(id)} />
-        </Subject>
+        <Subject.WithId type="Entry">{(id: string) => {
+          let entry = entries.find(id)
+          if (!entry) throw Error(`Could not find entry with id: ${id}`)
+          return <>
+            <Command name="delete" description="deletes an entry" onSubmit={() => entries.delete(id)} />
+            <Command name="edit" description="Edits an existing Entry"
+              params={{
+                sector: { type: 'string', required: true, defaultValue: entry.sector },
+                project: { type: 'string', required: true, defaultValue: entry.project },
+                description: { type: 'string', required: true, defaultValue: entry.description },
+              }}
+              onSubmit={(data) => {
+                entries.update(id, data)
+              }}
+            />
+          </>
+        }}
+        </Subject.WithId>
       </Palette>
       <Router>
         <Log path="/" />
