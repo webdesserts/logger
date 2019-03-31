@@ -39,8 +39,8 @@ type LogProviderProps = {
 }
 
 function LogProvider({ children }: LogProviderProps) {
-  let entries = EntriesModel.use(EntriesModel.initialState)
-  let active_entry = ActiveEntryModel.use(ActiveEntryModel.initialState)
+  let entries = EntriesModel.useState(EntriesModel.initialState)
+  let active_entry = ActiveEntryModel.useState(ActiveEntryModel.initialState)
 
   return (
     <EntriesProvider model={entries}>

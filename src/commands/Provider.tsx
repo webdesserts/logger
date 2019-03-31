@@ -7,8 +7,8 @@ interface PaletteProviderProps {
 }
 
 export function PaletteProvider(props: PaletteProviderProps) {
-  let palette_context = PaletteContextModel.use(PaletteContextModel.initialState)
-  let triggers = TriggersModel.use(TriggersModel.initialState)
+  let palette_context = PaletteContextModel.useState(PaletteContextModel.initialState)
+  let triggers = TriggersModel.useState(TriggersModel.initialState)
 
   return (
     <PaletteContextProvider model={palette_context}>

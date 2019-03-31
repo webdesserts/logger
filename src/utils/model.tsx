@@ -3,8 +3,8 @@ import produce from 'immer'
 
 export { Model }
 
-type Provider<S> = React.FunctionComponent<ProviderProps<S>>
-type ProviderProps<S> = { model: Model<S>, children: React.ReactChild }
+type Provider<S, T extends Model<S>> = React.FunctionComponent<ProviderProps<S, T>>
+type ProviderProps<S, M extends Model<S>> = { model: M, children: React.ReactChild }
 type ModelClass<T> = { new(...args: any[]) : T }
 
 type StateCallback<S> = ((state: S) => S | void)
@@ -25,14 +25,14 @@ class Model<S> {
     });
   }
 
-  static createContext<S, T extends Model<S>>(this: ModelClass<T>, initialState: S): [Provider<S>, () => T] {
+  static createContext<S, M extends Model<S>>(this: ModelClass<M>, initialState: S): [Provider<S, M>, () => M] {
     let self = this;
     let defaultInst = new self(initialState, () => { });
     const Context = React.createContext(defaultInst);
 
-    function Provider(props: ProviderProps<S>) {
+    function Provider(props: ProviderProps<S, M>) {
       return (
-        <Context.Provider value={defaultInst}>
+        <Context.Provider value={props.model || defaultInst}>
           {props.children}
         </Context.Provider>
       )
@@ -45,7 +45,7 @@ class Model<S> {
     return [Provider, useHook];
   }
 
-  static use<S, T extends Model<S>>(this: ModelClass<T>, initialState: S): Model<S> {
+  static useState<S, M extends Model<S>>(this: ModelClass<M>, initialState: S): M {
     let self = this;
     let [ state, setState ] = useState(initialState)
     return new self(state, setState);

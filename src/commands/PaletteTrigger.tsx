@@ -13,7 +13,7 @@ type AutoTriggerProps = {
 } & SubjectProps
 
 export function AutoTrigger(props: AutoTriggerProps) {
-  let { type, id, children } = props
+  let { type, id = null, children } = props
   let subject = { type, id }
   let triggers = useTriggers()
 
@@ -36,7 +36,7 @@ type TriggerProps = {
 
 
 export function Trigger(props: TriggerProps) {
-  let { className, onClick, tabIndex, type, id, ...otherProps } = props
+  let { className, onClick, tabIndex, type, id = null, ...otherProps } = props
 
   let subject = { type, id }
   let blockRef = useRef(null);

@@ -1,15 +1,18 @@
-import { Nullable, Empty } from '../../utils/types'
 import { Entry } from './entries'
 import nanoid from 'nanoid'
 import { Model } from '../../utils/model';
-import { busyWork } from './fixtures';
 import { DateTime } from 'luxon';
 
 /*=======*\
 *  Types  *
 \*=======*/
 
-export interface ActiveEntryState extends Nullable<'start', Empty<'end', Entry>> {
+export interface ActiveEntryState {
+  id: string,
+  sector: string,
+  project: string,
+  description: string,
+  start: DateTime | null
 }
 
 /*=======*\
@@ -17,14 +20,16 @@ export interface ActiveEntryState extends Nullable<'start', Empty<'end', Entry>>
 \*=======*/
 
 export class ActiveEntryModel extends Model<ActiveEntryState> {
-  static initialState: ActiveEntryState = busyWork
-// static initialState: ActiveEntryState = { id: nanoid(8), sector: '', project: '', description: '', start: null }
+  static initialState: ActiveEntryState = { id: nanoid(8), sector: '', project: '', description: '', start: null }
 
   update(changes: Partial<ActiveEntryState>) {
     this.produceState((draft) => Object.assign(draft, changes))
   }
-  start() {
+  start(data: { sector: string, description: string, project: string }) {
     this.produceState((draft) => {
+      draft.sector = data.sector
+      draft.project = data.project
+      draft.description = data.description
       draft.start = DateTime.local()
     })
   }
@@ -34,6 +39,7 @@ export class ActiveEntryModel extends Model<ActiveEntryState> {
       draft.description = ''
       draft.start = null
     })
+    return this.state.start ? { ...this.state, end: DateTime.local() } as Entry : null
   }
 }
 

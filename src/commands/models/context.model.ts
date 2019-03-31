@@ -5,7 +5,7 @@ import { Model } from '../../utils/model';
 \*=======*/
 
 export type PaletteContextState = SubjectPayload[]
-export type SubjectPayload = { type: string, id?: string  }
+export type SubjectPayload = { type: string, id: string | null  }
 
 /*=========*\
 *  Helpers  *
