@@ -216,7 +216,7 @@ let SubjectContext = React.createContext<string>('Global')
 function Subject(props: SubjectProps) {
   let { type, children  } = props
   let context = usePaletteContext()
-  let matchingSubject = context.state.reverse().find((subject) => subject.type === type)
+  let matchingSubject = Array.from(context.state).reverse().find((subject) => subject.type === type)
   if (!matchingSubject) return null
 
   return (
@@ -230,7 +230,7 @@ function Subject(props: SubjectProps) {
 function SubjectWithId(props: SubjectWithIdProps) {
   let { type, children  } = props
   let context = usePaletteContext()
-  let matchingSubject = context.state.reverse().find((subject) => subject.type === type)
+  let matchingSubject = Array.from(context.state).reverse().find((subject) => subject.type === type)
   if (!matchingSubject || matchingSubject.id === null) return null
 
   return (
