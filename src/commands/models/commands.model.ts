@@ -9,11 +9,22 @@ export type CommandsState = CommandState[]
 export type CommandState<P extends CommandParams = CommandParams> = { subject: string, name: string, params: CommandParams, description: string, onSubmit: (data: DataFromParams<P>) => void }
 export type CommandParamTypes = 'string'
 export type CommandParams = {
-  [key: string]: {
-    type: CommandParamTypes,
-    required?: boolean
-  }
+  [key: string]: CommandParamOptions
 }
+
+export type CommandParamOptions = StringParamOptions
+
+export interface StringParamOptions extends CommonParamOptions {
+  type: 'string',
+  required?: boolean,
+  defaultValue?: string,
+}
+
+interface CommonParamOptions {
+  type: CommandParamTypes,
+  required?: boolean,
+}
+
 export type DataFromParams<T extends CommandParams> = {
   [P in keyof T]: (
     T[P]['required'] extends true ? NamedType<T[P]['type']> :

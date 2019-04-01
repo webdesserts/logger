@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { CommandParams, DataFromParams, NamedType, CommandParamTypes, CommandState } from './models/commands.model';
+import { CommandParams, DataFromParams, NamedType, CommandParamTypes, CommandState, CommandParamOptions } from './models/commands.model';
 import { Textbox } from '../controls/Textbox';
 import { Button } from '../controls/Button';
 import { mapValues } from 'lodash'
@@ -16,8 +16,7 @@ export function PaletteForm<P extends CommandParams>(props: Props<P>) {
   let controls = Object.entries(command.params).map(([label, param], i) => (
     <div className="field">
       <label>{label}</label>
-      <Control type={param.type} value={data[label]} autoFocus={i === 0} onChange={(value) => {
-        console.log('set data?', value)
+      <Control options={param} value={data[label]} autoFocus={i === 0} onChange={(value) => {
         setData({ ...data, [label]: value  })
       }} />
     </div>
@@ -59,7 +58,7 @@ function matchesType<T extends CommandParamTypes>(type: T | undefined, value: an
 function generateInitialData<P extends CommandParams>(params: P) : FormStateFromParams<P> {
   let data = mapValues(params, (options, label) => {
     if (options.type === 'string') {
-      return ''
+      return options.defaultValue || ''
     } else {
       throw Error(`Unrecognized Param Type "${options.type}"`)
     }
@@ -68,16 +67,17 @@ function generateInitialData<P extends CommandParams>(params: P) : FormStateFrom
 }
 
 type ControlProps = {
-  type: 'string',
+  options: CommandParamOptions
   autoFocus?: boolean,
   value: string | undefined
   onChange: (value: string) => void
 }
 
 function Control(props: ControlProps) {
-  switch(props.type) {
+  let { options, autoFocus, value, onChange } = props
+  switch(options.type) {
     case 'string': return (
-      <Textbox theme="dark" autoFocus={props.autoFocus} value={props.value} onChange={({ target }) => props.onChange(target.value)}/>
+      <Textbox theme="dark" autoFocus={autoFocus} value={value} onChange={({ target }) => onChange(target.value)}/>
     )
     default: throw Error('unrecognized control type')
   }
