@@ -31,7 +31,11 @@ export function App() {
 
         <Subject.WithId type="Entry">{(id: string) => {
           let entry = entries.find(id)
-          if (!entry) throw Error(`Could not find entry with id: ${id}`)
+
+          // TODO: why are we hitting this after delete?
+          // if (!entry) throw Error(`Could not find entry with id: ${id}`)
+          if (!entry) return null
+
           return <>
             <Command name="delete" description="deletes an entry" onSubmit={() => entries.delete(id)} />
             <Command name="edit" description="Edits an existing Entry"
