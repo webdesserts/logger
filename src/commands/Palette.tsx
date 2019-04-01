@@ -39,6 +39,10 @@ function Palette(props: Props) {
   let [selection, setSelection] = useState<CommandState | null>(null)
   let [pendingCommand, setPendingCommand] = useState<CommandState | null>(null)
 
+  if (pendingCommand && !matchingSubject(pendingCommand)) {
+    setPendingCommand(null)
+  }
+
   function matchingSubject<P extends CommandParams>(command: CommandState<P>) {
     return context.state.find((subject) => subject.type === command.subject)
   }
