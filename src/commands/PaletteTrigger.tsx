@@ -94,6 +94,7 @@ export function useTriggersManager(palette: RefObject<HTMLElement>, onContextFoc
 
   function handleClickOrFocus(event: Event) {
     let $target = event.target as HTMLElement
+    if (!document.documentElement.contains($target)) return;
     for (let trigger of triggers.state) {
       if (trigger.auto) continue;
       if ($target === trigger.$node || trigger.$node.contains($target)) {
