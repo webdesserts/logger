@@ -36,7 +36,6 @@ export class Timebox extends React.Component<TimeboxProps> {
   handleKeyDown: KeyboardEventHandler<HTMLInputElement> = (event) => {
     let { time, onChange } = this.props
     let { key, shiftKey, currentTarget: $box } = event
-    console.log('keydown:', key)
 
     if (this.isHourSelected($box)) {
       let increment = shiftKey ? 12 : 1

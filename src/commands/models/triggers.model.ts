@@ -32,7 +32,6 @@ export class TriggersModel extends Model<TriggersState> {
   add(trigger: TriggerState) {
     this.produceState((draft) => {
       if (!draft.some(matches(trigger))) {
-        console.log('adding trigger', trigger)
         draft.push(trigger)
       }
     })

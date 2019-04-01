@@ -27,6 +27,10 @@ export type EntryData = Drop<'id', Entry>
 
 export class EntriesModel extends Model<Entry[]> {
   static initialState: Entry[] = busyDay
+  init() {
+    // console.log('entries:', this.state.map(({id, description}) => ({ id, description })))
+  }
+
   find(id: string) {
     return this.state.find((entry) => entry.id === id)
   }

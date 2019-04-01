@@ -26,7 +26,7 @@ export class PaletteContextModel extends Model<PaletteContextState> {
   static initialState: PaletteContextState = []
 
   init() {
-    console.log('context:', this.state.map((subject) => `${subject.type}+${subject.id || ''}`))
+    // console.log('context:', this.state.map((subject) => `${subject.type}+${subject.id || ''}`))
   }
 
   add(subject: SubjectPayload) {

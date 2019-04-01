@@ -1,5 +1,4 @@
 import { Model } from '../../utils/model';
-import { inherits } from 'util';
 
 /*=======*\
 *  Types  *
@@ -54,10 +53,9 @@ export function matches<P extends CommandParams>(search: CommandState<P>) {
 
 export class CommandsModel extends Model<CommandsState> {
   static initialState: CommandsState = []
-  init() { console.log('commands:', this.state) }
+  // init() { console.log('commands:', this.state) }
 
   add<P extends CommandParams>(command: CommandState<P>) {
-    console.log('addCommand')
     this.produceState((draft) => {
       let match = draft.findIndex(matches(command)) > -1
       if (!match) draft.push(command as CommandState)
