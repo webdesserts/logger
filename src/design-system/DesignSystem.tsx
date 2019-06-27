@@ -49,6 +49,8 @@ export default class DesignSystem extends React.Component<Props, State> {
           <h2>Dark Theme</h2>
           <label htmlFor="textbox">Textbox</label>
           <Textbox theme="dark" id="textbox" defaultValue="hello" />
+          <label htmlFor="timebox">Timebox</label>
+          <Timebox theme="dark" id="timebox" time={time} onChange={this.updateTime} />
           <Button theme="dark">Submit</Button>
         </section>
         <section>
