@@ -1,4 +1,5 @@
 import { Model } from '../../utils/model';
+import { DateTime } from 'luxon'
 
 /*=======*\
 *  Types  *
@@ -6,17 +7,23 @@ import { Model } from '../../utils/model';
 
 export type CommandsState = CommandState[]
 export type CommandState<P extends CommandParams = CommandParams> = { subject: string, name: string, params: CommandParams, description: string, onSubmit: (data: DataFromParams<P>) => void }
-export type CommandParamTypes = 'string'
+export type CommandParamTypes = 'string' | 'time'
 export type CommandParams = {
   [key: string]: CommandParamOptions
 }
 
-export type CommandParamOptions = StringParamOptions
+export type CommandParamOptions = StringParamOptions | TimeParamOptions
 
 export interface StringParamOptions extends CommonParamOptions {
   type: 'string',
   required?: boolean,
   defaultValue?: string,
+}
+
+export interface TimeParamOptions extends CommonParamOptions {
+  type: 'time',
+  required?: boolean,
+  defaultValue?: DateTime,
 }
 
 interface CommonParamOptions {
@@ -33,6 +40,7 @@ export type DataFromParams<T extends CommandParams> = {
 
 export type NamedType<T extends CommandParamTypes> = (
   T extends 'string' ? string :
+  T extends 'time' ? DateTime :
   never
 )
 

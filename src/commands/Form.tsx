@@ -1,8 +1,11 @@
 import React, { useState } from 'react'
 import { CommandParams, DataFromParams, NamedType, CommandParamTypes, CommandState, CommandParamOptions } from './models/commands.model';
 import { Textbox } from '../controls/Textbox';
+import { Timebox } from '../controls/Timebox';
 import { Button } from '../controls/Button';
+import { DateTime } from 'luxon';
 import { mapValues } from 'lodash'
+import classes from './Form.module.scss'
 
 interface Props<P extends CommandParams> {
   command: CommandState<P>, 
@@ -14,7 +17,7 @@ export function PaletteForm<P extends CommandParams>(props: Props<P>) {
   let [ data, setData ] = useState(generateInitialData(command.params as P))
 
   let controls = Object.entries(command.params).map(([label, param], i) => (
-    <div className="field">
+    <div className={classes.field}>
       <label>{label}</label>
       <Control options={param} value={data[label]} autoFocus={i === 0} onChange={(value) => {
         setData({ ...data, [label]: value  })
@@ -28,7 +31,7 @@ export function PaletteForm<P extends CommandParams>(props: Props<P>) {
   }
 
   return (
-    <div>
+    <div className={classes.form}>
       {controls}
       <Button theme="dark" onClick={handleSubmit}>Submit</Button>
     </div>
@@ -52,6 +55,7 @@ function isValid<P extends CommandParams>(data: FormStateFromParams<P>, params: 
 function matchesType<T extends CommandParamTypes>(type: T | undefined, value: any) : value is NamedType<T> {
   if (value === undefined) return true
   else if (typeof value === type) return true 
+  else if (type === 'time' && value instanceof DateTime) return true 
   else return false
 }
 
@@ -59,6 +63,8 @@ function generateInitialData<P extends CommandParams>(params: P) : FormStateFrom
   let data = mapValues(params, (options, label) => {
     if (options.type === 'string') {
       return options.defaultValue || ''
+    } else if (options.type === 'time') {
+      return options.defaultValue
     } else {
       throw Error(`Unrecognized Param Type "${options.type}"`)
     }
@@ -66,18 +72,21 @@ function generateInitialData<P extends CommandParams>(params: P) : FormStateFrom
   return data as FormStateFromParams<P>
 }
 
-type ControlProps = {
-  options: CommandParamOptions
+type ControlProps<P extends CommandParamOptions, T extends NamedType<P['type']>> = {
+  options: P
   autoFocus?: boolean,
-  value: string | undefined
-  onChange: (value: string) => void
+  value: T | undefined,
+  onChange: (value: T) => void
 }
 
-function Control(props: ControlProps) {
+function Control<P extends CommandParamOptions, T extends NamedType<P['type']>>(props: ControlProps<P, T>) {
   let { options, autoFocus, value, onChange } = props
   switch(options.type) {
     case 'string': return (
-      <Textbox theme="dark" autoFocus={autoFocus} value={value} onChange={({ target }) => onChange(target.value)}/>
+      <Textbox theme="dark" autoFocus={autoFocus} value={value as string} onChange={({ target }) => onChange(target.value as any)}/>
+    )
+    case 'time': return (
+      <Timebox theme="dark" time={value as DateTime | undefined} autoFocus={autoFocus} onChange={(time: DateTime) => onChange(time as any)} />
     )
     default: throw Error('unrecognized control type')
   }

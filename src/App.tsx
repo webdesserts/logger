@@ -43,6 +43,8 @@ export function App() {
                 sector: { type: 'string', required: true, defaultValue: entry.sector },
                 project: { type: 'string', required: true, defaultValue: entry.project },
                 description: { type: 'string', required: true, defaultValue: entry.description },
+                start: { type: 'time', required: true, defaultValue: entry.start },
+                end: { type: 'time', required: true, defaultValue: entry.end }
               }}
               onSubmit={(data) => {
                 entries.update(id, data)
