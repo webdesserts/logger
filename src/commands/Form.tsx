@@ -17,7 +17,7 @@ export function PaletteForm<P extends CommandParams>(props: Props<P>) {
   let [ data, setData ] = useState(generateInitialData(command.params as P))
 
   let controls = Object.entries(command.params).map(([label, param], i) => (
-    <div className={classes.field}>
+    <div key={label} className={classes.field}>
       <label>{label}</label>
       <Control options={param} value={data[label]} autoFocus={i === 0} onChange={(value) => {
         setData({ ...data, [label]: value  })
