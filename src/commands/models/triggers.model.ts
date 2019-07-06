@@ -1,5 +1,5 @@
 import { Model } from '../../utils/model';
-import { matches as matchesSubject, SubjectPayload } from './context.model';
+import { PaletteContextModel, SubjectPayload } from './context.model';
 
 /*=======*\
 *  Types  *
@@ -18,7 +18,7 @@ function matches(search: TriggerState) {
   return (trigger: TriggerState) => (
     trigger.$node === search.$node &&
     trigger.auto === search.auto,
-    matchesSubject(search.subject)(trigger.subject)
+    PaletteContextModel.isEqual(search.subject, trigger.subject)
   )
 }
 
@@ -26,7 +26,7 @@ export class TriggersModel extends Model<TriggersState> {
   static initialState: TriggersState = []
 
   // init() {
-  //   console.log('triggers:', this.state.map((trigger) => trigger.subject.type))
+  //   console.log('Triggers:', this.state.map(trigger => PaletteContextModel.display(trigger.subject)))
   // }
 
   add(trigger: TriggerState) {

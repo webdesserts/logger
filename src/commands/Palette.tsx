@@ -1,10 +1,9 @@
 import React, { useState, ChangeEventHandler, KeyboardEvent, useRef, RefObject, useImperativeHandle, Ref, useContext, useEffect, } from 'react'
 import classes from './Palette.module.scss'
-import { usePaletteContext, PaletteContextState, PaletteContextModel } from './models/context.model';
+import { usePaletteContext, PaletteContextModel, SubjectPayload } from './models/context.model';
 import { useTriggersManager } from './PaletteTrigger';
 import { CommandsModel, CommandState, CommandsProvider, CommandParams, DataFromParams, useCommands, } from './models/commands.model';
 import { PaletteForm } from './Form';
-import { isEqual } from 'lodash'
 
 export { Palette }
 
@@ -33,31 +32,38 @@ function Palette(props: Props) {
 
   let matchingCommands = commands.state
     .filter(matchesSearch(search))
-    .sort(sortSubjectsByDepth(context.state))
+    .sort(sortCommandsBySubjectDepth(context))
 
   let first_match = matchingCommands[0];
-  let [selection, setSelection] = useState<CommandState | null>(null)
+  let [selectedCommand, setSelectedCommand] = useState<CommandState | null>(null)
   let [pendingCommand, setPendingCommand] = useState<CommandState | null>(null)
 
-  if (pendingCommand && !matchingSubject(pendingCommand)) {
+  // SAME SUBJECT BUG:
+  // Commands have no clue which subject id it's actually associated with.
+  // Right now we are having a problem where we are using an old subject id as long as the pending subject is the same
+  // I'm assuming this is mostly a timing issue, but the fact that the pending Subject apparently "sticks" could point
+  // elsewhere
+
+  // This is a stopgap in case we some how end up with a command and subject that don't match
+  // TODO: I don't think we should ever need this. This should be handled at an "action level"
+  if (pendingCommand && !context.hasSubject(pendingCommand.subject)) {
     setPendingCommand(null)
   }
 
-  function matchingSubject<P extends CommandParams>(command: CommandState<P>) {
-    return context.state.find((subject) => subject.type === command.subject)
-  }
-
-  function handleSubmit(command: CommandState) {
+  function handleSubmit (command: CommandState) {
     if (Object.entries(command.params).length) {
-      setPendingCommand(command)
+      if (context.hasSubject(command.subject)) {
+        setPendingCommand(command)
+      } else {
+        throw new Error(`Tried to submit a form for subject ${command.subject}, but we couldn't find that subject in context`)
+      }
     } else {
       submitWithData(command, {})
     }
   }
 
   function submitWithData<P extends CommandParams, C extends CommandState<P>>(command: C, data: DataFromParams<P>) {
-    let subject = matchingSubject(command)
-    if (subject) {
+    if (context.hasSubject(command.subject)) {
       command.onSubmit(data)
     }
     setPendingCommand(null)
@@ -68,17 +74,21 @@ function Palette(props: Props) {
   }
 
   function handleKeyDown (event: KeyboardEvent<HTMLElement>) {
-    if (selection) {
-      let index = matchingCommands.indexOf(selection)
+    if (selectedCommand) {
+      let index = matchingCommands.indexOf(selectedCommand)
       if (event.key === 'ArrowUp') {
-        if (index > 0) setSelection(matchingCommands[--index])
+        if (index > 0) setSelectedCommand(matchingCommands[--index])
       } else if (event.key === 'ArrowDown') {
-        if (index < matchingCommands.length - 1) setSelection(matchingCommands[++index])
+        if (index < matchingCommands.length - 1) setSelectedCommand(matchingCommands[++index])
       } else if (event.key === 'Enter') {
-        if (selection) handleSubmit(selection)
+        if (selectedCommand) handleSubmit(selectedCommand)
       }
     }
   }
+
+  // if (pendingCommand) {
+  //   console.log('pending:', CommandsModel.display(pendingCommand))
+  // }
 
   return (
     <CommandsProvider model={commands}>
@@ -86,10 +96,10 @@ function Palette(props: Props) {
         {pendingCommand ? (
           <PaletteForm command={pendingCommand} onSubmit={submitWithData} />
         ) : <>
-          <Line ref={lineRef} context={context} value={search} onChange={handleValueChange} onSubmit={() => { if (selection) handleSubmit(selection)}} />
+          <Line ref={lineRef} context={context} value={search} onChange={handleValueChange} onSubmit={() => { if (selectedCommand) handleSubmit(selectedCommand)}} />
           <CommandList
             commands={matchingCommands}
-            selection={selection || first_match || null}
+            selection={selectedCommand || first_match || null}
             onSubmit={handleSubmit}
           />
         </>}
@@ -134,7 +144,7 @@ let Line = React.forwardRef(function Line(props: LineProps, ref: Ref<LineRef>) {
     <div className={classes.Line} onKeyDown={handleKeyDown}>
       <div className={classes.Contexts}>
         {Array.from(props.context.state).reverse().map((subject) => (
-          <div key={`${subject.type}+${subject.id || ''}`} className={classes.Context}>{subject.type}</div>
+          <div key={PaletteContextModel.display(subject)} className={classes.Context}>{subject.type}</div>
         ))}
       </div>
       <div className={classes.Chevron}>&rsaquo;</div>
@@ -160,12 +170,12 @@ function CommandList (props: CommandListProps) {
     <div className={classes.Commands}>
       {commands.map((command, i) => {
         let classNames = [classes.Command]
-        if (isEqual(command, selection)) classNames.push(classes.Command_selected)
+        if (CommandsModel.isEqual(command, selection)) classNames.push(classes.Command_selected)
         return (
-          <div key={command.subject + command.name} className={classNames.join(' ')} onClick={onSubmit.bind(null, command)}>
+          <div key={command.subject.type + command.name} className={classNames.join(' ')} onClick={onSubmit.bind(null, command)}>
             <div className={classes.CommandName}>
               {command.name}
-              <span className={classes.CommandContext}>{command.subject}</span>
+              <span className={classes.CommandContext}>{command.subject.type}</span>
             </div>
             <div className={classes.CommandDescription}>{command.description}</div>
           </div>
@@ -179,18 +189,12 @@ function CommandList (props: CommandListProps) {
 *  Helpers  *
 \*=========*/
 
-function sortSubjectsByDepth(context: PaletteContextState) {
+function sortCommandsBySubjectDepth(context: PaletteContextModel) {
   return (a: CommandState, b: CommandState) => {
-    let ia = context.findIndex((subject) => subject.type == a.subject)
-    let ib = context.findIndex((subject) => subject.type == b.subject)
+    let ia = context.findIndexOfSubjectWithType(a.subject.type)
+    let ib = context.findIndexOfSubjectWithType(b.subject.type)
     return ib - ia
   }
-}
-
-function matchesContext(context: PaletteContextState) {
-  return (command: CommandState) => (
-    context.some((subject) => command.subject === subject.type)
-  )
 }
 
 function matchesSearch(value: string) {
@@ -215,30 +219,29 @@ type SubjectWithIdProps = {
   children: (id: string) => React.ReactNode
 }
 
-let SubjectContext = React.createContext<string>('Global')
+let SubjectContext = React.createContext<SubjectPayload>({ type: 'Global', id: null })
 
 function Subject(props: SubjectProps) {
   let { type, children  } = props
   let context = usePaletteContext()
-  let matchingSubject = Array.from(context.state).reverse().find((subject) => subject.type === type)
+  let matchingSubject = context.findSubjectWithType(type)
   if (!matchingSubject) return null
 
   return (
-    <SubjectContext.Provider value={type}>
+    <SubjectContext.Provider value={matchingSubject}>
       {children}
     </SubjectContext.Provider>
   )
 }
 
-
 function SubjectWithId(props: SubjectWithIdProps) {
   let { type, children  } = props
   let context = usePaletteContext()
-  let matchingSubject = Array.from(context.state).reverse().find((subject) => subject.type === type)
+  let matchingSubject = context.findSubjectWithType(type)
   if (!matchingSubject || matchingSubject.id === null) return null
 
   return (
-    <SubjectContext.Provider value={type}>
+    <SubjectContext.Provider value={matchingSubject}>
       {children(matchingSubject.id)}
     </SubjectContext.Provider>
   )
@@ -263,7 +266,7 @@ type CommandProps<P extends CommandParams> = {
 export function Command<P extends CommandParams>(props: CommandProps<P>) {
   let subject = useContext(SubjectContext)
   let commands = useCommands()
-  useEffect(setCommandEffect, [subject])
+  useEffect(setCommandEffect, [subject.type, subject.id])
 
   function setCommandEffect() {
     let command: CommandState<P> = { subject, ...props }

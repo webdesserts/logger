@@ -1,5 +1,4 @@
 import { Model } from '../../utils/model';
-import produce from 'immer';
 
 /*=======*\
 *  Types  *
@@ -12,11 +11,12 @@ export type SubjectPayload = { type: string, id: string | null  }
 *  Helpers  *
 \*=========*/
 
-export function matches(search: SubjectPayload) {
-  return (subject: SubjectPayload) => (
-    subject.type === search.type &&
-    subject.id === search.id
-  )
+function display(subject: SubjectPayload) {
+  return subject.type + (subject.id ? `[${subject.id}]` : '')
+}
+
+function isEqual(a: SubjectPayload, b: SubjectPayload) {
+  return a.type === b.type && a.id === b.id;
 }
 
 /*=======*\
@@ -26,18 +26,17 @@ export function matches(search: SubjectPayload) {
 export class PaletteContextModel extends Model<PaletteContextState> {
   static initialState: PaletteContextState = []
 
-  static displayName(subject: SubjectPayload) {
-    return `${subject.type}+${subject.id || ''}`
-  }
+  static display = display
+  static isEqual = isEqual
 
-  init() {
-    console.log('context:', this.state.map(PaletteContextModel.displayName))
-  }
+  // init() {
+  //   console.log('Context:', this.state.map(display))
+  // }
 
   add(subject: SubjectPayload) {
-    let match = this.state.findIndex(matches(subject)) > -1
+    let match = this.state.findIndex(s => isEqual(s, subject)) > -1
     if (!match) {
-      console.log('add', PaletteContextModel.displayName(subject))
+      // console.log('ADD', display(subject))
       this.produceState((draft) => {
         draft.push(subject)
       })
@@ -45,13 +44,23 @@ export class PaletteContextModel extends Model<PaletteContextState> {
   }
 
   remove(subject: SubjectPayload) {
-    let index = this.state.findIndex(matches(subject))
+    let index = this.state.findIndex(s => isEqual(s, subject))
     if (index > -1) {
-      console.log('remove',PaletteContextModel.displayName(subject))
+      // console.log('REM', display(subject))
       this.produceState((draft) => {
         draft.splice(index, 1)
       })
     }
+  }
+
+  hasSubject(subject: SubjectPayload) : boolean {
+    return Array.from(this.state).reverse().some((s) => isEqual(subject, s))
+  }
+  findSubjectWithType(type: string) : SubjectPayload | undefined {
+    return Array.from(this.state).reverse().find(subject => subject.type === type)
+  }
+  findIndexOfSubjectWithType(type: string) {
+    return Array.from(this.state).findIndex((subject) => subject.type === type)
   }
 }
 
