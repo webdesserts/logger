@@ -1,4 +1,5 @@
 import { Model } from '../../utils/model';
+import produce from 'immer';
 
 /*=======*\
 *  Types  *
@@ -25,21 +26,32 @@ export function matches(search: SubjectPayload) {
 export class PaletteContextModel extends Model<PaletteContextState> {
   static initialState: PaletteContextState = []
 
+  static displayName(subject: SubjectPayload) {
+    return `${subject.type}+${subject.id || ''}`
+  }
+
   init() {
-    // console.log('context:', this.state.map((subject) => `${subject.type}+${subject.id || ''}`))
+    console.log('context:', this.state.map(PaletteContextModel.displayName))
   }
 
   add(subject: SubjectPayload) {
-    this.produceState((draft) => {
-      let match = draft.findIndex(matches(subject)) > -1
-      if (!match) draft.push(subject)
-    })
+    let match = this.state.findIndex(matches(subject)) > -1
+    if (!match) {
+      console.log('add', PaletteContextModel.displayName(subject))
+      this.produceState((draft) => {
+        draft.push(subject)
+      })
+    }
   }
+
   remove(subject: SubjectPayload) {
-    this.produceState((draft) => {
-      let index = draft.findIndex(matches(subject))
-      if (index > -1) draft.splice(index, 1)
-    })
+    let index = this.state.findIndex(matches(subject))
+    if (index > -1) {
+      console.log('remove',PaletteContextModel.displayName(subject))
+      this.produceState((draft) => {
+        draft.splice(index, 1)
+      })
+    }
   }
 }
 
