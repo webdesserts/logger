@@ -10,20 +10,25 @@ export type TriggerState = AutoTriggerState | NodeTriggerState
 export type AutoTriggerState = { subject: SubjectPayload, auto: true, $node: null }
 export type NodeTriggerState = { subject: SubjectPayload, auto: false, $node: HTMLElement }
 
-/*=======*\
-*  Model  *
-\*=======*/
+/*=========*\
+*  Helpers  *
+\*=========*/
 
-function matches(search: TriggerState) {
-  return (trigger: TriggerState) => (
+function isEqual(search: TriggerState, trigger: TriggerState) {
+  return (
     trigger.$node === search.$node &&
     trigger.auto === search.auto,
     PaletteContextModel.isEqual(search.subject, trigger.subject)
   )
 }
 
+/*=======*\
+*  Model  *
+\*=======*/
+
 export class TriggersModel extends Model<TriggersState> {
   static initialState: TriggersState = []
+  static isEqual = isEqual
 
   // init() {
   //   console.log('Triggers:', this.state.map(trigger => PaletteContextModel.display(trigger.subject)))
@@ -31,14 +36,14 @@ export class TriggersModel extends Model<TriggersState> {
 
   add(trigger: TriggerState) {
     this.produceState((draft) => {
-      if (!draft.some(matches(trigger))) {
+      if (!draft.some((t) => isEqual(t, trigger))) {
         draft.push(trigger)
       }
     })
   }
   remove(trigger: TriggerState) {
     this.produceState((draft) => {
-      let index = draft.findIndex(matches(trigger))
+      let index = draft.findIndex((t) => isEqual(t, trigger))
       if (index > -1) draft.splice(index, 1)
     })
   }

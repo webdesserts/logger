@@ -69,9 +69,12 @@ function display(command: CommandState<any>) : string {
 
 export class CommandsModel extends Model<CommandsState> {
   static initialState: CommandsState = []
-  // init() { console.log('commands:', this.state.map(display)) }
   static isEqual = isEqual
   static display = display
+
+  // init() {
+  //   console.log('commands:', this.state.map(display))
+  // }
 
   add<P extends CommandParams>(command: CommandState<P>) {
     this.produceState((draft) => {

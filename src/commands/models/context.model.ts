@@ -25,7 +25,6 @@ function isEqual(a: SubjectPayload, b: SubjectPayload) {
 
 export class PaletteContextModel extends Model<PaletteContextState> {
   static initialState: PaletteContextState = []
-
   static display = display
   static isEqual = isEqual
 
@@ -34,23 +33,23 @@ export class PaletteContextModel extends Model<PaletteContextState> {
   // }
 
   add(subject: SubjectPayload) {
-    let match = this.state.findIndex(s => isEqual(s, subject)) > -1
-    if (!match) {
-      // console.log('ADD', display(subject))
-      this.produceState((draft) => {
+    this.produceState((draft) => {
+      let match = draft.findIndex(s => isEqual(s, subject)) > -1
+      if (!match) {
+        // console.log('ADD', display(subject))
         draft.push(subject)
-      })
-    }
+      }
+    })
   }
 
   remove(subject: SubjectPayload) {
-    let index = this.state.findIndex(s => isEqual(s, subject))
-    if (index > -1) {
-      // console.log('REM', display(subject))
-      this.produceState((draft) => {
+    this.produceState((draft) => {
+      let index = draft.findIndex(s => isEqual(s, subject))
+      if (index > -1) {
+        // console.log('REM', display(subject))
         draft.splice(index, 1)
-      })
-    }
+      }
+    })
   }
 
   hasSubject(subject: SubjectPayload) : boolean {

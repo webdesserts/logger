@@ -13,19 +13,24 @@ export type Sector = { id: string, name: string }
 \*=======*/
 
 export class SectorsModel extends Model<SectorsState> {
+  static initialState: SectorsState = []
+
   create(name: string) {
-    this.produceState((draft) => {
-      let exists = Boolean(draft.find((sector) => sector.name === name))
-      if (exists) return draft
-      else draft.push({ id: nanoid(8), name });
-    })
+    let exists = this.state.some((sector) => sector.name === name)
+    if (!exists) {
+      this.produceState((draft) => {
+        draft.push({ id: nanoid(8), name });
+      })
+    }
   }
+
   update(id: string, name: string) {
     this.produceState((draft) => {
       let project = draft.find((sector) => sector.id === id)
       if (project) project.name = name
     })
   }
+
   delete(id: string) {
     this.produceState((draft) => {
       let i = draft.findIndex((sector) => sector.id === id)
@@ -34,5 +39,4 @@ export class SectorsModel extends Model<SectorsState> {
   }
 }
 
-let initialState: SectorsState = []
-export let [ SectorsProvider, useSectors ] = SectorsModel.createContext(initialState)
+export let [ SectorsProvider, useSectors ] = SectorsModel.createContext(SectorsModel.initialState)

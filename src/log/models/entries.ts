@@ -27,37 +27,34 @@ export type EntryData = Drop<'id', Entry>
 
 export class EntriesModel extends Model<Entry[]> {
   static initialState: Entry[] = busyDay
-  init() {
-    // console.log('entries:', this.state.map(({id, description}) => ({ id, description })))
-  }
 
-  find(id: string) {
-    return this.state.find((entry) => entry.id === id)
-  }
+  // init() {
+  //   console.log('entries:', this.state.map(({id, description}) => ({ id, description })))
+  // }
+
   create(entry: Optional<'id', Entry>) {
     this.produceState((draft) => {
-      let {
-        id = nanoid(8),
-        ...entryData
-      } = entry
-
+      let { id = nanoid(8), ...entryData } = entry;
       draft.push({ id, ...entryData })
-      return draft;
     })
   }
+
   update(id: string, changes: Partial<EntryData>) {
     this.produceState((draft) => {
       let i = draft.findIndex((entry) => entry.id === id)
       Object.assign(draft[i], changes)
-      return draft;
     })
   }
+
   delete(id: string) {
     this.produceState((draft) => {
       let i = draft.findIndex((entry) => entry.id === id)
       draft.splice(i, 1)
-      return draft;
     })
+  }
+
+  find(id: string) {
+    return this.state.find((entry) => entry.id === id)
   }
 }
 
