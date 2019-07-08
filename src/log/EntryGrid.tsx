@@ -15,9 +15,13 @@ interface EntryGridProps {
   entries: EntriesState
 }
 
+function sortEntriesByStart(a: Entry, b: Entry) {
+  return a.start.diff(b.start).milliseconds
+}
+
 function EntryGrid (props: EntryGridProps) {
   let { activeEntry, entries } = props
-  let rows = entries.map((entry) => (
+  let rows = entries.sort(sortEntriesByStart).map((entry) => (
     <EntryRow key={entry.id} entry={entry} />
   ))
 
