@@ -1,5 +1,5 @@
 import React from 'react';
-import classes from './Log.module.scss';
+import * as Styles from './Log.styles';
 import { EntryGrid } from './EntryGrid';
 import { DayOverview } from './DayOverview'
 import { DateTime, Interval } from 'luxon'
@@ -26,10 +26,10 @@ function Log (props: LogProps) {
 
   return (
     <AutoTrigger type="Log">
-      <div className={classes.Log}>
+      <Styles.Log>
         <DayOverview day={day_start} entries={day_log} active_entry={active_entry.state} />
         <EntryGrid activeEntry={active_entry.state} entries={entries.state} />
-      </div>
+      </Styles.Log>
     </AutoTrigger>
   );
 }

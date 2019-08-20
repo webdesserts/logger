@@ -1,5 +1,5 @@
 import React, { useState, ChangeEventHandler, KeyboardEvent, useRef, RefObject, useImperativeHandle, Ref, useContext, useEffect, } from 'react'
-import classes from './Palette.module.scss'
+import * as Styles from './Palette.styles'
 import { usePaletteContext, PaletteContextModel, SubjectPayload } from './models/context.model';
 import { useTriggersManager } from './PaletteTrigger';
 import { CommandsModel, CommandState, CommandsProvider, CommandParams, DataFromParams, useCommands, } from './models/commands.model';
@@ -92,7 +92,7 @@ function Palette(props: Props) {
 
   return (
     <CommandsProvider model={commands}>
-      <div ref={blockRef} className={classes.Palette} onKeyDown={handleKeyDown}>
+      <Styles.Palette ref={blockRef} onKeyDown={handleKeyDown}>
         {pendingCommand ? (
           <PaletteForm command={pendingCommand} onSubmit={submitWithData} />
         ) : <>
@@ -104,7 +104,7 @@ function Palette(props: Props) {
           />
         </>}
         {children}
-      </div>
+      </Styles.Palette>
     </CommandsProvider>
   ) 
 }
@@ -141,15 +141,15 @@ let Line = React.forwardRef(function Line(props: LineProps, ref: Ref<LineRef>) {
   }
 
   return (
-    <div className={classes.Line} onKeyDown={handleKeyDown}>
-      <div className={classes.Contexts}>
+    <Styles.Line onKeyDown={handleKeyDown}>
+      <Styles.Contexts>
         {Array.from(props.context.state).reverse().map((subject) => (
-          <div key={PaletteContextModel.display(subject)} className={classes.Context}>{subject.type}</div>
+          <Styles.Context key={PaletteContextModel.display(subject)}>{subject.type}</Styles.Context>
         ))}
-      </div>
-      <div className={classes.Chevron}>&rsaquo;</div>
-      <input ref={inputRef} autoFocus className={classes.Input} value={props.value} placeholder="Command" onChange={handleChange}/>
-    </div>
+      </Styles.Contexts>
+      <Styles.Chevron>&rsaquo;</Styles.Chevron>
+      <Styles.Input ref={inputRef} autoFocus value={props.value} placeholder="Command" onChange={handleChange}/>
+    </Styles.Line>
   )
 })
 
@@ -167,21 +167,20 @@ function CommandList (props: CommandListProps) {
   let { selection, commands, onSubmit } = props
 
   return (
-    <div className={classes.Commands}>
+    <Styles.Commands>
       {commands.map((command, i) => {
-        let classNames = [classes.Command]
-        if (CommandsModel.isEqual(command, selection)) classNames.push(classes.Command_selected)
+        let isSelected = CommandsModel.isEqual(command, selection)
         return (
-          <div key={command.subject.type + command.name} className={classNames.join(' ')} onClick={onSubmit.bind(null, command)}>
-            <div className={classes.CommandName}>
+          <Styles.Command key={command.subject.type + command.name} isSelected={isSelected} onClick={onSubmit.bind(null, command)}>
+            <Styles.CommandName>
               {command.name}
-              <span className={classes.CommandContext}>{command.subject.type}</span>
-            </div>
-            <div className={classes.CommandDescription}>{command.description}</div>
-          </div>
+              <Styles.CommandContext>{command.subject.type}</Styles.CommandContext>
+            </Styles.CommandName>
+            <Styles.CommandDescription>{command.description}</Styles.CommandDescription>
+          </Styles.Command>
         )
       })}
-    </div>
+    </Styles.Commands>
   )
 }
 

@@ -1,31 +1,57 @@
-import React from 'react';
-import classes from './Textbox.module.scss';
+import styled from "styled-components";
+import { text, colors } from "../styles";
+import React from "react";
 
-type Themes = 'light' | 'dark'
+export { Textbox }
 
 export interface TextboxProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  theme?: Themes
   shy?: boolean
-  readOnly?: boolean
 }
 
-export const Textbox = React.forwardRef<HTMLInputElement, TextboxProps>(
-  function Textbox(props, ref) {
-    let { className: userClassName, shy, readOnly, theme, tabIndex, ...otherProps } = props
-    let classNames = [classes.Textbox]
-    classNames.push(getThemeClass(theme))
-    if (shy) { classNames.push(classes.Textbox_shy) }
-    if (userClassName) { classNames.push(userClassName) }
-    let overriddenIndex = readOnly ? -1 : tabIndex
-    return (
-      <input ref={ref} type="text" className={classNames.join(' ')} readOnly={readOnly} tabIndex={overriddenIndex} {...otherProps} />
-    )
-  }
-)
+const Textbox = styled.input.attrs(noTabbingWhenReadonly).attrs(shy)<TextboxProps>`
+  ${text.body}
+  height: 32px;
+  padding: 4px 8px 0;
+  color: ${colors.text};
+  border: none;
+  background-color: transparent;
+  box-shadow: inset 0 28px 0 0 ${colors.bkgAlt};
+  border-bottom: 2px solid ${colors.bkgAlt};
+  width: 100%;
+  transition: box-shadow 300ms ease, border-color 200ms ease;
 
-function getThemeClass(theme: Themes = 'light') {
-  switch(theme) {
-    case "dark": return classes.Textbox_dark;
-    case "light": return classes.Textbox_light;
+  &:hover:not(:read-only) {
+    border-color: ${colors.accent};
+  }
+
+  &:focus:not(:read-only) {
+    outline: none;
+    box-shadow: inset 0 32px 0 0 ${colors.bkgAlt};
+    border-color: ${colors.primary};
+  }
+
+  &:read-only {
+    cursor: inherit;
+  }
+
+  &[data-shy="true"] {
+    background-color: transparent;
+    box-shadow: none;
+    border-color: transparent;
+    &:focus:not(:read-only) {
+      box-shadow: none;
+    }
+  }
+`;
+
+function noTabbingWhenReadonly({ readOnly, tabIndex }: TextboxProps) {
+  return {
+    tabIndex: readOnly ? -1 : tabIndex
+  };
+}
+
+function shy({ shy = false }: TextboxProps) {
+  return {
+    'data-shy': shy
   }
 }

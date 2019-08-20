@@ -5,7 +5,7 @@ import { Timebox } from '../controls/Timebox';
 import { Button } from '../controls/Button';
 import { DateTime } from 'luxon';
 import { mapValues } from 'lodash'
-import classes from './Form.module.scss'
+import * as Styles from './Form.styles'
 
 interface Props<P extends CommandParams> {
   command: CommandState<P>, 
@@ -17,12 +17,12 @@ export function PaletteForm<P extends CommandParams>(props: Props<P>) {
   let [ data, setData ] = useState(generateInitialData(command.params as P))
 
   let controls = Object.entries(command.params).map(([label, param], i) => (
-    <div key={label} className={classes.field}>
+    <Styles.Field key={label}>
       <label>{label}</label>
       <Control options={param} value={data[label]} autoFocus={i === 0} onChange={(value) => {
         setData({ ...data, [label]: value  })
       }} />
-    </div>
+    </Styles.Field>
     )
   )
 
@@ -31,10 +31,10 @@ export function PaletteForm<P extends CommandParams>(props: Props<P>) {
   }
 
   return (
-    <div className={classes.form}>
+    <Styles.Form>
       {controls}
-      <Button theme="dark" onClick={handleSubmit}>Submit</Button>
-    </div>
+      <Button onClick={handleSubmit}>Submit</Button>
+    </Styles.Form>
   )
 }
 
@@ -83,10 +83,10 @@ function Control<P extends CommandParamOptions, T extends NamedType<P['type']>>(
   let { options, autoFocus, value, onChange } = props
   switch(options.type) {
     case 'string': return (
-      <Textbox theme="dark" autoFocus={autoFocus} value={value as string} onChange={({ target }) => onChange(target.value as any)}/>
+      <Textbox autoFocus={autoFocus} value={value as string} onChange={({ target }) => onChange(target.value as any)}/>
     )
     case 'time': return (
-      <Timebox theme="dark" time={value as DateTime | undefined} autoFocus={autoFocus} onChange={(time: DateTime) => onChange(time as any)} />
+      <Timebox time={value as DateTime | undefined} autoFocus={autoFocus} onChange={(time: DateTime) => onChange(time as any)} />
     )
     default: throw Error('unrecognized control type')
   }

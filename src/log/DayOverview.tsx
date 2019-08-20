@@ -1,5 +1,5 @@
 import React from 'react';
-import classes from './Log.module.scss';
+import * as Styles from './Log.styles';
 import { DateTime, Duration } from 'luxon';
 import { ActiveEntryState } from './models/active_entry';
 import { EntriesState } from './models/entries';
@@ -21,20 +21,20 @@ function DayOverview ({ day, entries, active_entry } : DayOverviewProps) {
   let hours = Math.round(duration.as('hours') * 100) / 100
 
   return (
-    <div className={classes.overview}>
-      <h1 className={classes.header}>{day.toLocaleString(DateTime.DATE_HUGE)}</h1>
-      <div className={classes.stats}>
-        <div className={classes.field}>
-          <div className={classes.fieldLabel}>Day</div>
-          <div className={classes.fieldItem}>
+    <Styles.Overview>
+      <Styles.Header>{day.toLocaleString(DateTime.DATE_HUGE)}</Styles.Header>
+      <Styles.Stats>
+        <Styles.Field>
+          <Styles.FieldLabel>Day</Styles.FieldLabel>
+          <Styles.FieldItem>
             {active_entry.start ? <Counter since={active_entry.start} plus={duration} displayUnit='hours'/> : hours} hrs | {entries.length} logs
-          </div>
-        </div>
-        <div className={classes.field}>
-          <div className={classes.fieldLabel}>Average</div>
-          <div className={classes.fieldItem}>3.2 hrs | 5 logs | .3 hrs/log</div>
-        </div>
-      </div>
-    </div>
+          </Styles.FieldItem>
+        </Styles.Field>
+        <Styles.Field>
+          <Styles.FieldLabel>Average</Styles.FieldLabel>
+          <Styles.FieldItem>3.2 hrs | 5 logs | .3 hrs/log</Styles.FieldItem>
+        </Styles.Field>
+      </Styles.Stats>
+    </Styles.Overview>
   )
 }

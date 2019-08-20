@@ -2,11 +2,8 @@ import React, { KeyboardEventHandler, ReactEventHandler } from 'react'
 import { Textbox } from './Textbox'
 import { DateTime } from 'luxon';
 
-type Themes = 'light' | 'dark'
-
 export interface TimeboxProps {
   id?: string,
-  theme: Themes,
   time: DateTime,
   shy: boolean,
   readOnly: boolean,
@@ -22,7 +19,6 @@ export class Timebox extends React.Component<TimeboxProps> {
   needsReselect : 'hour' | 'minute' | null = null
 
   static defaultProps = {
-    theme: 'light',
     shy: false,
     time: DateTime.fromObject({}),
     readOnly: false,

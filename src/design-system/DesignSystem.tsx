@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import classes from './DesignSystem.module.scss'
+import * as Styled from './DesignSystem.styles'
 import { DateTime, Duration } from 'luxon'
 import { RouteComponentProps } from '@reach/router'
 
@@ -33,9 +33,9 @@ export default class DesignSystem extends React.Component<Props, State> {
   render () {
     let { time, dur, color, bkgs } = this.state
     return (
-      <div className={classes.DesignSystem}>
+      <Styled.DesignSystem>
         <h1>Design System</h1>
-        <section className={classes.lightFrame}>
+        <Styled.LightFrame>
           <h2>Light Theme</h2>
           <label htmlFor="textbox">Textbox</label>
           <Textbox id="textbox" defaultValue="hello" />
@@ -44,16 +44,16 @@ export default class DesignSystem extends React.Component<Props, State> {
           <label htmlFor="durationbox">Durationbox</label>
           <Durationbox id="durationbox" value={dur} onChange={this.updateDuration} />
           <Button>Submit</Button>
-        </section>
-        <section className={classes.darkFrame}>
+        </Styled.LightFrame>
+        <Styled.DarkFrame>
           <h2>Dark Theme</h2>
           <label htmlFor="textbox">Textbox</label>
-          <Textbox theme="dark" id="textbox" defaultValue="hello" />
+          <Textbox id="textbox" defaultValue="hello" />
           <label htmlFor="timebox">Timebox</label>
-          <Timebox theme="dark" id="timebox" time={time} onChange={this.updateTime} />
-          <Button theme="dark">Submit</Button>
-        </section>
-        <section>
+          <Timebox id="timebox" time={time} onChange={this.updateTime} />
+          <Button>Submit</Button>
+        </Styled.DarkFrame>
+        <Styled.LightFrame>
           <h2>Selectable</h2>
           <Selectable required value={color} options={['red', 'green', 'blue']} onChange={this.updateColor} optionRenderer={
             (color, isSelected, triggerSelect) => (
@@ -63,8 +63,8 @@ export default class DesignSystem extends React.Component<Props, State> {
             (bkg, isSelected, triggerSelect) => (
               <span key={bkg} style={isSelected ? { backgroundColor: bkg, fontWeight: 'bold' } : {}} onClick={triggerSelect}>{bkg}</span>
             )}/>
-        </section>
-      </div>
+        </Styled.LightFrame>
+      </Styled.DesignSystem>
     )
   }
 }

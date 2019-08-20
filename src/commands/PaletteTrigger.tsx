@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, RefObject } from 'react';
-import classes from './PaletteTrigger.module.scss';
+import * as Styles from './PaletteTrigger.styles';
 import { usePaletteContext } from './models/context.model';
 import { useTriggers, NodeTriggerState, AutoTriggerState } from './models/triggers.model';
 
@@ -36,7 +36,7 @@ type TriggerProps = {
 
 
 export function Trigger(props: TriggerProps) {
-  let { className, onClick, tabIndex, type, id = null, ...otherProps } = props
+  let { onClick, tabIndex, type, id = null, ...otherProps } = props
 
   let subject = { type, id }
   let blockRef = useRef(null);
@@ -57,17 +57,14 @@ export function Trigger(props: TriggerProps) {
   // Apparently this might not always work as expected?
   }, [blockRef])
 
-  let classNames = [classes.block, props.className]
-  if (context.state.find((s) => s.type === subject.type && s.id === subject.id)) {
-    classNames.push(classes.block_inContext)
-  }
+  let inContext = Boolean(context.state.find((s) => s.type === subject.type && s.id === subject.id))
 
   function handleClick (event: React.MouseEvent<HTMLDivElement>) {
     if (props.onClick) props.onClick(event);
   }
 
   return (
-    <div ref={blockRef} className={classNames.join(' ')} tabIndex={0} onClick={handleClick} {...otherProps}/>
+    <Styles.Trigger ref={blockRef} inContext={inContext} tabIndex={0} onClick={handleClick} {...otherProps} />
   )
 }
 
