@@ -22,7 +22,3 @@ function generateColorGetters(theme: Theme) : ThemeColors {
 const colorGetters: ThemeColors = generateColorGetters(themes.dark)
 
 export { colorGetters as colors }
-
-/*===========*\
-*  Theme HoC  * 
-\*===========*/

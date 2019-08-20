@@ -63,6 +63,10 @@ const light: Theme = {
 
 export const themes = { dark, light }
 
+/*===========*\
+*  Theme HoC  * 
+\*===========*/
+
 export function withThemeProvider<C extends React.ComponentType<any>>(theme: Theme, Component: C) {
   return React.forwardRef<C, ComponentProps<C>>((props, ref) => (
     <ThemeProvider theme={theme}>
