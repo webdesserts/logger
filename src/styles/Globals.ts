@@ -1,16 +1,18 @@
 import { createGlobalStyle } from "styled-components";
-import * as colors from '../brand/colors';
-import * as fonts from './text';
+import { colors } from './colors';
+import * as text from './text';
 
 export const GlobalStyles = createGlobalStyle`
   :root {
-    ${fonts.fontFamilies.body};
-    ${fonts.body};
-    color: ${colors.darkAlt};
+    ${text.fontFamilies.body};
+    ${text.body};
+    color: ${colors.text};
+    background-color: ${colors.bkg};
   }
 
-  html, body {
-    background-color: ${colors.light};
+  html, body, #root { 
+    height: 100%;
+    background-color: inherit;
   }
 
   [href] {
@@ -19,20 +21,16 @@ export const GlobalStyles = createGlobalStyle`
   }
 
   *::selection {
-    background-color: ${colors.dark};
-    color: ${colors.light};
-  }
-
-  html, body, #root { 
-    height: 100%;
+    background-color: ${colors.bkgInverted};
+    color: ${colors.textInverted};
   }
 
   code {
-    font-family: ${fonts.fontFamilies.mono};
   }
 
   #root {
     display: grid;
     grid-auto-flow: column;
+    font-family: ${text.fontFamilies.mono};
   }
 `;
