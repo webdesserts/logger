@@ -7,8 +7,6 @@ export const Palette = styled.div`
   grid-gap: 16px;
   background-color: ${colors.bkg};
   color: ${colors.text};
-  padding: 32px;
-  width: 408px;
   align-items: start;
   align-content: start;
   ::selection {

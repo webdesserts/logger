@@ -2,9 +2,6 @@ import styled from 'styled-components'
 import { colors, text } from '../styles'
 
 export const Log = styled.div`
-  max-width: 670px;
-  margin: 0 auto;
-  padding: 32px;
 `
 
 export const Header = styled.h1`
@@ -31,6 +28,6 @@ export const Stats = styled.div`
 `
 
 export const Overview = styled.div`
-  padding: 32px 0;
+  padding-bottom: 32px;
   border-bottom: 2px dotted ${colors.accent};
 `

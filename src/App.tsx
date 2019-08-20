@@ -5,12 +5,17 @@ import DesignSystem from './design-system/DesignSystem'
 import { Palette, Subject, Command } from './commands/Palette';
 import { useActiveEntry } from './log/models/active_entry';
 import { useEntries } from './log/models/entries';
+import * as Styled from './App.styles'
 
 export function App() {
   let active_entry = useActiveEntry()
   let entries = useEntries()
   return (
-    <>
+    <Styled.App>
+      <Router>
+        <Log path="/" />
+        <DesignSystem path="/design" />
+      </Router>
       <Palette>
         <Subject type="Log">
           <Command name="start" description="Starts a new Entry" params={{
@@ -54,10 +59,6 @@ export function App() {
         }}
         </Subject.WithId>
       </Palette>
-      <Router>
-        <Log path="/" />
-        <DesignSystem path="/design" />
-      </Router>
-    </>
+    </Styled.App>
   )
 }

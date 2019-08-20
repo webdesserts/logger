@@ -26,11 +26,6 @@ export const GlobalStyles = createGlobalStyle`
   }
 
   code {
-  }
-
-  #root {
-    display: grid;
-    grid-auto-flow: column;
     font-family: ${text.fontFamilies.mono};
   }
 `;
