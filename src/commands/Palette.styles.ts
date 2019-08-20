@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { text, colors, withThemeProvider, themes } from '../styles';
 
-export const Palette = withThemeProvider(themes.dark, styled.div`
+export const Palette = styled.div`
   display: grid;
   grid-auto-flow: row;
   grid-gap: 16px;
@@ -15,7 +15,7 @@ export const Palette = withThemeProvider(themes.dark, styled.div`
     background-color: ${colors.bkgInverted};
     color: ${colors.textInverted};
   }
-`)
+`
 
 export const Contexts = styled.div`
   ${text.small}
