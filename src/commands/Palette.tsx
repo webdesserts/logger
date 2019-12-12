@@ -63,7 +63,7 @@ function Palette(props: Props) {
   }
 
   function submitWithData<P extends CommandParams, C extends CommandState<P>>(command: C, data: DataFromParams<P>) {
-    if (context.hasSubject(command.subject)) {
+    if (context.hasSubject(command.subject) || command.subject.type === 'Global') {
       command.onSubmit(data)
     }
     setPendingCommand(null)
