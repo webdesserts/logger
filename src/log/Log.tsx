@@ -7,6 +7,7 @@ import { EntriesProvider, Entry, useEntries, EntriesModel } from './models/entri
 import { ActiveEntryProvider, useActiveEntry, ActiveEntryModel } from './models/active_entry';
 import { RouteComponentProps } from '@reach/router'
 import { AutoTrigger } from '../commands';
+import { useAuth } from '../utils/auth';
 
 export { Log, LogProvider }
 
@@ -17,8 +18,11 @@ function getInterval(entry: Entry) : Interval {
 }
 
 function Log (props: LogProps) {
+  let { user, isAuthenticated } = useAuth()
   let active_entry = useActiveEntry()
   let entries = useEntries()
+
+  if (!isAuthenticated) return null
 
   let day_start = DateTime.local().minus({ days: 0 }).startOf('day')
   let day = Interval.fromDateTimes(day_start, day_start.endOf('day'))

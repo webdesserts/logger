@@ -5,11 +5,19 @@ import DesignSystem from './design-system/DesignSystem'
 import { Palette, Subject, Command } from './commands/Palette';
 import { useActiveEntry } from './log/models/active_entry';
 import { useEntries } from './log/models/entries';
+import { useAuth } from './utils/auth';
 import * as Styled from './App.styles'
 
 export function App() {
+  let { isLoading, user, loginWithRedirect } = useAuth()
   let active_entry = useActiveEntry()
   let entries = useEntries()
+
+  if (isLoading) {
+    return <Styled.App>Loading...</Styled.App>
+  }
+
+  console.log(user)
   return (
     <Styled.App>
       <Router>
@@ -17,6 +25,9 @@ export function App() {
         <DesignSystem path="/design" />
       </Router>
       <Palette>
+        <Command name="Sign in" description="Sign in or Register to Logger" onSubmit={() => {
+          loginWithRedirect()
+        }}/>
         <Subject type="Log">
           <Command name="start" description="Starts a new Entry" params={{
             sector: { type: 'string', required: true },
