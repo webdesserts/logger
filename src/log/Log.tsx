@@ -6,7 +6,7 @@ import { DateTime, Interval } from 'luxon'
 import { EntriesProvider, Entry, useEntries, EntriesModel } from './models/entries';
 import { ActiveEntryProvider, useActiveEntry, ActiveEntryModel } from './models/active_entry';
 import { RouteComponentProps } from '@reach/router'
-import { AutoTrigger } from '../commands';
+import { useSubjectTrigger } from '../commands';
 import { useAuth } from '../utils/auth';
 
 export { Log, LogProvider }
@@ -21,6 +21,7 @@ function Log (props: LogProps) {
   let { user, isAuthenticated } = useAuth()
   let active_entry = useActiveEntry()
   let entries = useEntries()
+  useSubjectTrigger('Log', { enabled: isAuthenticated })
 
   if (!isAuthenticated) return null
 
@@ -29,12 +30,10 @@ function Log (props: LogProps) {
   let day_log = entries.state.filter((entry) => day.intersection(getInterval(entry))).sort((a, b) => b.start.diff(a.start).as('seconds'))
 
   return (
-    <AutoTrigger type="Log">
-      <Styles.Log>
-        <DayOverview day={day_start} entries={day_log} active_entry={active_entry.state} />
-        <EntryGrid activeEntry={active_entry.state} entries={entries.state} />
-      </Styles.Log>
-    </AutoTrigger>
+    <Styles.Log>
+      <DayOverview day={day_start} entries={day_log} active_entry={active_entry.state} />
+      <EntryGrid activeEntry={active_entry.state} entries={entries.state} />
+    </Styles.Log>
   );
 }
 

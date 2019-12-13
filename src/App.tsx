@@ -7,17 +7,24 @@ import { useActiveEntry } from './log/models/active_entry';
 import { useEntries } from './log/models/entries';
 import { useAuth } from './utils/auth';
 import * as Styled from './App.styles'
+import { useSubjectTrigger } from './commands';
 
 export function App() {
-  let { isLoading, user, loginWithRedirect } = useAuth()
+  let { isLoading, user, isAuthenticated, loginWithRedirect, logout } = useAuth()
   let active_entry = useActiveEntry()
   let entries = useEntries()
+  useSubjectTrigger('Account')
 
   if (isLoading) {
     return <Styled.App>Loading...</Styled.App>
   }
 
-  console.log(user)
+  console.log({
+    isAuthenticated,
+    isLoading,
+    user
+  })
+
   return (
     <Styled.App>
       <Router>
@@ -25,9 +32,10 @@ export function App() {
         <DesignSystem path="/design" />
       </Router>
       <Palette>
-        <Command name="Sign in" description="Sign in or Register to Logger" onSubmit={() => {
-          loginWithRedirect()
-        }}/>
+        <Subject type="Account">
+          <Command name="login" description="Log in or Register to Logger" enabled={!isAuthenticated} onSubmit={loginWithRedirect}/>
+          <Command name="logout" description="Log out of your account" enabled={isAuthenticated} onSubmit={logout}/>
+        </Subject>
         <Subject type="Log">
           <Command name="start" description="Starts a new Entry" params={{
             sector: { type: 'string', required: true },
@@ -39,7 +47,7 @@ export function App() {
         </Subject>
 
         <Subject type="Entry (Active)">
-          <Command name="stop" description="stops the log" onSubmit={() => {
+          <Command name="stop" description="Stops the log" onSubmit={() => {
             let entry = active_entry.stop()
             if (entry) entries.create(entry)
           }} />
@@ -53,7 +61,7 @@ export function App() {
           if (!entry) return null
 
           return <>
-            <Command name="delete" description="deletes an entry" onSubmit={() => entries.delete(id)} />
+            <Command name="delete" description="Deletes an entry" onSubmit={() => entries.delete(id)} />
             <Command name="edit" description="Edits an existing Entry"
               params={{
                 sector: { type: 'string', required: true, defaultValue: entry.sector },

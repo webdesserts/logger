@@ -13,7 +13,7 @@ export { Palette }
 
 type SubjectElement = React.ReactElement<SubjectProps, typeof Subject>
 type Props = {
-  children?: SubjectElement | SubjectElement[]
+  children?: SubjectElement | Array<SubjectElement>
 }
 
 function Palette(props: Props) {
@@ -26,9 +26,8 @@ function Palette(props: Props) {
 
   let commands = CommandsModel.useState(CommandsModel.initialState)
   let [search, setSearch] = useState("")
-
-  let children: React.ReactElement<SubjectProps, typeof Subject>[] = []
-  children = children.concat(props.children || [])
+  
+  let children: SubjectElement[] = props.children ? React.Children.toArray(props.children) : []
 
   let matchingCommands = commands.state
     .filter(matchesSearch(search))
@@ -259,17 +258,23 @@ type CommandProps<P extends CommandParams> = {
   name: string,
   description: string,
   params: P,
+  enabled?: boolean,
   onSubmit(data: DataFromParams<P>) : void 
 }
 
 export function Command<P extends CommandParams>(props: CommandProps<P>) {
+  let { enabled = true } = props
   let subject = useContext(SubjectContext)
   let commands = useCommands()
-  useEffect(setCommandEffect, [subject.type, subject.id])
+  useEffect(setCommandEffect, [subject.type, subject.id, enabled])
 
   function setCommandEffect() {
     let command: CommandState<P> = { subject, ...props }
-    commands.add(command)
+    if (enabled) {
+      commands.add(command)
+    } else {
+      commands.remove(command)
+    }
     return () => {
       commands.remove(command)
     }

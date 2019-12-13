@@ -12,21 +12,34 @@ type AutoTriggerProps = {
   children: React.ReactNode
 } & SubjectProps
 
-export function AutoTrigger(props: AutoTriggerProps) {
-  let { type, id = null, children } = props
+type SubjectHookOptions = {
+  id?: string,
+  enabled?: boolean
+}
+
+export function useSubjectTrigger(type: string, options: SubjectHookOptions = {}) {
+  let { id = null, enabled = true } = options
   let subject = { type, id }
   let triggers = useTriggers()
 
   useEffect(() => {
     let trigger: AutoTriggerState = { subject, auto: true, $node: null }
 
-    triggers.add(trigger)
+    if (enabled) {
+      triggers.add(trigger)
+    } else {
+      triggers.remove(trigger)
+    }
 
     return () => {
       triggers.remove(trigger)
     }
   }, [type, id])
+}
 
+export function AutoTrigger(props: AutoTriggerProps) {
+  let { type, id, children } = props
+  useSubjectTrigger(type, { id })
   return <>{children}</>
 }
 
