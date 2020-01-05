@@ -13,8 +13,10 @@ export class EntryModel extends Model {
     const author = user.id
     const sector = await this.createOrConnectSector(data.sector, user)
     const project = await this.createOrConnectProject(data.project, user)
+    // prisma's "now()" default is broken so we're using this for now
+    const start = data.start ? data.start : new Date(Date.now())
     return await this.db.entries.create({
-      data: { ...data, author, sector, project }
+      data: { ...data, author, sector, project, start }
     })
   }
 
