@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Router } from '@reach/router'
 import { Log } from './log/Log'
 import DesignSystem from './design-system/DesignSystem'
@@ -10,10 +10,18 @@ import * as Styled from './App.styles'
 import { useSubjectTrigger } from './commands';
 
 export function App() {
-  let { isLoading, user, isAuthenticated, loginWithRedirect, logout } = useAuth()
+  let { isLoading, user, isAuthenticated, loginWithRedirect, logout, getTokenSilently } = useAuth()
   let active_entry = useActiveEntry()
   let entries = useEntries()
   useSubjectTrigger('Account')
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      getTokenSilently().then((token) => {
+        console.log({ token })
+      })
+    }
+  }, [isAuthenticated])
 
   if (isLoading) {
     return <Styled.App>Loading...</Styled.App>

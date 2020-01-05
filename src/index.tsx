@@ -10,7 +10,8 @@ import { AuthProvider } from './utils/auth'
 const authConfig: React.ComponentProps<typeof AuthProvider> = {
   domain: "webdesserts.auth0.com",
   client_id: "qzkUBg5FvbWNVSflQ52aRS5RQq6jR1Ef",
-  redirect_uri: window.location.href
+  redirect_uri: window.location.href,
+  audience: 'logger-api'
 }
 
 let Root = (

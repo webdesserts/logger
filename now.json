@@ -1,0 +1,6 @@
+{
+  "version": 2,
+  "env": {
+    "POSTGRESQL_URL": "@postgresql_url"
+  }
+}
