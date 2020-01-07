@@ -1,4 +1,4 @@
-import { EntryInclude, SectorCreateOneWithoutSectorInput, ProjectCreateOneWithoutProjectInput, EntryUpdateArgs } from '@prisma/photon'
+import { EntryInclude, EntryUpdateArgs } from '@prisma/photon'
 import { UserData } from '../validation'
 import { filterUnauthored } from '../authenticate'
 import { Model } from './Model'
@@ -11,12 +11,10 @@ const include: EntryInclude = { project: true, sector: true }
 export class EntryModel extends Model {
   async create (data: Types.CreateEntryData, user: UserData) {
     const author = user.id
-    const sector = await this.createOrConnectSector(data.sector, user)
-    const project = await this.createOrConnectProject(data.project, user)
-    // prisma's "now()" default is broken so we're using this for now
-    const start = data.start ? data.start : new Date(Date.now())
+    const sector = await SectorModel.create(this.db).generateCreateOrConnectQuery(data.sector, user)
+    const project = await ProjectModel.create(this.db).generateCreateOrConnectQuery(data.project, user)
     return await this.db.entries.create({
-      data: { ...data, author, sector, project, start }
+      data: { ...data, author, sector, project }
     })
   }
 
@@ -28,8 +26,8 @@ export class EntryModel extends Model {
       data: { ...otherData, author },
       include
     }
-    if (sector) { query.data.sector = await this.createOrConnectSector(sector, user) }
-    if (project) { query.data.sector = await this.createOrConnectSector(project, user) }
+    if (sector) { query.data.sector = await SectorModel.create(this.db).generateCreateOrConnectQuery(sector, user) }
+    if (project) { query.data.project = await ProjectModel.create(this.db).generateCreateOrConnectQuery(project, user) }
     return await this.db.entries.update(query)
   }
 
@@ -52,25 +50,5 @@ export class EntryModel extends Model {
       return true
     }
     return false
-  }
-
-  private async createOrConnectSector(name: string, user: UserData) : Promise<SectorCreateOneWithoutSectorInput> {
-    const sector = await SectorModel.create(this.db).find(name, user)
-    if (sector) {
-      return { connect: { author_name: sector } }
-    } else {
-      const create = { name, author: user.id }
-      return { create }
-    }
-  }
-
-  private async createOrConnectProject(name: string, user: UserData) : Promise<ProjectCreateOneWithoutProjectInput> {
-    const project = await ProjectModel.create(this.db).find(name, user)
-    if (project) {
-      return { connect: { author_name: project } }
-    } else {
-      const create = { name, author: user.id }
-      return { create }
-    }
   }
 }

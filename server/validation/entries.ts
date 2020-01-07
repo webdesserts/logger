@@ -7,11 +7,11 @@ export const FindEntryData = T.type({
 export type FindEntryData = T.TypeOf<typeof FindEntryData>
 
 export const UpdateEntryData = T.partial({
+  sector: T.string,
+  project: T.string,
   description: T.string,
   start: T.string,
   end: T.string,
-  sector: T.string,
-  project: T.string,
 })
 export type UpdateEntryData = T.TypeOf<typeof UpdateEntryData>
 
@@ -20,17 +20,14 @@ export const FindAllEntriesData = T.partial({
 })
 export type FindAllEntriesData = T.TypeOf<typeof FindAllEntriesData>
 
-export const CreateEntryData = T.intersection([
-  T.type({
-    description: T.string,
+export const CreateEntryData = T.type({
     sector: T.string,
-    project: T.string
-  }),
-  T.partial({
+    project: T.string,
+    description: T.string,
     start: T.string,
     end: T.string
-  })
-])
+})
+
 export type CreateEntryData = T.TypeOf<typeof CreateEntryData>
 
 export const CreateEntryRequest = Request(T.type({}), CreateEntryData)

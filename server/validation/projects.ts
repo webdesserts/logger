@@ -1,9 +1,15 @@
 import * as T from 'io-ts'
 import { Request } from './requests'
 
-export const ProjectData = T.type({
-  name: T.string
-})
+const ProjectData = T.intersection([
+  T.string,
+  T.type({
+    id: T.string
+  }),
+  T.type({
+    name: T.string
+  })
+])
 
 export const CreateProjectData = ProjectData
 export type CreateProjectData = T.TypeOf<typeof CreateProjectData>

@@ -7,13 +7,20 @@ generator photon {
   provider = "photonjs"
 }
 
+model ActiveEntry {
+  id String @default(cuid()) @id
+  author String @unique
+  start DateTime @default(now())
+  description String
+  sector Sector
+  project Project
+}
+
 model Entry {
   id String @default(cuid()) @id
   author String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  start DateTime @default(now())
-  end DateTime?
+  start DateTime
+  end DateTime
   description String
   sector Sector
   project Project
