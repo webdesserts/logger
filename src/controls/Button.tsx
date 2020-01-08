@@ -46,4 +46,7 @@ export const Button = styled.button`
       background-color: ${colors.primary};
     }
   }
+  &:disabled {
+    opacity: .5
+  }
 `;

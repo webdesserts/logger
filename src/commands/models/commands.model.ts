@@ -10,10 +10,15 @@ export type CommandsState = CommandState[]
 export type CommandState<P extends CommandParams = CommandParams> = {
   subject: SubjectPayload;
   name: string;
-  params: P;
+  params: P | (() => (P | Promise<P>));
   description: string;
-  onSubmit: (data: DataFromParams<P>) => void;
+  onSubmit: (data: DataFromParams<P>) => void | Promise<void>;
 };
+
+export interface ResolvedCommandState<P extends CommandParams = CommandParams> extends CommandState<P> {
+  params: P
+}
+
 export type CommandParamTypes = 'string' | 'time'
 export type CommandParams = {
   [key: string]: CommandParamOptions

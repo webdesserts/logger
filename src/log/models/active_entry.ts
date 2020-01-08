@@ -2,6 +2,7 @@ import { Entry } from './entries'
 import nanoid from 'nanoid'
 import { Model } from '../../utils/model';
 import { DateTime } from 'luxon';
+import { sleep } from '../../utils/sleep'
 
 /*=======*\
 *  Types  *
@@ -28,7 +29,8 @@ export class ActiveEntryModel extends Model<ActiveEntryState> {
     start: null
   };
 
-  start(data: { sector: string; description: string; project: string }) {
+  async start(data: { sector: string; description: string; project: string }) {
+    await sleep(1000)
     this.produceState(draft => {
       draft.sector = data.sector;
       draft.project = data.project;
@@ -37,11 +39,13 @@ export class ActiveEntryModel extends Model<ActiveEntryState> {
     });
   }
 
-  update(changes: Partial<ActiveEntryState>) {
+  async update(changes: Partial<ActiveEntryState>) {
+    await sleep(1000)
     this.produceState(draft => Object.assign(draft, changes));
   }
 
-  stop() {
+  async stop() {
+    await sleep(1000)
     this.produceState(draft => {
       draft.id = nanoid(8);
       draft.description = "";

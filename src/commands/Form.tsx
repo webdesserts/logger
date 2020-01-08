@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { CommandParams, DataFromParams, NamedType, CommandParamTypes, CommandState, CommandParamOptions } from './models/commands.model';
+import { CommandParams, DataFromParams, NamedType, CommandParamTypes, CommandState, CommandParamOptions, ResolvedCommandState } from './models/commands.model';
 import { Textbox } from '../controls/Textbox';
 import { Timebox } from '../controls/Timebox';
 import { Button } from '../controls/Button';
@@ -8,12 +8,13 @@ import { mapValues } from 'lodash'
 import * as Styles from './Form.styles'
 
 interface Props<P extends CommandParams> {
-  command: CommandState<P>, 
-  onSubmit: (command: CommandState<P>, data: DataFromParams<P>) => void
+  command: ResolvedCommandState<P>, 
+  isSubmitting: boolean,
+  onSubmit: (command: ResolvedCommandState<P>, data: DataFromParams<P>) => void
 }
 
 export function PaletteForm<P extends CommandParams>(props: Props<P>) {
-  let { command, onSubmit } = props
+  let { command, isSubmitting, onSubmit } = props
   let [ data, setData ] = useState(generateInitialData(command.params as P))
 
   let controls = Object.entries(command.params).map(([label, param], i) => (
@@ -33,7 +34,7 @@ export function PaletteForm<P extends CommandParams>(props: Props<P>) {
   return (
     <Styles.Form>
       {controls}
-      <Button onClick={handleSubmit}>Submit</Button>
+      <Button disabled={isSubmitting} onClick={handleSubmit}>Submit</Button>
     </Styles.Form>
   )
 }

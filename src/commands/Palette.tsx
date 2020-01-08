@@ -2,7 +2,7 @@ import React, { useState, ChangeEventHandler, KeyboardEvent, useRef, RefObject, 
 import * as Styles from './Palette.styles'
 import { usePaletteContext, PaletteContextModel, SubjectPayload } from './models/context.model';
 import { useTriggersManager } from './PaletteTrigger';
-import { CommandsModel, CommandState, CommandsProvider, CommandParams, DataFromParams, useCommands, } from './models/commands.model';
+import { CommandsModel, CommandState, CommandsProvider, CommandParams, DataFromParams, useCommands, ResolvedCommandState, } from './models/commands.model';
 import { PaletteForm } from './Form';
 
 export { Palette }
@@ -35,7 +35,9 @@ function Palette(props: Props) {
 
   let first_match = matchingCommands[0];
   let [selectedCommand, setSelectedCommand] = useState<CommandState | null>(null)
-  let [pendingCommand, setPendingCommand] = useState<CommandState | null>(null)
+  let [pendingCommand, setPendingCommand] = useState<ResolvedCommandState | null>(null)
+  let [isLoadingParams, setIsLoadingParams] = useState(false)
+  let [isSubmittingCommand, setIsSubmittingCommand] = useState(false)
 
   // SAME SUBJECT BUG:
   // Commands have no clue which subject id it's actually associated with.
@@ -49,21 +51,36 @@ function Palette(props: Props) {
     setPendingCommand(null)
   }
 
-  function handleSubmit (command: CommandState) {
-    if (Object.entries(command.params).length) {
-      if (context.hasSubject(command.subject)) {
-        setPendingCommand(command)
+  async function handleSubmit (command: CommandState) {
+    const resolved = await resolveCommandParams(command)
+    if (Object.entries(resolved.params).length) {
+      if (context.hasSubject(resolved.subject)) {
+        setPendingCommand(resolved)
       } else {
-        throw new Error(`Tried to submit a form for subject ${command.subject}, but we couldn't find that subject in context`)
+        throw new Error(`Tried to submit a form for subject ${resolved.subject}, but we couldn't find that subject in context`)
       }
     } else {
-      submitWithData(command, {})
+      submitWithData(resolved, {})
     }
   }
 
-  function submitWithData<P extends CommandParams, C extends CommandState<P>>(command: C, data: DataFromParams<P>) {
+  async function resolveCommandParams<P extends CommandParams>(command: CommandState<P>) : Promise<ResolvedCommandState<P>> {
+    setIsLoadingParams(true)
+
+    const params = typeof command.params === "function"
+      ? await Promise.resolve(command.params())
+      : command.params
+
+    setIsLoadingParams(false)
+
+    return { ...command, params }
+  }
+
+  async function submitWithData<P extends CommandParams, C extends CommandState<P>>(command: C, data: DataFromParams<P>) {
     if (context.hasSubject(command.subject) || command.subject.type === 'Global') {
-      command.onSubmit(data)
+      setIsSubmittingCommand(true)
+      await Promise.resolve(command.onSubmit(data))
+      setIsSubmittingCommand(false)
     }
     setPendingCommand(null)
   }
@@ -92,16 +109,32 @@ function Palette(props: Props) {
   return (
     <CommandsProvider model={commands}>
       <Styles.Palette ref={blockRef} onKeyDown={handleKeyDown}>
-        {pendingCommand ? (
-          <PaletteForm command={pendingCommand} onSubmit={submitWithData} />
-        ) : <>
-          <Line ref={lineRef} context={context} value={search} onChange={handleValueChange} onSubmit={() => { if (selectedCommand) handleSubmit(selectedCommand)}} />
-          <CommandList
-            commands={matchingCommands}
-            selection={selectedCommand || first_match || null}
-            onSubmit={handleSubmit}
+        {isLoadingParams ? (
+          <Styles.Loader>Loading...</Styles.Loader>
+        ) : pendingCommand ? (
+          <PaletteForm
+            command={pendingCommand}
+            isSubmitting={isSubmittingCommand}
+            onSubmit={submitWithData}
           />
-        </>}
+        ) : (
+          <>
+            <Line
+              ref={lineRef}
+              context={context}
+              value={search}
+              onChange={handleValueChange}
+              onSubmit={() => {
+                if (selectedCommand) handleSubmit(selectedCommand);
+              }}
+            />
+            <CommandList
+              commands={matchingCommands}
+              selection={selectedCommand || first_match || null}
+              onSubmit={handleSubmit}
+            />
+          </>
+        )}
         {children}
       </Styles.Palette>
     </CommandsProvider>
@@ -257,9 +290,9 @@ export { Subject }
 type CommandProps<P extends CommandParams> = {
   name: string,
   description: string,
-  params: P,
+  params: P | (() => (P | Promise<P>)),
   enabled?: boolean,
-  onSubmit(data: DataFromParams<P>) : void 
+  onSubmit(data: DataFromParams<P>) : void | Promise<void>
 }
 
 export function Command<P extends CommandParams>(props: CommandProps<P>) {

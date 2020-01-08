@@ -45,43 +45,41 @@ export function App() {
           <Command name="logout" description="Log out of your account" enabled={isAuthenticated} onSubmit={logout}/>
         </Subject>
         <Subject type="Log">
-          <Command name="start" description="Starts a new Entry" params={{
-            sector: { type: 'string', required: true },
-            project: { type: 'string', required: true },
-            description: { type: 'string', required: true },
-          }} onSubmit={(data) => {
-            active_entry.start(data)
+          <Command name="start" description="Starts a new Entry" params={
+            async () => {
+              await sleep(300)
+              return {
+                sector: { type: 'string', required: true },
+                project: { type: 'string', required: true },
+                description: { type: 'string', required: true },
+              } as const
+          }} onSubmit={async (data) => {
+            await active_entry.start(data)
           }}/>
         </Subject>
 
         <Subject type="Entry (Active)">
-          <Command name="stop" description="Stops the log" onSubmit={() => {
-            let entry = active_entry.stop()
-            if (entry) entries.create(entry)
+          <Command name="stop" description="Stops the log" onSubmit={async () => {
+            await active_entry.stop()
           }} />
         </Subject>
 
         <Subject.WithId type="Entry">{(id: string) => {
-          let entry = entries.find(id)
-
-          // TODO: why are we hitting this after delete?
-          // if (!entry) throw Error(`Could not find entry with id: ${id}`)
-          if (!entry) return null
-
           return <>
-            <Command name="delete" description="Deletes an entry" onSubmit={() => entries.delete(id)} />
+            <Command name="delete" description="Deletes an entry" onSubmit={async () => entries.delete(id)} />
             <Command name="edit" description="Edits an existing Entry"
-              params={{
-                sector: { type: 'string', required: true, defaultValue: entry.sector },
-                project: { type: 'string', required: true, defaultValue: entry.project },
-                description: { type: 'string', required: true, defaultValue: entry.description },
-                start: { type: 'time', required: true, defaultValue: entry.start },
-                end: { type: 'time', required: true, defaultValue: entry.end }
+              params={async () => {
+                const entry = await entries.find(id)
+                if (!entry) throw Error(`Could not find entry with id: ${id}`)
+                return {
+                  sector: { type: 'string', required: true, defaultValue: entry.sector },
+                  project: { type: 'string', required: true, defaultValue: entry.project },
+                  description: { type: 'string', required: true, defaultValue: entry.description },
+                  start: { type: 'time', required: true, defaultValue: entry.start },
+                  end: { type: 'time', required: true, defaultValue: entry.end }
+                } as const
               }}
-              onSubmit={(data) => {
-                entries.update(id, data)
-              }}
-            />
+              onSubmit={async (data) => entries.update(id, data)} />
           </>
         }}
         </Subject.WithId>
@@ -89,3 +87,5 @@ export function App() {
     </Styled.App>
   )
 }
+
+const sleep = (duration: number) => new Promise((resolve) => window.setTimeout(resolve, duration))
