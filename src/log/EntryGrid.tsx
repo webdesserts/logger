@@ -1,10 +1,10 @@
 import React from 'react';
 import { Textbox } from '../controls/Textbox'
 import { Durationbox } from '../controls/Durationbox'
-import { Entry, EntriesState } from './models/entries'
+import { Entry, EntriesState } from './stores/entries'
 import * as Styles from './EntryGrid.styles'
 import { Timebox } from '../controls/Timebox';
-import { ActiveEntryState } from './models/active_entry';
+import { ActiveEntryState } from './stores/active_entry';
 import { Counter } from './Counter';
 
 export { EntryGrid };

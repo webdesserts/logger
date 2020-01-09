@@ -1,9 +1,8 @@
 import { DateTime } from 'luxon'
 import { Optional, Drop } from '../../utils/types'
 import nanoid from 'nanoid'
-import { Model } from '../../utils/model'
+import { Store } from '../../utils/store'
 import { busyDay } from './fixtures';
-import { findDOMNode } from 'react-dom';
 
 /*=======*\
 *  Types  *
@@ -22,10 +21,10 @@ export interface Entry {
 export type EntryData = Drop<'id', Entry>
 
 /*=======*\
-*  Model  *
+*  Store  *
 \*=======*/
 
-export class EntriesModel extends Model<Entry[]> {
+export class EntriesStore extends Store<Entry[]> {
   static initialState: Entry[] = busyDay
 
   // init() {
@@ -58,4 +57,4 @@ export class EntriesModel extends Model<Entry[]> {
   }
 }
 
-export let [ EntriesProvider, useEntries ] = EntriesModel.createContext(EntriesModel.initialState)
+export let [ EntriesProvider, useEntries ] = EntriesStore.createContext(EntriesStore.initialState)

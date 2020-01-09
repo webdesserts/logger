@@ -1,18 +1,18 @@
 import React from 'react';
-import { PaletteContextProvider, PaletteContextModel } from './models/context.model';
-import { TriggersProvider, TriggersModel } from './models/triggers.model';
+import { PaletteContextProvider, PaletteContextStore } from './stores/context.store';
+import { TriggersProvider, TriggersStore } from './stores/triggers.store';
 
 interface PaletteProviderProps {
   children: React.ReactChild
 }
 
 export function PaletteProvider(props: PaletteProviderProps) {
-  let palette_context = PaletteContextModel.useState(PaletteContextModel.initialState)
-  let triggers = TriggersModel.useState(TriggersModel.initialState)
+  let palette_context = PaletteContextStore.useState(PaletteContextStore.initialState)
+  let triggers = TriggersStore.useState(TriggersStore.initialState)
 
   return (
-    <PaletteContextProvider model={palette_context}>
-      <TriggersProvider model={triggers}>
+    <PaletteContextProvider store={palette_context}>
+      <TriggersProvider store={triggers}>
         {props.children}
       </TriggersProvider>
     </PaletteContextProvider>

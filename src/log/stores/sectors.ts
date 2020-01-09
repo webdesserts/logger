@@ -1,5 +1,5 @@
 import nanoid from 'nanoid'
-import { Model } from '../../utils/model'
+import { Store } from '../../utils/store'
 
 /*=======*\
 *  Types  *
@@ -9,10 +9,10 @@ export type SectorsState = Sector[]
 export type Sector = { id: string, name: string }
 
 /*=======*\
-*  Model  *
+*  Store  *
 \*=======*/
 
-export class SectorsModel extends Model<SectorsState> {
+export class SectorsStore extends Store<SectorsState> {
   static initialState: SectorsState = []
 
   create(name: string) {
@@ -39,4 +39,4 @@ export class SectorsModel extends Model<SectorsState> {
   }
 }
 
-export let [ SectorsProvider, useSectors ] = SectorsModel.createContext(SectorsModel.initialState)
+export let [ SectorsProvider, useSectors ] = SectorsStore.createContext(SectorsStore.initialState)

@@ -1,6 +1,6 @@
-import { Model } from '../../utils/model';
+import { Store } from '../../utils/store';
 import { DateTime } from 'luxon'
-import { SubjectPayload, PaletteContextModel } from './context.model';
+import { SubjectPayload, PaletteContextStore } from './context.store';
 
 /*=======*\
 *  Types  *
@@ -61,7 +61,7 @@ export type NamedType<T extends CommandParamTypes> = (
 \*=========*/
 
 function isEqual(a: CommandState<any> | null, b: CommandState<any> | null) : boolean {
-  return a !== null && b !== null && a.name === b.name && PaletteContextModel.isEqual(a.subject, b.subject);
+  return a !== null && b !== null && a.name === b.name && PaletteContextStore.isEqual(a.subject, b.subject);
 }
 
 function display(command: CommandState<any>) : string {
@@ -69,10 +69,10 @@ function display(command: CommandState<any>) : string {
 }
 
 /*=======*\
-*  Model  *
+*  Store  *
 \*=======*/
 
-export class CommandsModel extends Model<CommandsState> {
+export class CommandsStore extends Store<CommandsState> {
   static initialState: CommandsState = []
   static isEqual = isEqual
   static display = display
@@ -95,4 +95,4 @@ export class CommandsModel extends Model<CommandsState> {
   }
 }
 
-export const [ CommandsProvider, useCommands ] = CommandsModel.createContext(CommandsModel.initialState)
+export const [ CommandsProvider, useCommands ] = CommandsStore.createContext(CommandsStore.initialState)

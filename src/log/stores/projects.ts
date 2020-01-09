@@ -1,5 +1,5 @@
 import nanoid from 'nanoid'
-import { Model } from '../../utils/model'
+import { Store } from '../../utils/store'
 
 /*=======*\
 *  Types  *
@@ -9,10 +9,10 @@ export type ProjectsState = Project[]
 export type Project = { id: string, name: string }
 
 /*=======*\
-*  Model  *
+*  Store  *
 \*=======*/
 
-export class ProjectsModel extends Model<ProjectsState> {
+export class ProjectsStore extends Store<ProjectsState> {
   create(name: string) {
     this.produceState((draft) => {
       let exists = Boolean(draft.find((project) => project.name === name))
@@ -35,4 +35,4 @@ export class ProjectsModel extends Model<ProjectsState> {
 }
 
 let initialState: ProjectsState = []
-export let [ ProjectsProvider, useProjects ] = ProjectsModel.createContext(initialState)
+export let [ ProjectsProvider, useProjects ] = ProjectsStore.createContext(initialState)

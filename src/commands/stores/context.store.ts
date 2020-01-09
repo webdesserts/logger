@@ -1,4 +1,4 @@
-import { Model } from '../../utils/model';
+import { Store } from '../../utils/store';
 
 /*=======*\
 *  Types  *
@@ -20,10 +20,10 @@ function isEqual(a: SubjectPayload, b: SubjectPayload) {
 }
 
 /*=======*\
-*  Model  *
+*  Store  *
 \*=======*/
 
-export class PaletteContextModel extends Model<PaletteContextState> {
+export class PaletteContextStore extends Store<PaletteContextState> {
   static initialState: PaletteContextState = []
   static display = display
   static isEqual = isEqual
@@ -63,4 +63,4 @@ export class PaletteContextModel extends Model<PaletteContextState> {
   }
 }
 
-export const [ PaletteContextProvider, usePaletteContext ] = PaletteContextModel.createContext(PaletteContextModel.initialState)
+export const [ PaletteContextProvider, usePaletteContext ] = PaletteContextStore.createContext(PaletteContextStore.initialState)

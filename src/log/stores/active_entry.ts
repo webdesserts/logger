@@ -1,6 +1,6 @@
 import { Entry } from './entries'
 import nanoid from 'nanoid'
-import { Model } from '../../utils/model';
+import { Store } from '../../utils/store';
 import { DateTime } from 'luxon';
 import { sleep } from '../../utils/sleep'
 
@@ -17,10 +17,10 @@ export interface ActiveEntryState {
 }
 
 /*=======*\
-*  Model  *
+*  Store  *
 \*=======*/
 
-export class ActiveEntryModel extends Model<ActiveEntryState> {
+export class ActiveEntryStore extends Store<ActiveEntryState> {
   static initialState: ActiveEntryState = {
     id: nanoid(8),
     sector: "",
@@ -57,4 +57,4 @@ export class ActiveEntryModel extends Model<ActiveEntryState> {
   }
 }
 
-export const [ ActiveEntryProvider, useActiveEntry ] = ActiveEntryModel.createContext(ActiveEntryModel.initialState)
+export const [ ActiveEntryProvider, useActiveEntry ] = ActiveEntryStore.createContext(ActiveEntryStore.initialState)

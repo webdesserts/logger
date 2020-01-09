@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { CommandParams, DataFromParams, NamedType, CommandParamTypes, CommandState, CommandParamOptions, ResolvedCommandState } from './models/commands.model';
+import { CommandParams, DataFromParams, NamedType, CommandParamTypes, CommandState, CommandParamOptions, ResolvedCommandState } from './stores/commands.store';
 import { Textbox } from '../controls/Textbox';
 import { Timebox } from '../controls/Timebox';
 import { Button } from '../controls/Button';

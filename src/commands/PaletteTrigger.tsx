@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, RefObject } from 'react';
 import * as Styles from './PaletteTrigger.styles';
-import { usePaletteContext } from './models/context.model';
-import { useTriggers, NodeTriggerState, AutoTriggerState } from './models/triggers.model';
+import { usePaletteContext } from './stores/context.store';
+import { useTriggers, NodeTriggerState, AutoTriggerState } from './stores/triggers.store';
 
 type SubjectProps = {
   type: string,

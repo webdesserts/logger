@@ -3,8 +3,8 @@ import { Router } from '@reach/router'
 import { Log } from './log/Log'
 import DesignSystem from './design-system/DesignSystem'
 import { Palette, Subject, Command } from './commands/Palette';
-import { useActiveEntry } from './log/models/active_entry';
-import { useEntries } from './log/models/entries';
+import { useActiveEntry } from './log/stores/active_entry';
+import { useEntries } from './log/stores/entries';
 import { useAuth } from './utils/auth';
 import * as Styled from './App.styles'
 import { useSubjectTrigger } from './commands';

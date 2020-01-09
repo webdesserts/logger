@@ -1,5 +1,5 @@
-import { Model } from '../../utils/model';
-import { PaletteContextModel, SubjectPayload } from './context.model';
+import { Store } from '../../utils/store';
+import { PaletteContextStore, SubjectPayload } from './context.store';
 
 /*=======*\
 *  Types  *
@@ -18,20 +18,20 @@ function isEqual(search: TriggerState, trigger: TriggerState) {
   return (
     trigger.$node === search.$node &&
     trigger.auto === search.auto,
-    PaletteContextModel.isEqual(search.subject, trigger.subject)
+    PaletteContextStore.isEqual(search.subject, trigger.subject)
   )
 }
 
 /*=======*\
-*  Model  *
+*  Store  *
 \*=======*/
 
-export class TriggersModel extends Model<TriggersState> {
+export class TriggersStore extends Store<TriggersState> {
   static initialState: TriggersState = []
   static isEqual = isEqual
 
   // init() {
-  //   console.log('Triggers:', this.state.map(trigger => PaletteContextModel.display(trigger.subject)))
+  //   console.log('Triggers:', this.state.map(trigger => PaletteContextStore.display(trigger.subject)))
   // }
 
   add(trigger: TriggerState) {
@@ -55,8 +55,8 @@ export class TriggersModel extends Model<TriggersState> {
     )
   }
   findBySubject(subject: SubjectPayload) {
-    return this.state.find((trigger) => TriggersModel.matchesSubject(trigger, subject))
+    return this.state.find((trigger) => TriggersStore.matchesSubject(trigger, subject))
   }
 }
 
-export const [ TriggersProvider, useTriggers ] = TriggersModel.createContext(TriggersModel.initialState)
+export const [ TriggersProvider, useTriggers ] = TriggersStore.createContext(TriggersStore.initialState)

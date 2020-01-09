@@ -1,8 +1,8 @@
 import React from 'react';
 import * as Styles from './Log.styles';
 import { DateTime, Duration } from 'luxon';
-import { ActiveEntryState } from './models/active_entry';
-import { EntriesState } from './models/entries';
+import { ActiveEntryState } from './stores/active_entry';
+import { EntriesState } from './stores/entries';
 import { Counter } from './Counter';
 
 export { DayOverview };

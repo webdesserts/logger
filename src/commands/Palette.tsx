@@ -1,8 +1,8 @@
 import React, { useState, ChangeEventHandler, KeyboardEvent, useRef, RefObject, useImperativeHandle, Ref, useContext, useEffect, } from 'react'
 import * as Styles from './Palette.styles'
-import { usePaletteContext, PaletteContextModel, SubjectPayload } from './models/context.model';
+import { usePaletteContext, PaletteContextStore, SubjectPayload } from './stores/context.store';
 import { useTriggersManager } from './PaletteTrigger';
-import { CommandsModel, CommandState, CommandsProvider, CommandParams, DataFromParams, useCommands, ResolvedCommandState, } from './models/commands.model';
+import { CommandsStore, CommandState, CommandsProvider, CommandParams, DataFromParams, useCommands, ResolvedCommandState, } from './stores/commands.store';
 import { PaletteForm } from './Form';
 
 export { Palette }
@@ -24,7 +24,7 @@ function Palette(props: Props) {
     if (lineRef.current) lineRef.current.focus()
   })
 
-  let commands = CommandsModel.useState(CommandsModel.initialState)
+  let commands = CommandsStore.useState(CommandsStore.initialState)
   let [search, setSearch] = useState("")
   
   let children: SubjectElement[] = props.children ? React.Children.toArray(props.children) : []
@@ -103,11 +103,11 @@ function Palette(props: Props) {
   }
 
   // if (pendingCommand) {
-  //   console.log('pending:', CommandsModel.display(pendingCommand))
+  //   console.log('pending:', CommandsStore.display(pendingCommand))
   // }
 
   return (
-    <CommandsProvider model={commands}>
+    <CommandsProvider store={commands}>
       <Styles.Palette ref={blockRef} onKeyDown={handleKeyDown}>
         {isLoadingParams ? (
           <Styles.Loader>Loading...</Styles.Loader>
@@ -147,7 +147,7 @@ function Palette(props: Props) {
 
 type LineProps = {
   value: string,
-  context: PaletteContextModel,
+  context: PaletteContextStore,
   onChange: (value: string) => void,
   onSubmit: () => void
 }
@@ -176,7 +176,7 @@ let Line = React.forwardRef(function Line(props: LineProps, ref: Ref<LineRef>) {
     <Styles.Line onKeyDown={handleKeyDown}>
       <Styles.Contexts>
         {Array.from(props.context.state).reverse().map((subject) => (
-          <Styles.Context key={PaletteContextModel.display(subject)}>{subject.type}</Styles.Context>
+          <Styles.Context key={PaletteContextStore.display(subject)}>{subject.type}</Styles.Context>
         ))}
       </Styles.Contexts>
       <Styles.Chevron>&rsaquo;</Styles.Chevron>
@@ -201,7 +201,7 @@ function CommandList (props: CommandListProps) {
   return (
     <Styles.Commands>
       {commands.map((command, i) => {
-        let isSelected = CommandsModel.isEqual(command, selection)
+        let isSelected = CommandsStore.isEqual(command, selection)
         return (
           <Styles.Command key={command.subject.type + command.name} isSelected={isSelected} onClick={onSubmit.bind(null, command)}>
             <Styles.CommandName>
@@ -220,7 +220,7 @@ function CommandList (props: CommandListProps) {
 *  Helpers  *
 \*=========*/
 
-function sortCommandsBySubjectDepth(context: PaletteContextModel) {
+function sortCommandsBySubjectDepth(context: PaletteContextStore) {
   return (a: CommandState, b: CommandState) => {
     let ia = context.findIndexOfSubjectWithType(a.subject.type)
     let ib = context.findIndexOfSubjectWithType(b.subject.type)
