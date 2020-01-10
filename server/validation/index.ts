@@ -1,5 +1,5 @@
 export * from './validate'
-export * from './requests'
+export * from './api'
 
 export * from './activeEntry'
 export * from './entries'

@@ -1,8 +1,7 @@
-import { Request } from './router'
-import { UnauthorizedError, AuthTokenExpired } from './errors'
+import { ServerError } from './errors'
 import Jwt from 'jsonwebtoken'
 import jwksClient from 'jwks-rsa'
-import { Types } from '.'
+import { API } from './validation'
 
 type Payload = {
   iss: string
@@ -19,7 +18,7 @@ type AuthenticationDetails = {
   }
 }
 
-export async function authenticate(req: Request) : Promise<AuthenticationDetails> {
+export async function authenticate(req: API.Request) : Promise<AuthenticationDetails> {
   const bearerTag = 'Bearer '
   if (req.headers.authorization?.startsWith(bearerTag)) {
     const { authorization } = req.headers
@@ -30,13 +29,13 @@ export async function authenticate(req: Request) : Promise<AuthenticationDetails
         issuer: 'https://webdesserts.auth0.com/',
         algorithms: ['RS256']
       }, (error, payload) => {
-        if (error && error.message === 'jwt expired') reject(AuthTokenExpired.create(req, error))
-        else if (error) reject(UnauthorizedError.create(req, error))
+        if (error && error.message === 'jwt expired') reject(ServerError.AuthTokenExpired.create(req, error))
+        else if (error) reject(ServerError.Unauthorized.create(req, error))
         else resolve(translatePayload(payload))
       }) 
     })
   } else {
-    throw UnauthorizedError.create(req)
+    throw ServerError.Unauthorized.create(req)
   }
 }
 
@@ -55,10 +54,10 @@ function translatePayload(payload: Payload) : AuthenticationDetails {
 }
 
 type AuthoredData = { author: string }
-export function isAuthor<M extends AuthoredData>(data: M, user: Types.UserData) : boolean {
+export function isAuthor<M extends AuthoredData>(data: M, user: API.UserData) : boolean {
   return Boolean(data && data.author === user.id)
 }
 
-export function filterUnauthored<M extends AuthoredData>(data: M | null, user: Types.UserData) : M | null {
+export function filterUnauthored<M extends AuthoredData>(data: M | null, user: API.UserData) : M | null {
   return (data && isAuthor(data, user)) ? data : null
 }

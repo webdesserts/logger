@@ -1,5 +1,6 @@
 import * as T from 'io-ts'
-import { Request } from './requests'
+import { API } from './api'
+import { ActiveEntryModel } from '../models/ActiveEntryModel'
 
 export const FindActiveEntryData = T.type({ })
 export type FindActiveEntryData = T.TypeOf<typeof FindActiveEntryData>
@@ -28,14 +29,29 @@ export const StopActiveEntryData = T.type({
 })
 export type StopActiveEntryData = T.TypeOf<typeof StopActiveEntryData>
 
-export const StartActiveEntryRequest = Request(T.type({}), StartActiveEntryData)
-export type StartActiveEntryRequest = T.TypeOf<typeof StartActiveEntryRequest>
-
-export const StopActiveEntryRequest = Request(T.type({}), StopActiveEntryData)
-export type StopActiveEntryRequest = T.TypeOf<typeof StopActiveEntryRequest>
-
-export const UpdateActiveEntryRequest = Request(FindActiveEntryData, UpdateActiveEntryData)
-export type UpdateActiveEntryRequest = T.TypeOf<typeof UpdateActiveEntryRequest>
-
-export const FindActiveEntryRequest = Request(FindActiveEntryData, T.type({}))
+export const FindActiveEntryRequest = API.RequestData(FindActiveEntryData, T.type({}))
 export type FindActiveEntryRequest = T.TypeOf<typeof FindActiveEntryRequest>
+export type FindActiveEntryResponse = API.ResponseBody<{
+  activeEntry: AsyncReturnType<ActiveEntryModel['find']>
+}>
+
+export const StartActiveEntryRequest = API.RequestData(T.type({}), StartActiveEntryData)
+export type StartActiveEntryRequest = T.TypeOf<typeof StartActiveEntryRequest>
+export type StartActiveEntryResponse = API.ResponseBody<{
+  activeEntry: AsyncReturnType<ActiveEntryModel['start']>
+}>
+
+export const StopActiveEntryRequest = API.RequestData(T.type({}), StopActiveEntryData)
+export type StopActiveEntryRequest = T.TypeOf<typeof StopActiveEntryRequest>
+export type StopActiveEntryResponse = API.ResponseBody<{
+  activeEntry: null,
+  entry: AsyncReturnType<ActiveEntryModel['stop']>
+}>
+
+export const UpdateActiveEntryRequest = API.RequestData(FindActiveEntryData, UpdateActiveEntryData)
+export type UpdateActiveEntryRequest = T.TypeOf<typeof UpdateActiveEntryRequest>
+export type UpdateActiveEntryResponse = API.ResponseBody<{
+  activeEntry: AsyncReturnType<ActiveEntryModel['update']>
+}>
+
+export type DeleteActiveEntryResponse = API.ResponseBody<{}>

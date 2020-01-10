@@ -1,5 +1,5 @@
 import { ActiveEntryUpdateArgs, ActiveEntryInclude } from '@prisma/photon'
-import { UserData } from '../validation'
+import { API } from '../validation'
 import { Model } from './Model'
 import { Types } from '..'
 import { SectorModel } from './SectorModel'
@@ -8,7 +8,7 @@ import { ProjectModel } from './ProjectModel'
 const include: ActiveEntryInclude = { project: true, sector: true }
 
 export class ActiveEntryModel extends Model {
-  async start (data: Types.StartActiveEntryData, user: UserData) {
+  async start (data: Types.StartActiveEntryData, user: API.UserData) {
     const author = user.id
     const sector = await SectorModel.create(this.db).generateCreateOrConnectQuery(data.sector, user)
     const project = await ProjectModel.create(this.db).generateCreateOrConnectQuery(data.project, user)
@@ -20,7 +20,7 @@ export class ActiveEntryModel extends Model {
     })
   }
 
-  async stop (data: Types.StopActiveEntryData, user: UserData) {
+  async stop (data: Types.StopActiveEntryData, user: API.UserData) {
     const activeEntry = await this.find(user)
     if (!activeEntry) return null
 
@@ -37,7 +37,7 @@ export class ActiveEntryModel extends Model {
     return entry
   }
 
-  async update (data: Types.UpdateActiveEntryData, user: UserData)  {
+  async update (data: Types.UpdateActiveEntryData, user: API.UserData)  {
     const { sector, project, ...otherData } = data
     const author = user.id
     const query: ActiveEntryUpdateArgs = {
@@ -50,13 +50,13 @@ export class ActiveEntryModel extends Model {
     return await this.db.entries.update(query)
   }
 
-  async find(user: UserData) {
+  async find(user: API.UserData) {
     const author = user.id
     const where = { author }
     return await this.db.activeEntries.findOne({ where, include })
   }
 
-  async delete(user: UserData) : Promise<boolean> {
+  async delete(user: API.UserData) : Promise<boolean> {
     if (await this.find(user)) {
       const author = user.id
       const where = { author }

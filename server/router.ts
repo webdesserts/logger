@@ -1,11 +1,9 @@
-import { NowRequest, NowResponse } from '@now/node';
-import { MethodNotAllowedError, ServerError, InternalServerError } from './errors'
+import { ServerError } from './errors'
 import { create } from './createable';
+import { API } from './validation';
 
-export type Request = NowRequest
-export type Response = NowResponse
-type LifecycleHandler = (request: Request) => void | Promise<void>
-type RequestHandler = (request: Request, response: Response) => Response | Promise<Response>
+type LifecycleHandler = (request: API.Request) => void | Promise<void>
+type RequestHandler<T extends {} = any> = (request: API.Request, response: API.Response<T>) => API.Response<T> | Promise<API.Response<T>>
 
 const enum LIFECYCLES {
   BEFORE,
@@ -37,24 +35,24 @@ export class Router {
   }
 
   // method handlers
-  get(handler: RequestHandler) {
+  get<R extends {} = {}>(handler: RequestHandler<R>) {
     this.methodHandlers.set(METHODS.GET, handler)
   }
-  post(handler: RequestHandler) {
+  post<R extends {} = {}>(handler: RequestHandler<R>) {
     this.methodHandlers.set(METHODS.POST, handler)
   }
-  put(handler: RequestHandler) {
+  put<R extends {} = {}>(handler: RequestHandler<R>) {
     this.methodHandlers.set(METHODS.PUT, handler)
   }
-  patch(handler: RequestHandler) {
+  patch<R extends {} = {}>(handler: RequestHandler<R>) {
     this.methodHandlers.set(METHODS.PATCH, handler)
   }
-  delete(handler: RequestHandler) {
+  delete<R extends {} = {}>(handler: RequestHandler<R>) {
     this.methodHandlers.set(METHODS.DELETE, handler)
   }
 
   // routing
-  handler = async (req: Request, res: Response) : Promise<Response>  => {
+  handler = async (req: API.Request, res: API.Response) : Promise<API.Response>  => {
     const { method } = req
     if (isValidMethod(method)) {
       const beforeHandler = this.lifecycleHandlers.get(LIFECYCLES.BEFORE) || (() => {})
@@ -70,12 +68,12 @@ export class Router {
           if (error instanceof ServerError) {
             return error.send(res)
           } else {
-            return InternalServerError.create(req, error).send(res)
+            return ServerError.Internal.create(req, error).send(res)
           }
         }
       }
     }
-    return MethodNotAllowedError.create(req).send(res)
+    return ServerError.MethodNotAllowed.create(req).send(res)
   }
 }
 

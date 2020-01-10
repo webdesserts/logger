@@ -1,15 +1,15 @@
 import { EntryInclude, EntryUpdateArgs } from '@prisma/photon'
-import { UserData } from '../validation'
 import { filterUnauthored } from '../authenticate'
 import { Model } from './Model'
 import { Types } from '..'
 import { SectorModel } from './SectorModel'
 import { ProjectModel } from './ProjectModel'
+import { API } from '../validation'
 
 const include: EntryInclude = { project: true, sector: true }
 
 export class EntryModel extends Model {
-  async create (data: Types.CreateEntryData, user: UserData) {
+  async create (data: Types.CreateEntryData, user: API.UserData) {
     const author = user.id
     const sector = await SectorModel.create(this.db).generateCreateOrConnectQuery(data.sector, user)
     const project = await ProjectModel.create(this.db).generateCreateOrConnectQuery(data.project, user)
@@ -18,7 +18,7 @@ export class EntryModel extends Model {
     })
   }
 
-  async update (id: string, data: Types.UpdateEntryData, user: UserData)  {
+  async update (id: string, data: Types.UpdateEntryData, user: API.UserData)  {
     const { sector, project,  ...otherData } = data
     const author = user.id
     const query: EntryUpdateArgs = {
@@ -31,19 +31,19 @@ export class EntryModel extends Model {
     return await this.db.entries.update(query)
   }
 
-  async findAll(user: UserData) {
+  async findAll(user: API.UserData) {
     const where = { author: user.id }
     const orderBy = { end: 'desc' } as const
     return await this.db.entries({ where, orderBy, include })
   }
 
-  async findById(id: string, user: UserData) {
+  async findById(id: string, user: API.UserData) {
     const where = { id }
     const entry = await this.db.entries.findOne({ where, include })
     return filterUnauthored(entry, user)
   }
 
-  async delete(id: string, user: UserData) : Promise<boolean> {
+  async delete(id: string, user: API.UserData) : Promise<boolean> {
     if (await this.findById(id, user)) {
       const where = { id }
       await this.db.entries.delete({ where })

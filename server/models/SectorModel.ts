@@ -1,31 +1,31 @@
-import { UserData } from '../validation'
+import { API } from '../validation'
 import { Model } from './Model'
 import { Sector, SectorCreateOneWithoutSectorInput } from '@prisma/photon'
 
 export class SectorModel extends Model {
-  async create(name: string, user: UserData) {
+  async create(name: string, user: API.UserData) {
     const data = { name, author: user.id }
     return await this.db.sectors.create({ data })
   }
 
-  async find(name: string, user: UserData) {
+  async find(name: string, user: API.UserData) {
     const author_name = { name, author: user.id }
     const where = { author_name }
     return await this.db.sectors.findOne({ where })
   }
 
-  async findAll(user: UserData) {
+  async findAll(user: API.UserData) {
     const where = { author: user.id }
     return await this.db.sectors.findMany({ where })
   }
 
-  async delete(name: string, user: UserData) {
+  async delete(name: string, user: API.UserData) {
     const author_name = { name, author: user.id }
     const where = { author_name }
     return await this.db.sectors.delete({ where })
   }
 
-  async generateCreateOrConnectQuery(name: string, user: UserData) : Promise<SectorCreateOneWithoutSectorInput> {
+  async generateCreateOrConnectQuery(name: string, user: API.UserData) : Promise<SectorCreateOneWithoutSectorInput> {
     const sector = await this.find(name, user)
     if (sector) {
       return { connect: { author_name: sector } }

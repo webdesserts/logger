@@ -1,5 +1,6 @@
 import * as T from 'io-ts'
-import { Request } from './requests'
+import { API } from './api'
+import { EntryModel } from '../models/EntryModel'
 
 export const FindEntryData = T.type({
   id: T.string,
@@ -30,14 +31,28 @@ export const CreateEntryData = T.type({
 
 export type CreateEntryData = T.TypeOf<typeof CreateEntryData>
 
-export const CreateEntryRequest = Request(T.type({}), CreateEntryData)
+export const CreateEntryRequest = API.RequestData(T.type({}), CreateEntryData)
 export type CreateEntryRequest = T.TypeOf<typeof CreateEntryRequest>
+export type CreateEntryResponse = API.ResponseBody<{
+  entry: AsyncReturnType<EntryModel['create']>
+}>
 
-export const UpdateEntryRequest = Request(FindEntryData, UpdateEntryData)
+export const UpdateEntryRequest = API.RequestData(FindEntryData, UpdateEntryData)
 export type UpdateEntryRequest = T.TypeOf<typeof UpdateEntryRequest>
+export type UpdateEntryResponse = API.ResponseBody<{
+  entry: AsyncReturnType<EntryModel['update']>
+}>
 
-export const FindEntryRequest = Request(FindEntryData, T.type({}))
+export type DeleteEntryResponse = API.ResponseBody<{}>
+
+export const FindEntryRequest = API.RequestData(FindEntryData, T.type({}))
 export type FindEntryRequest = T.TypeOf<typeof FindEntryRequest>
+export type FindEntryResponse = API.ResponseBody<{
+  entry: AsyncReturnType<EntryModel['findById']>
+}>
 
-export const FindAllEntriesRequest = Request(T.type({}), FindAllEntriesData)
+export const FindAllEntriesRequest = API.RequestData(T.type({}), FindAllEntriesData)
 export type FindAllEntriesRequest = T.TypeOf<typeof FindAllEntriesRequest>
+export type FindAllEntriesResponse = API.ResponseBody<{
+  entries: AsyncReturnType<EntryModel['findAll']>
+}>

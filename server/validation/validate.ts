@@ -1,19 +1,19 @@
-import { Request } from '../router'
-import { BadRequestError } from '../errors'
+import { ServerError } from '../errors'
 import * as T from 'io-ts'
 import * as array from 'fp-ts/lib/Array'
 import * as option from 'fp-ts/lib/Option'
 import { fold } from 'fp-ts/lib/Either'
 import { pipe } from 'fp-ts/lib/pipeable'
 import { eqString } from 'fp-ts/lib/Eq'
+import { API } from './api'
 
-export function validate<R extends Request, A>(req: R, type: T.Type<A>) : A {
+export function validate<R extends API.Request, A>(req: R, type: T.Type<A>) : A {
   const data = { query: req.query, body: req.body }
 
   const onSuccess = (result: A) => result
   const onError = (errors: T.Errors) => {
     const validations = array.uniq(eqString)(array.compact(errors.map(formatValidationError)))
-    throw BadRequestError.create(req, validations)
+    throw ServerError.BadRequest.create(req, validations)
   }
 
   return pipe(type.decode(data), fold(onError, onSuccess))
