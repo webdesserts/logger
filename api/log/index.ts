@@ -1,6 +1,6 @@
 import {
   Router,
-  validate,
+  validateRequest,
   Types,
   authenticate,
 } from "../../server";
@@ -23,7 +23,7 @@ router.get<FindAllEntriesResponse>(async (req, res) => {
 
 router.post<CreateEntryResponse>(async (req, res) => {
   const { user } = await authenticate(req)
-  const { body } = validate(req, Types.CreateEntryRequest)
+  const { body } = validateRequest(req, Types.CreateEntryRequest)
   const entry = await model.create(body, user)
   return res.status(200).json({ entry })
 })

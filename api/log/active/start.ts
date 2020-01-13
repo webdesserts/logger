@@ -1,6 +1,6 @@
 import {
   Router,
-  validate,
+  validateRequest,
   Types,
   authenticate,
 } from "../../../server";
@@ -17,7 +17,7 @@ router.after(async () => await db.disconnect())
 
 router.post<StartActiveEntryResponse>(async (req, res) => {
   const { user } = await authenticate(req)
-  const { body } = validate(req, Types.StartActiveEntryRequest)
+  const { body } = validateRequest(req, Types.StartActiveEntryRequest)
   const activeEntry = await model.start(body, user)
   return res.status(200).json({ activeEntry })
 })

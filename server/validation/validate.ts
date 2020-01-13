@@ -7,24 +7,33 @@ import { pipe } from 'fp-ts/lib/pipeable'
 import { eqString } from 'fp-ts/lib/Eq'
 import { API } from './api'
 
-export function validate<R extends API.Request, A>(req: R, type: T.Type<A>) : A {
-  const data = { query: req.query, body: req.body }
+class ValidationError extends TypeError {
+  constructor(public context: string[]) { super("Validation Failed") }
+}
 
+export function validate<A, O, I>(data: I, type: T.Type<A, O, I>) : A {
   const onSuccess = (result: A) => result
   const onError = (errors: T.Errors) => {
     const validations = array.uniq(eqString)(array.compact(errors.map(formatValidationError)))
-    throw ServerError.BadRequest.create(req, validations)
+    throw new ValidationError(validations)
   }
 
   return pipe(type.decode(data), fold(onError, onSuccess))
 }
 
-const jsToString = (value: T.mixed) => value === undefined ? 'undefined' : JSON.stringify(value);
+export function validateRequest<R extends API.Request, A, O>(req: R, type: T.Type<A, O>) : A {
+  const data = { query: req.query, body: req.body }
 
-// const arrayifyIntegers = (value: string) => {
-//   let int = parseInt(value, 10)
-//   return isNaN(int) ? value : `[${int}]`
-// }
+  try {
+    return validate(data, type)
+  } catch (err) {
+    if (err instanceof ValidationError) {
+      throw ServerError.BadRequest.create(req, err.context)
+    } else throw err
+  }
+}
+
+const jsToString = (value: T.mixed) => value === undefined ? 'undefined' : JSON.stringify(value);
 
 // Credit: https://github.com/OliverJAsh/io-ts-reporters
 const filterInterfaceAndUnionTypes = (entry: T.ContextEntry, i: number, entries: T.Context) => {

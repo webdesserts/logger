@@ -1,6 +1,6 @@
 import {
   Router,
-  validate,
+  validateRequest,
   Types,
   authenticate,
 } from "../../../server";
@@ -17,7 +17,7 @@ router.after(async () => await db.disconnect())
 
 router.patch<StopActiveEntryResponse>(async (req, res) => {
   const { user } = await authenticate(req)
-  const { body } = validate(req, Types.StopActiveEntryRequest)
+  const { body } = validateRequest(req, Types.StopActiveEntryRequest)
   const entry = await model.stop(body, user)
   return res.status(200).json({ activeEntry: null, entry })
 })

@@ -1,5 +1,5 @@
 import { Photon } from '@prisma/photon';
-import { Router, validate, Types, authenticate } from "../../server";
+import { Router, validateRequest, Types, authenticate } from "../../server";
 import { ServerError } from '../../server/errors';
 import { ProjectModel } from '../../server/models/ProjectModel';
 import { FindProjectResponse, DeleteProjectResponse } from '../../server/validation';
@@ -13,14 +13,14 @@ router.after(async () => { await db.disconnect() })
 
 router.get<FindProjectResponse>(async (req, res) => {
   const { user } = await authenticate(req)
-  const { query } = validate(req, Types.FindProjectRequest)
+  const { query } = validateRequest(req, Types.FindProjectRequest)
   const project = await model.find(query.name, user)
   return res.status(200).json({ project })
 })
 
 router.delete<DeleteProjectResponse>(async (req, res) => {
   const { user } = await authenticate(req)
-  const { query } = validate(req, Types.FindProjectRequest)
+  const { query } = validateRequest(req, Types.FindProjectRequest)
   const wasDeleted = await model.delete(query.name, user)
   if (wasDeleted) {
     return res.status(204).json({})

@@ -1,5 +1,5 @@
 import { Photon } from '@prisma/photon';
-import { Router, validate, authenticate, Types } from '../../server'
+import { Router, validateRequest, authenticate, Types } from '../../server'
 import { ProjectModel } from '../../server/models/ProjectModel';
 import { CreateProjectResponse, FindAllProjectsResponse } from '../../server/validation';
 
@@ -18,7 +18,7 @@ router.get<FindAllProjectsResponse>(async (req, res) => {
 
 router.post<CreateProjectResponse>(async (req, res) => {
   const { user } = await authenticate(req)
-  const { body } = validate(req, Types.CreateProjectRequest)
+  const { body } = validateRequest(req, Types.CreateProjectRequest)
   const project = await model.find(body.name, user)
   if (project) {
     return res.status(200).json({ project })

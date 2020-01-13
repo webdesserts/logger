@@ -28,7 +28,7 @@ export class SectorModel extends Model {
   async generateCreateOrConnectQuery(name: string, user: API.UserData) : Promise<SectorCreateOneWithoutSectorInput> {
     const sector = await this.find(name, user)
     if (sector) {
-      return { connect: { author_name: sector } }
+      return SectorModel.generateConnectQuery(sector)
     } else {
       const author = user.id
       const create = { name, author }
@@ -36,8 +36,8 @@ export class SectorModel extends Model {
     }
   }
   static generateConnectQuery(sector: Sector) : SectorCreateOneWithoutSectorInput {
-    const { author, name, id } = sector
+    const { author, name } = sector
     const author_name = { author, name }
-    return { connect: { id, author_name } }
+    return { connect: { author_name } }
   }
 }

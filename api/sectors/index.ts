@@ -1,5 +1,5 @@
 import { Photon } from '@prisma/photon';
-import { Router, validate, Types, authenticate } from '../../server'
+import { Router, validateRequest, Types, authenticate } from '../../server'
 import { SectorModel } from '../../server/models/SectorModel';
 import { FindAllSectorsResponse, CreateSectorResponse } from '../../server/validation';
 
@@ -18,7 +18,7 @@ router.get<FindAllSectorsResponse>(async (req, res) => {
 
 router.post<CreateSectorResponse>(async (req, res) => {
   const { user } = await authenticate(req)
-  const { body } = validate(req, Types.CreateSectorRequest)
+  const { body } = validateRequest(req, Types.CreateSectorRequest)
   const sector = await model.find(body.name, user)
   if (sector) {
     return res.status(200).json({ sector })

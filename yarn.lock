@@ -3052,9 +3052,9 @@ forwarded@~0.1.2:
   integrity sha1-mMI9qxF1ZXuMBXPozszZGw/xjIQ=
 
 fp-ts@^2.3.1:
-  version "2.3.1"
-  resolved "https://registry.yarnpkg.com/fp-ts/-/fp-ts-2.3.1.tgz#8068bfcca118227932941101e062134d7ecd9119"
-  integrity sha512-KevPBnYt0aaJiuUzmU9YIxjrhC9AgJ8CLtLlXmwArovlNTeYM5NtEoKd86B0wHd7FIbzeE8sNXzCoYIOr7e6Iw==
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/fp-ts/-/fp-ts-2.4.0.tgz#087864607d5cc130a6427220a77096d4592baddc"
+  integrity sha512-o96pqlRq4YB0dZpnInHrz6O6jHWTf+jDIpY6vsM/ZxAPfOhW9gl9ng62wfyhFHFeH+Ldn2/zOF32xbR2O+/MEw==
 
 fragment-cache@^0.2.1:
   version "0.2.1"
@@ -3527,9 +3527,9 @@ invert-kv@^1.0.0:
   integrity sha1-EEqOSqym09jNFXqO+L+rLXo//bY=
 
 io-ts@^2.0.2:
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/io-ts/-/io-ts-2.0.2.tgz#86522c945c60c6f883c5f134fcfbb7f136a8bf10"
-  integrity sha512-ydQnGMAlUJ1n+UZkBWDClm/v5OqPbe7RI8U3AgPJ3FqYQtDyu5PvJ3CUbB5ES9OFbR92NIu1rTl6R3eEOeET/A==
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/io-ts/-/io-ts-2.0.4.tgz#5e07ce63a1ee484dc680e9e2a2414e0a6c503c93"
+  integrity sha512-GqCi13q6FFWbHZa6a+Aza6pJ66OqfYvEQwZyvKbKs21bez207NEQWhXH43JvwYIFk6R7rYidG8p/xqTYzvX2tQ==
 
 ipaddr.js@1.9.0:
   version "1.9.0"

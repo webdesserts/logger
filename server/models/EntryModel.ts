@@ -13,21 +13,28 @@ export class EntryModel extends Model {
     const author = user.id
     const sector = await SectorModel.create(this.db).generateCreateOrConnectQuery(data.sector, user)
     const project = await ProjectModel.create(this.db).generateCreateOrConnectQuery(data.project, user)
+    const start = data.start.toJSDate()
+    const end = data.end.toJSDate() 
     return await this.db.entries.create({
-      data: { ...data, author, sector, project }
+      data: { ...data, author, sector, project, start, end }
     })
   }
 
   async update (id: string, data: Types.UpdateEntryData, user: API.UserData)  {
-    const { sector, project,  ...otherData } = data
+    const { sector, project, start, end, ...otherData } = data
     const author = user.id
     const query: EntryUpdateArgs = {
       where: { id },
-      data: { ...otherData, author },
+      data: {
+        ...otherData,
+        author,
+      },
       include
     }
     if (sector) { query.data.sector = await SectorModel.create(this.db).generateCreateOrConnectQuery(sector, user) }
     if (project) { query.data.project = await ProjectModel.create(this.db).generateCreateOrConnectQuery(project, user) }
+    if (start) { query.data.start = start.toJSDate() }
+    if (end) { query.data.end = end.toJSDate() }
     return await this.db.entries.update(query)
   }
 

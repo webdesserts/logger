@@ -1,6 +1,6 @@
 import {
   Router,
-  validate,
+  validateRequest,
   Types,
   authenticate,
 } from "../../../server";
@@ -24,7 +24,7 @@ router.get<FindActiveEntryResponse>(async (req, res) => {
 
 router.patch<UpdateActiveEntryResponse>(async (req, res) => {
   const { user } = await authenticate(req)
-  const { body } = validate(req, Types.UpdateActiveEntryRequest)
+  const { body } = validateRequest(req, Types.UpdateActiveEntryRequest)
   const activeEntry = await model.update(body, user)
   return res.status(200).json({ activeEntry })
 })

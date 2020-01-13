@@ -1,6 +1,7 @@
 import * as T from 'io-ts'
 import { API } from './api'
 import { EntryModel } from '../models/EntryModel'
+import { DateTimeFromISOString } from './shared'
 
 export const FindEntryData = T.type({
   id: T.string,
@@ -11,8 +12,8 @@ export const UpdateEntryData = T.partial({
   sector: T.string,
   project: T.string,
   description: T.string,
-  start: T.string,
-  end: T.string,
+  start: DateTimeFromISOString,
+  end: DateTimeFromISOString,
 })
 export type UpdateEntryData = T.TypeOf<typeof UpdateEntryData>
 
@@ -25,8 +26,8 @@ export const CreateEntryData = T.type({
     sector: T.string,
     project: T.string,
     description: T.string,
-    start: T.string,
-    end: T.string
+    start: DateTimeFromISOString,
+    end: DateTimeFromISOString
 })
 
 export type CreateEntryData = T.TypeOf<typeof CreateEntryData>

@@ -53,7 +53,7 @@ export namespace ServerError {
 
   export class Unauthorized extends ServerError<401> {
     readonly code = 401
-    message = `Authentication failed due to an invalid auth token`
+    message = `Authentication failed due to an invalid or missing auth token`
   }
 
   export class AuthTokenExpired extends ServerError<401> {

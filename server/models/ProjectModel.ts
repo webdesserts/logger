@@ -28,7 +28,7 @@ export class ProjectModel extends Model {
   async generateCreateOrConnectQuery(name: string, user: API.UserData) : Promise<ProjectCreateOneWithoutProjectInput> {
     const sector = await this.find(name, user)
     if (sector) {
-      return { connect: { author_name: sector } }
+      return ProjectModel.generateConnectQuery(sector)
     } else {
       const author = user.id
       const create = { name, author }
@@ -37,8 +37,8 @@ export class ProjectModel extends Model {
   }
 
   static generateConnectQuery(project: Project) : ProjectCreateOneWithoutProjectInput {
-    const { author, name, id } = project
+    const { author, name } = project
     const author_name = { author, name }
-    return { connect: { id, author_name } }
+    return { connect: { author_name } }
   }
 }

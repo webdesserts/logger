@@ -1,6 +1,6 @@
 import {
   Router,
-  validate,
+  validateRequest,
   Types,
   authenticate,
 } from "../../server";
@@ -18,21 +18,21 @@ router.after(async () => await db.disconnect())
 
 router.patch<UpdateEntryResponse>(async (req, res) => {
   const { user } = await authenticate(req)
-  const { query, body } = validate(req, Types.UpdateEntryRequest)
+  const { query, body } = validateRequest(req, Types.UpdateEntryRequest)
   const entry = await model.update(query.id, body, user)
   return res.status(200).json({ entry })
 })
 
 router.get<FindEntryResponse>(async (req, res) => {
   const { user } = await authenticate(req)
-  const { query } = validate(req, Types.FindEntryRequest)
+  const { query } = validateRequest(req, Types.FindEntryRequest)
   const entry = await model.findById(query.id, user)
   return res.status(200).json({ entry })
 })
 
 router.delete<DeleteEntryResponse>(async (req, res) => {
   const { user } = await authenticate(req)
-  const { query } = validate(req, Types.FindEntryRequest)
+  const { query } = validateRequest(req, Types.FindEntryRequest)
   const wasDeleted = await model.delete(query.id, user)
   if (wasDeleted) {
     return res.status(204).json({})
