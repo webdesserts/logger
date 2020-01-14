@@ -1,12 +1,9 @@
-import {
-  Router,
-  validateRequest,
-  Types,
-  authenticate,
-} from "../../../server";
+import { Types } from '../../../server/runtypes'
+import { validateRequest } from "../../../server/validate";
+import { authenticate } from "../../../server/authenticate";
+import { Router } from "../../../server/router";
 import { Photon } from '@prisma/photon';
 import { ActiveEntryModel } from "../../../server/models/ActiveEntryModel";
-import { StopActiveEntryResponse } from "../../../server/validation";
 
 const db = new Photon()
 const model = ActiveEntryModel.create(db)
@@ -15,7 +12,7 @@ const router = Router.create()
 router.before(async () => await db.connect())
 router.after(async () => await db.disconnect())
 
-router.patch<StopActiveEntryResponse>(async (req, res) => {
+router.patch<Types.StopActiveEntryResponse>(async (req, res) => {
   const { user } = await authenticate(req)
   const { body } = validateRequest(req, Types.StopActiveEntryRequest)
   const entry = await model.stop(body, user)

@@ -1,8 +1,10 @@
+import { Types } from '../../server/runtypes'
+import { validateRequest } from "../../server/validate";
+import { authenticate } from "../../server/authenticate";
+import { Router } from "../../server/router";
 import { Photon } from '@prisma/photon';
-import { Router, validateRequest, Types, authenticate } from "../../server";
 import { ServerError } from '../../server/errors';
 import { ProjectModel } from '../../server/models/ProjectModel';
-import { FindProjectResponse, DeleteProjectResponse } from '../../server/validation';
 
 const db = new Photon()
 const router = Router.create()
@@ -11,14 +13,14 @@ const model = ProjectModel.create(db)
 router.before(async () => { await db.connect() })
 router.after(async () => { await db.disconnect() })
 
-router.get<FindProjectResponse>(async (req, res) => {
+router.get<Types.FindProjectResponse>(async (req, res) => {
   const { user } = await authenticate(req)
   const { query } = validateRequest(req, Types.FindProjectRequest)
   const project = await model.find(query.name, user)
   return res.status(200).json({ project })
 })
 
-router.delete<DeleteProjectResponse>(async (req, res) => {
+router.delete<Types.DeleteProjectResponse>(async (req, res) => {
   const { user } = await authenticate(req)
   const { query } = validateRequest(req, Types.FindProjectRequest)
   const wasDeleted = await model.delete(query.name, user)

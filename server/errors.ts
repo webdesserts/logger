@@ -1,6 +1,6 @@
 import { create } from './createable'
 import { STATUS_CODES } from 'http'
-import { API } from './validation';
+import { API } from './runtypes';
 
 export abstract class ServerError<C extends number = number> extends Error {
   static create = create

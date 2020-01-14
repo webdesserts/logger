@@ -1,13 +1,13 @@
-import { ServerError } from '../errors'
+import { ServerError } from './errors'
 import * as T from 'io-ts'
 import * as array from 'fp-ts/lib/Array'
 import * as option from 'fp-ts/lib/Option'
 import { fold } from 'fp-ts/lib/Either'
 import { pipe } from 'fp-ts/lib/pipeable'
 import { eqString } from 'fp-ts/lib/Eq'
-import { API } from './api'
+import { API } from './runtypes'
 
-class ValidationError extends TypeError {
+export class ValidationError extends TypeError {
   constructor(public context: string[]) { super("Validation Failed") }
 }
 

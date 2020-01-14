@@ -1,10 +1,9 @@
 import { EntryInclude, EntryUpdateArgs } from '@prisma/photon'
 import { filterUnauthored } from '../authenticate'
 import { Model } from './Model'
-import { Types } from '..'
 import { SectorModel } from './SectorModel'
 import { ProjectModel } from './ProjectModel'
-import { API } from '../validation'
+import { Types, API } from '../runtypes'
 
 const include: EntryInclude = { project: true, sector: true }
 

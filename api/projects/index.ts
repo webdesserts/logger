@@ -1,7 +1,9 @@
+import { Types } from '../../server/runtypes'
+import { validateRequest } from "../../server/validate";
+import { authenticate } from "../../server/authenticate";
+import { Router } from "../../server/router";
 import { Photon } from '@prisma/photon';
-import { Router, validateRequest, authenticate, Types } from '../../server'
 import { ProjectModel } from '../../server/models/ProjectModel';
-import { CreateProjectResponse, FindAllProjectsResponse } from '../../server/validation';
 
 const db = new Photon()
 const router = Router.create()
@@ -10,13 +12,13 @@ const model = ProjectModel.create(db)
 router.before(async () => await db.connect())
 router.after(async () => await db.disconnect())
 
-router.get<FindAllProjectsResponse>(async (req, res) => {
+router.get<Types.FindAllProjectsResponse>(async (req, res) => {
   const { user } = await authenticate(req)
   const projects = await model.findAll(user)
   return res.status(200).json({ projects })
 })
 
-router.post<CreateProjectResponse>(async (req, res) => {
+router.post<Types.CreateProjectResponse>(async (req, res) => {
   const { user } = await authenticate(req)
   const { body } = validateRequest(req, Types.CreateProjectRequest)
   const project = await model.find(body.name, user)

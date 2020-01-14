@@ -1,7 +1,6 @@
 import { ActiveEntryUpdateArgs, ActiveEntryInclude } from '@prisma/photon'
-import { API } from '../validation'
+import { API, Types } from '../runtypes'
 import { Model } from './Model'
-import { Types } from '..'
 import { SectorModel } from './SectorModel'
 import { ProjectModel } from './ProjectModel'
 import { DateTime } from 'luxon'
@@ -9,7 +8,7 @@ import { DateTime } from 'luxon'
 const include: ActiveEntryInclude = { project: true, sector: true }
 
 export class ActiveEntryModel extends Model {
-  async start (data: Types.StartActiveEntryData, user: API.UserData) {
+  async start (data: Types.StartActiveEntryData, user: Types.API.UserData) {
     const author = user.id
     const sector = await SectorModel.create(this.db).generateCreateOrConnectQuery(data.sector, user)
     const project = await ProjectModel.create(this.db).generateCreateOrConnectQuery(data.project, user)

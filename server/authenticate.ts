@@ -1,7 +1,7 @@
 import { ServerError } from './errors'
 import Jwt from 'jsonwebtoken'
 import jwksClient from 'jwks-rsa'
-import { API } from './validation'
+import { API } from './runtypes'
 
 type Payload = {
   iss: string

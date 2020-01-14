@@ -1,4 +1,4 @@
-import { API } from '../validation'
+import { API } from '../runtypes'
 import { Model } from './Model'
 import { Sector, SectorCreateOneWithoutSectorInput } from '@prisma/photon'
 

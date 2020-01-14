@@ -1,6 +1,6 @@
 import { ServerError } from './errors'
 import { create } from './createable';
-import { API } from './validation';
+import { API } from './runtypes';
 
 type LifecycleHandler = (request: API.Request) => void | Promise<void>
 type RequestHandler<T extends {} = any> = (request: API.Request, response: API.Response<T>) => API.Response<T> | Promise<API.Response<T>>
