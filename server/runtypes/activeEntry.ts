@@ -1,58 +1,74 @@
 import * as T from 'io-ts'
 import { API } from './api'
-import { ActiveEntryModel } from '../models/ActiveEntryModel'
 import { DateTimeFromISOString } from './shared'
+import { Entry } from './entries'
 
-export const FindActiveEntryData = T.type({ })
-export type FindActiveEntryData = T.TypeOf<typeof FindActiveEntryData>
-
-export const UpdateActiveEntryData = T.partial({
-  sector: T.string,
-  project: T.string,
-  description: T.string,
-  start: DateTimeFromISOString,
-})
-export type UpdateActiveEntryData = T.TypeOf<typeof UpdateActiveEntryData>
-
-export const StartActiveEntryData = T.intersection([
-  T.type({
+export namespace ActiveEntry {
+  export const DataRequired = T.type({
     sector: T.string,
     project: T.string,
     description: T.string,
-  }), T.partial({
+  })
+
+  export const DataOptional = T.type({
     start: DateTimeFromISOString
   })
-])
-export type StartActiveEntryData = T.TypeOf<typeof StartActiveEntryData>
 
-export const StopActiveEntryData = T.type({
-  end: DateTimeFromISOString
-})
-export type StopActiveEntryData = T.TypeOf<typeof StopActiveEntryData>
+  export const Data = T.type({
+    ...DataRequired.props,
+    ...DataOptional.props
+  })
 
-export const FindActiveEntryRequest = API.RequestData(FindActiveEntryData, T.type({}))
-export type FindActiveEntryRequest = T.TypeOf<typeof FindActiveEntryRequest>
-export type FindActiveEntryResponse = API.ResponseBody<{
-  activeEntry: AsyncReturnType<ActiveEntryModel['find']>
-}>
+  /*==========*\
+  *  Requests  *
+  \*==========*/
 
-export const StartActiveEntryRequest = API.RequestData(T.type({}), StartActiveEntryData)
-export type StartActiveEntryRequest = T.TypeOf<typeof StartActiveEntryRequest>
-export type StartActiveEntryResponse = API.ResponseBody<{
-  activeEntry: AsyncReturnType<ActiveEntryModel['start']>
-}>
+  export namespace RequestBody {
+    export const Start = T.intersection([ DataRequired, T.partial(DataOptional.props) ])
+    export const Stop = T.type({ end: DateTimeFromISOString })
+    export const Update = T.partial(Data.props)
 
-export const StopActiveEntryRequest = API.RequestData(T.type({}), StopActiveEntryData)
-export type StopActiveEntryRequest = T.TypeOf<typeof StopActiveEntryRequest>
-export type StopActiveEntryResponse = API.ResponseBody<{
-  activeEntry: null,
-  entry: AsyncReturnType<ActiveEntryModel['stop']>
-}>
+    export type Start = T.TypeOf<typeof Start>
+    export type Stop = T.TypeOf<typeof Stop>
+    export type Update = T.TypeOf<typeof Update>
+  }
 
-export const UpdateActiveEntryRequest = API.RequestData(FindActiveEntryData, UpdateActiveEntryData)
-export type UpdateActiveEntryRequest = T.TypeOf<typeof UpdateActiveEntryRequest>
-export type UpdateActiveEntryResponse = API.ResponseBody<{
-  activeEntry: AsyncReturnType<ActiveEntryModel['update']>
-}>
+  export namespace Request {
+    export const Start = API.RequestDetails(T.type({}), RequestBody.Start)
+    export const Stop = API.RequestDetails(T.type({}), RequestBody.Stop)
+    export const Find = API.RequestDetails(T.type({}), T.type({}))
+    export const Update = API.RequestDetails(T.type({}), RequestBody.Update)
 
-export type DeleteActiveEntryResponse = API.ResponseBody<{}>
+    export type Start = T.TypeOf<typeof Start>
+    export type Stop = T.TypeOf<typeof Stop>
+    export type Find = T.TypeOf<typeof Find>
+    export type Update = T.TypeOf<typeof Update>
+  }
+
+  /*==========*\
+  *  Response  *
+  \*==========*/
+
+  export namespace Response {
+    export const Start = API.ResponseBody(T.type({ activeEntry: Data }))
+    export const Stop = API.ResponseBody(T.type({
+      activeEntry: T.null,
+      entry: Entry.Data
+    }))
+    export const Find = API.ResponseBody(T.type({ activeEntry: T.union([Data, T.null]) }))
+    export const Update = API.ResponseBody(T.type({ activeEntry: Data }))
+    export const Delete = API.ResponseBody(T.type({}))
+
+    export type Start = T.TypeOf<typeof Start>
+    export type Stop = T.TypeOf<typeof Stop>
+    export type Find = T.TypeOf<typeof Find>
+    export type Update = T.TypeOf<typeof Update>
+    export type Delete = T.TypeOf<typeof Delete>
+
+    export type StartJSON = T.OutputOf<typeof Start>
+    export type StopJSON = T.OutputOf<typeof Stop>
+    export type FindJSON = T.OutputOf<typeof Find>
+    export type UpdateJSON = T.OutputOf<typeof Update>
+    export type DeleteJSON = T.OutputOf<typeof Delete>
+  }
+}

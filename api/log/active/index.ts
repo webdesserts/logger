@@ -13,20 +13,20 @@ const router = Router.create()
 router.before(async () => await db.connect())
 router.after(async () => await db.disconnect())
 
-router.get<Types.FindActiveEntryResponse>(async (req, res) => {
+router.get<Types.ActiveEntry.Response.FindJSON>(async (req, res) => {
   const { user } = await authenticate(req)
   const activeEntry = await model.find(user)
   return res.status(200).json({ activeEntry })
 })
 
-router.patch<Types.UpdateActiveEntryResponse>(async (req, res) => {
+router.patch<Types.ActiveEntry.Response.UpdateJSON>(async (req, res) => {
   const { user } = await authenticate(req)
-  const { body } = validateRequest(req, Types.UpdateActiveEntryRequest)
+  const { body } = validateRequest(req, Types.ActiveEntry.Request.Update)
   const activeEntry = await model.update(body, user)
   return res.status(200).json({ activeEntry })
 })
 
-router.delete<Types.DeleteActiveEntryResponse>(async (req, res) => {
+router.delete<Types.ActiveEntry.Response.DeleteJSON>(async (req, res) => {
   const { user } = await authenticate(req)
   const wasDeleted = await model.delete(user)
   if (wasDeleted) return res.status(204).json({})

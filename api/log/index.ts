@@ -12,15 +12,15 @@ const router = Router.create()
 router.before(async () => await db.connect())
 router.after(async () => await db.disconnect())
 
-router.get<Types.FindAllEntriesResponse>(async (req, res) => {
+router.get<Types.Entry.Response.FindAllJSON>(async (req, res) => {
   const { user } = await authenticate(req)
   const entries = await model.findAll(user)
   return res.status(200).json({ entries })
 })
 
-router.post<Types.CreateEntryResponse>(async (req, res) => {
+router.post<Types.Entry.Response.CreateJSON>(async (req, res) => {
   const { user } = await authenticate(req)
-  const { body } = validateRequest(req, Types.CreateEntryRequest)
+  const { body } = validateRequest(req, Types.Entry.Request.Create)
   const entry = await model.create(body, user)
   return res.status(200).json({ entry })
 })

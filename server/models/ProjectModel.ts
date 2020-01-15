@@ -16,7 +16,8 @@ export class ProjectModel extends Model {
 
   async findAll(user: API.UserData) {
     const where = { author: user.id }
-    return await this.db.projects.findMany({ where })
+    const projects = await this.db.projects.findMany({ where })
+    return projects.map((p) => p.name)
   }
 
   async delete(name: string, user: API.UserData) {
@@ -26,9 +27,9 @@ export class ProjectModel extends Model {
   }
 
   async generateCreateOrConnectQuery(name: string, user: API.UserData) : Promise<ProjectCreateOneWithoutProjectInput> {
-    const sector = await this.find(name, user)
-    if (sector) {
-      return ProjectModel.generateConnectQuery(sector)
+    const project = await this.find(name, user)
+    if (project) {
+      return ProjectModel.generateConnectQuery(project)
     } else {
       const author = user.id
       const create = { name, author }
@@ -40,5 +41,13 @@ export class ProjectModel extends Model {
     const { author, name } = project
     const author_name = { author, name }
     return { connect: { author_name } }
+  }
+
+  static mapToName<O extends { project?: Project, [key: string] : any }>(obj: O) {
+    const { project, ...others } = obj
+    return {
+      ...others,
+      ...(project && { project: project.name }),
+    }
   }
 }

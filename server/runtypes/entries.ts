@@ -1,59 +1,64 @@
 import * as T from 'io-ts'
 import { API } from './api'
-import { EntryModel } from '../models/EntryModel'
 import { DateTimeFromISOString } from './shared'
 
-export const FindEntryData = T.type({
-  id: T.string,
-})
-export type FindEntryData = T.TypeOf<typeof FindEntryData>
-
-export const UpdateEntryData = T.partial({
-  sector: T.string,
-  project: T.string,
-  description: T.string,
-  start: DateTimeFromISOString,
-  end: DateTimeFromISOString,
-})
-export type UpdateEntryData = T.TypeOf<typeof UpdateEntryData>
-
-export const FindAllEntriesData = T.partial({
-  description: T.string,
-})
-export type FindAllEntriesData = T.TypeOf<typeof FindAllEntriesData>
-
-export const CreateEntryData = T.type({
+export namespace Entry {
+  export const Data = T.type({
+    id: T.string,
     sector: T.string,
     project: T.string,
     description: T.string,
     start: DateTimeFromISOString,
-    end: DateTimeFromISOString
-})
+    end: DateTimeFromISOString,
+  })
 
-export type CreateEntryData = T.TypeOf<typeof CreateEntryData>
+  export namespace RequestParams {
+    const { id } = Data.props
 
-export const CreateEntryRequest = API.RequestData(T.type({}), CreateEntryData)
-export type CreateEntryRequest = T.TypeOf<typeof CreateEntryRequest>
-export type CreateEntryResponse = API.ResponseBody<{
-  entry: AsyncReturnType<EntryModel['create']>
-}>
+    export const Find = T.type({ id })
+    export type Find = T.TypeOf<typeof Find>
+  }
 
-export const UpdateEntryRequest = API.RequestData(FindEntryData, UpdateEntryData)
-export type UpdateEntryRequest = T.TypeOf<typeof UpdateEntryRequest>
-export type UpdateEntryResponse = API.ResponseBody<{
-  entry: AsyncReturnType<EntryModel['update']>
-}>
+  export namespace RequestBody {
+    const { id, ...bodyProps } = Data.props
 
-export type DeleteEntryResponse = API.ResponseBody<{}>
+    export const Create = T.type({ ...bodyProps })
+    export const Update = T.partial({ ...bodyProps })
 
-export const FindEntryRequest = API.RequestData(FindEntryData, T.type({}))
-export type FindEntryRequest = T.TypeOf<typeof FindEntryRequest>
-export type FindEntryResponse = API.ResponseBody<{
-  entry: AsyncReturnType<EntryModel['findById']>
-}>
+    export type Create = T.TypeOf<typeof Create>
+    export type Update = T.TypeOf<typeof Update>
+  }
 
-export const FindAllEntriesRequest = API.RequestData(T.type({}), FindAllEntriesData)
-export type FindAllEntriesRequest = T.TypeOf<typeof FindAllEntriesRequest>
-export type FindAllEntriesResponse = API.ResponseBody<{
-  entries: AsyncReturnType<EntryModel['findAll']>
-}>
+  export namespace Request {
+    export const Create = API.RequestDetails(T.type({}), RequestBody.Create)
+    export const Find = API.RequestDetails(RequestParams.Find, T.type({}))
+    export const FindAll = API.RequestDetails(T.type({}), T.type({}))
+    export const Update = API.RequestDetails(RequestParams.Find, RequestBody.Update)
+    export const Delete = API.RequestDetails(RequestParams.Find, T.type({}))
+
+    export type Create = T.TypeOf<typeof Create>
+    export type Find = T.TypeOf<typeof Find>
+    export type FindAll = T.TypeOf<typeof FindAll>
+    export type Update = T.TypeOf<typeof Update>
+    export type Delete = T.TypeOf<typeof Delete>
+  }
+
+  export namespace Response {
+    export const Create = API.ResponseBody(T.type({ entry: Data }))
+    export const Find = API.ResponseBody(T.type({ entry: T.union([Data, T.null]) }))
+    export const FindAll = API.ResponseBody(T.type({ entries: T.array(Data) }))
+    export const Update = API.ResponseBody(T.type({ entry: Data }))
+    export const Delete = API.ResponseBody(T.type({}))
+
+    export type Create = T.TypeOf<typeof Create>
+    export type CreateJSON = T.OutputOf<typeof Create>
+    export type Find = T.TypeOf<typeof Find>
+    export type FindJSON = T.OutputOf<typeof Find>
+    export type FindAll = T.TypeOf<typeof FindAll>
+    export type FindAllJSON = T.OutputOf<typeof FindAll>
+    export type Update = T.TypeOf<typeof Update>
+    export type UpdateJSON = T.OutputOf<typeof Update>
+    export type Delete = T.TypeOf<typeof Delete>
+    export type DeleteJSON = T.OutputOf<typeof Delete>
+  }
+}

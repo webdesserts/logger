@@ -1,27 +1,33 @@
-import { ActiveEntryUpdateArgs, ActiveEntryInclude } from '@prisma/photon'
+import { ActiveEntryUpdateInput, ActiveEntry } from '@prisma/photon'
 import { API, Types } from '../runtypes'
 import { Model } from './Model'
 import { SectorModel } from './SectorModel'
 import { ProjectModel } from './ProjectModel'
 import { DateTime } from 'luxon'
+import { pipe } from 'fp-ts/lib/pipeable'
+import { mapDatesToISOStrings } from '../runtypes/shared'
+import { EntryModel } from './EntryModel'
 
-const include: ActiveEntryInclude = { project: true, sector: true }
+const include = { project: true, sector: true } as const
 
 export class ActiveEntryModel extends Model {
-  async start (data: Types.StartActiveEntryData, user: Types.API.UserData) {
+  async start (data: Types.ActiveEntry.RequestBody.Start, user: Types.API.UserData) {
     const author = user.id
     const sector = await SectorModel.create(this.db).generateCreateOrConnectQuery(data.sector, user)
     const project = await ProjectModel.create(this.db).generateCreateOrConnectQuery(data.project, user)
     // prisma's "now()" default is broken so we're using this for now
     const start = (data.start || DateTime.local()).toJSDate()
-    return await this.db.activeEntries.create({
+    const activeEntry = await this.db.activeEntries.create({
       data: { ...data, author, sector, project, start },
       include
     })
+    return ActiveEntryModel.serialize(activeEntry)
   }
 
-  async stop (data: Types.StopActiveEntryData, user: API.UserData) {
-    const activeEntry = await this.find(user)
+  async stop (data: Types.ActiveEntry.RequestBody.Stop, user: API.UserData) {
+    const author = user.id
+    const where = { author }
+    const activeEntry = await this.db.activeEntries.findOne({ where, include })
     if (!activeEntry) return null
 
     // prisma's "now()" default is broken so we're using this for now
@@ -34,31 +40,35 @@ export class ActiveEntryModel extends Model {
     })
     await this.delete(user)
 
-    return entry
+    return EntryModel.serialize(entry)
   }
 
-  async update (data: Types.UpdateActiveEntryData, user: API.UserData)  {
+
+  async update (data: Types.ActiveEntry.RequestBody.Update, user: API.UserData)  {
     const { sector, project, start, ...otherData } = data
     const author = user.id
 
-    const query: ActiveEntryUpdateArgs = {
-      where: { author },
-      data: {
-        ...otherData,
-      },
-      include
+    const queryData: ActiveEntryUpdateInput = {
+      ...otherData
     }
-    if (sector) { query.data.sector = await SectorModel.create(this.db).generateCreateOrConnectQuery(sector, user) }
-    if (project) { query.data.project = await ProjectModel.create(this.db).generateCreateOrConnectQuery(project, user) }
-    if (start) { query.data.start = start.toJSDate() }
 
-    return await this.db.entries.update(query)
+    if (sector) { queryData.sector = await SectorModel.create(this.db).generateCreateOrConnectQuery(sector, user) }
+    if (project) { queryData.project = await ProjectModel.create(this.db).generateCreateOrConnectQuery(project, user) }
+    if (start) { queryData.start = start.toJSDate() }
+
+    const activeEntry = await this.db.activeEntries.update({
+      where: { author },
+      data: queryData,
+      include
+    })
+    return ActiveEntryModel.serialize(activeEntry)
   }
 
   async find(user: API.UserData) {
     const author = user.id
     const where = { author }
-    return await this.db.activeEntries.findOne({ where, include })
+    const activeEntry = await this.db.activeEntries.findOne({ where, include })
+    return activeEntry && ActiveEntryModel.serialize(activeEntry)
   }
 
   async delete(user: API.UserData) : Promise<boolean> {
@@ -69,5 +79,9 @@ export class ActiveEntryModel extends Model {
       return true
     }
     return false
+  }
+
+  static serialize<T extends ActiveEntry>(activeEntry: T) {
+    return pipe(activeEntry, SectorModel.mapToName, ProjectModel.mapToName, mapDatesToISOStrings)
   }
 }

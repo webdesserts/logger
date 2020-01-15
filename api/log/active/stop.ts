@@ -12,9 +12,9 @@ const router = Router.create()
 router.before(async () => await db.connect())
 router.after(async () => await db.disconnect())
 
-router.patch<Types.StopActiveEntryResponse>(async (req, res) => {
+router.patch<Types.ActiveEntry.Response.StopJSON>(async (req, res) => {
   const { user } = await authenticate(req)
-  const { body } = validateRequest(req, Types.StopActiveEntryRequest)
+  const { body } = validateRequest(req, Types.ActiveEntry.Request.Stop)
   const entry = await model.stop(body, user)
   return res.status(200).json({ activeEntry: null, entry })
 })

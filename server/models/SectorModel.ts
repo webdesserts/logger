@@ -16,7 +16,8 @@ export class SectorModel extends Model {
 
   async findAll(user: API.UserData) {
     const where = { author: user.id }
-    return await this.db.sectors.findMany({ where })
+    const sectors = await this.db.sectors.findMany({ where })
+    return sectors.map((s) => s.name)
   }
 
   async delete(name: string, user: API.UserData) {
@@ -35,9 +36,18 @@ export class SectorModel extends Model {
       return { create }
     }
   }
+
   static generateConnectQuery(sector: Sector) : SectorCreateOneWithoutSectorInput {
     const { author, name } = sector
     const author_name = { author, name }
     return { connect: { author_name } }
+  }
+
+  static mapToName<O extends { sector?: Sector, [key: string] : any }>(obj: O) {
+    const { sector, ...others } = obj
+    return {
+      ...others,
+      ...(sector && { sector: sector.name }),
+    }
   }
 }

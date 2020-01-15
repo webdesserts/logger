@@ -12,9 +12,9 @@ const router = Router.create()
 router.before(async () => await db.connect())
 router.after(async () => await db.disconnect())
 
-router.post<Types.StartActiveEntryResponse>(async (req, res) => {
+router.post<Types.ActiveEntry.Response.StartJSON>(async (req, res) => {
   const { user } = await authenticate(req)
-  const { body } = validateRequest(req, Types.StartActiveEntryRequest)
+  const { body } = validateRequest(req, Types.ActiveEntry.Request.Start)
   const activeEntry = await model.start(body, user)
   return res.status(200).json({ activeEntry })
 })

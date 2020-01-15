@@ -12,15 +12,15 @@ const model = ProjectModel.create(db)
 router.before(async () => await db.connect())
 router.after(async () => await db.disconnect())
 
-router.get<Types.FindAllProjectsResponse>(async (req, res) => {
+router.get<Types.Project.Response.FindAllJSON>(async (req, res) => {
   const { user } = await authenticate(req)
   const projects = await model.findAll(user)
   return res.status(200).json({ projects })
 })
 
-router.post<Types.CreateProjectResponse>(async (req, res) => {
+router.post<Types.Project.Response.CreateJSON>(async (req, res) => {
   const { user } = await authenticate(req)
-  const { body } = validateRequest(req, Types.CreateProjectRequest)
+  const { body } = validateRequest(req, Types.Project.Request.Create)
   const project = await model.find(body.name, user)
   if (project) {
     return res.status(200).json({ project })

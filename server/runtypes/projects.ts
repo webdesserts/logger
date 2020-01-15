@@ -1,42 +1,45 @@
 import * as T from 'io-ts'
 import { API } from './api'
-import { ProjectModel } from '../models/ProjectModel'
 
-const ProjectData = T.intersection([
-  T.string,
-  T.type({
-    id: T.string
-  }),
-  T.type({
+export namespace Project {
+  const Data = T.type({
     name: T.string
   })
-])
 
-export const CreateProjectData = ProjectData
-export type CreateProjectData = T.TypeOf<typeof CreateProjectData>
+  export namespace RequestParams {
+    export const Find = Data
+    export type Find = T.TypeOf<typeof Find>
 
-export const FindProjectData = ProjectData
-export type FindProjectData = T.TypeOf<typeof FindProjectData>
+    export const Delete = Data
+    export type Delete = T.TypeOf<typeof Delete>
+  }
 
-export const FindAllProjectsData = T.partial({})
-export type FindAllProjectsData = T.TypeOf<typeof FindAllProjectsData>
+  export namespace RequestBody {
+    export const Create = Data
+    export type Create = T.TypeOf<typeof Create>
+  }
 
-export const CreateProjectRequest = API.RequestData(T.type({}), CreateProjectData)
-export type CreateProjectRequest = T.TypeOf<typeof CreateProjectRequest>
-export type CreateProjectResponse = API.ResponseBody<{
-  project: AsyncReturnType<ProjectModel['create']>
-}>
+  export namespace Request {
+    export const Create = API.RequestDetails(T.type({}), RequestBody.Create)
+    export const Find = API.RequestDetails(RequestParams.Find, T.type({}))
+    export const FindAll = API.RequestDetails(T.type({}), T.type({}))
+    export const Delete = API.RequestDetails(RequestParams.Find, T.type({}))
 
-export const FindProjectRequest = API.RequestData(FindProjectData, T.type({}))
-export type FindProjectRequest = T.TypeOf<typeof FindProjectRequest>
-export type FindProjectResponse = API.ResponseBody<{
-  project: AsyncReturnType<ProjectModel['find']>
-}>
+    export type Create = T.TypeOf<typeof Create>
+    export type Find = T.TypeOf<typeof Find>
+    export type FindAll = T.TypeOf<typeof FindAll>
+    export type Delete = T.TypeOf<typeof Delete>
+  }
 
-export const FindAllProjectsRequest = API.RequestData(FindAllProjectsData, T.type({}))
-export type FindAllProjectsRequest = T.TypeOf<typeof FindAllProjectsRequest>
-export type FindAllProjectsResponse = API.ResponseBody<{
-  projects: AsyncReturnType<ProjectModel['findAll']>
-}>
+  export namespace Response {
+    export const Create = API.ResponseBody(T.strict({ project: Data }))
+    export const Find = API.ResponseBody(T.strict({ project: T.union([Data, T.null]) }))
+    export const FindAll = API.ResponseBody(T.strict({ projects: T.array(Data.props.name) }))
+    export const Delete = API.ResponseBody(T.strict({}))
 
-export type DeleteProjectResponse = API.ResponseBody<{}>
+    export type CreateJSON = T.OutputOf<typeof Create>
+    export type FindJSON = T.OutputOf<typeof Find>
+    export type FindAllJSON = T.OutputOf<typeof FindAll>
+    export type DeleteJSON = T.OutputOf<typeof Delete>
+  }
+}
