@@ -13,17 +13,17 @@ const model = SectorModel.create(db)
 router.before(async () => { await db.connect() })
 router.after(async () => { await db.disconnect() })
 
-router.get<Types.Sector.Response.FindJSON>(async (req, res) => {
+router.get(Types.Sector.Response.Find, async (req, res) => {
   const { user } = await authenticate(req)
-  const { query } = validateRequest(req, Types.Sector.Request.Find)
-  const sector = await model.find(query.name, user)
+  const { params } = validateRequest(req, Types.Sector.Request.Find)
+  const sector = await model.find(params.name, user)
   return res.status(200).json({ sector })
 })
 
-router.delete<Types.Sector.Response.DeleteJSON>(async (req, res) => {
+router.delete(Types.Sector.Response.Delete, async (req, res) => {
   const { user } = await authenticate(req)
-  const { query } = validateRequest(req, Types.Sector.Request.Delete)
-  const wasDeleted = await model.delete(query.name, user)
+  const { params } = validateRequest(req, Types.Sector.Request.Delete)
+  const wasDeleted = await model.delete(params.name, user)
   if (wasDeleted) {
     return res.status(204).json({})
   } else {

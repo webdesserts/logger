@@ -13,24 +13,24 @@ const router = Router.create()
 router.before(async () => await db.connect())
 router.after(async () => await db.disconnect())
 
-router.patch<Types.Entry.Response.UpdateJSON>(async (req, res) => {
+router.patch(Types.Entry.Response.Update, async (req, res) => {
   const { user } = await authenticate(req)
-  const { query, body } = validateRequest(req, Types.Entry.Request.Update)
-  const entry = await model.update(query.id, body, user)
+  const { params, body } = validateRequest(req, Types.Entry.Request.Update)
+  const entry = await model.update(params.id, body, user)
   return res.status(200).json({ entry })
 })
 
-router.get<Types.Entry.Response.FindJSON>(async (req, res) => {
+router.get(Types.Entry.Response.Find, async (req, res) => {
   const { user } = await authenticate(req)
-  const { query } = validateRequest(req, Types.Entry.Request.Find)
-  const entry = await model.findById(query.id, user)
+  const { params } = validateRequest(req, Types.Entry.Request.Find)
+  const entry = await model.findById(params.id, user)
   return res.status(200).json({ entry })
 })
 
-router.delete<Types.Entry.Response.DeleteJSON>(async (req, res) => {
+router.delete(Types.Entry.Response.Delete, async (req, res) => {
   const { user } = await authenticate(req)
-  const { query } = validateRequest(req, Types.Entry.Request.Delete)
-  const wasDeleted = await model.delete(query.id, user)
+  const { params } = validateRequest(req, Types.Entry.Request.Delete)
+  const wasDeleted = await model.delete(params.id, user)
   if (wasDeleted) {
     return res.status(204).json({})
   } else {

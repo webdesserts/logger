@@ -1,6 +1,7 @@
 import * as T from 'io-ts'
 import { API } from './api'
 import { DateTimeFromISOString } from './shared'
+import { METHODS } from '../http'
 
 export namespace Entry {
   export const Data = T.type({
@@ -12,53 +13,55 @@ export namespace Entry {
     end: DateTimeFromISOString,
   })
 
-  export namespace RequestParams {
-    const { id } = Data.props
-
-    export const Find = T.type({ id })
-    export type Find = T.TypeOf<typeof Find>
-  }
-
-  export namespace RequestBody {
+  export namespace Request {
     const { id, ...bodyProps } = Data.props
 
-    export const Create = T.type({ ...bodyProps })
-    export const Update = T.partial({ ...bodyProps })
+    export const Create = API.RequestDetails({
+      method: METHODS.POST,
+      path: "/log",
+      body: T.type({ ...bodyProps })
+    });
 
-    export type Create = T.TypeOf<typeof Create>
-    export type Update = T.TypeOf<typeof Update>
-  }
+    export const FindAll = API.RequestDetails({
+      method: METHODS.GET,
+      path: "/log"
+    });
 
-  export namespace Request {
-    export const Create = API.RequestDetails(T.type({}), RequestBody.Create)
-    export const Find = API.RequestDetails(RequestParams.Find, T.type({}))
-    export const FindAll = API.RequestDetails(T.type({}), T.type({}))
-    export const Update = API.RequestDetails(RequestParams.Find, RequestBody.Update)
-    export const Delete = API.RequestDetails(RequestParams.Find, T.type({}))
+    export const Find = API.RequestDetails({
+      method: METHODS.GET,
+      path: "/log:id",
+      params: T.type({ id })
+    });
 
-    export type Create = T.TypeOf<typeof Create>
-    export type Find = T.TypeOf<typeof Find>
-    export type FindAll = T.TypeOf<typeof FindAll>
-    export type Update = T.TypeOf<typeof Update>
-    export type Delete = T.TypeOf<typeof Delete>
+    export const Update = API.RequestDetails({
+      method: METHODS.PATCH,
+      path: "/log/:id",
+      params: T.type({ id }),
+      body: T.partial({ ...bodyProps })
+    });
+
+    export const Delete = API.RequestDetails({
+      method: METHODS.DELETE,
+      path: "/log/:id",
+      params: T.type({ id })
+    });
   }
 
   export namespace Response {
-    export const Create = API.ResponseBody(T.type({ entry: Data }))
-    export const Find = API.ResponseBody(T.type({ entry: T.union([Data, T.null]) }))
-    export const FindAll = API.ResponseBody(T.type({ entries: T.array(Data) }))
-    export const Update = API.ResponseBody(T.type({ entry: Data }))
-    export const Delete = API.ResponseBody(T.type({}))
-
-    export type Create = T.TypeOf<typeof Create>
-    export type CreateJSON = T.OutputOf<typeof Create>
-    export type Find = T.TypeOf<typeof Find>
-    export type FindJSON = T.OutputOf<typeof Find>
-    export type FindAll = T.TypeOf<typeof FindAll>
-    export type FindAllJSON = T.OutputOf<typeof FindAll>
-    export type Update = T.TypeOf<typeof Update>
-    export type UpdateJSON = T.OutputOf<typeof Update>
-    export type Delete = T.TypeOf<typeof Delete>
-    export type DeleteJSON = T.OutputOf<typeof Delete>
+    export const Create = API.ResponseDetails({
+      body: T.type({ entry: Data })
+    });
+    export const Find = API.ResponseDetails({
+      body: T.type({ entry: T.union([Data, T.null]) })
+    });
+    export const FindAll = API.ResponseDetails({
+      body: T.type({ entries: T.array(Data) })
+    });
+    export const Update = API.ResponseDetails({
+      body: T.type({ entry: Data })
+    });
+    export const Delete = API.ResponseDetails({
+      body: T.type({})
+    });
   }
 }

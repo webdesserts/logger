@@ -11,7 +11,7 @@ export class ValidationError extends TypeError {
   constructor(public context: string[]) { super("Validation Failed") }
 }
 
-export function validate<A, O, I>(data: I, type: T.Type<A, O, I>) : A {
+export function validate<A, O, I>(data: I, type: T.Decoder<I, A>) : A {
   const onSuccess = (result: A) => result
   const onError = (errors: T.Errors) => {
     const validations = array.uniq(eqString)(array.compact(errors.map(formatValidationError)))
@@ -21,11 +21,19 @@ export function validate<A, O, I>(data: I, type: T.Type<A, O, I>) : A {
   return pipe(type.decode(data), fold(onError, onSuccess))
 }
 
-export function validateRequest<R extends API.Request, A, O>(req: R, type: T.Type<A, O>) : A {
-  const data = { query: req.query, body: req.body }
+type ValidatedRequest<T extends API.RequestDetails> = {
+  params: T.OutputOf<T['Params']>,
+  body: T.OutputOf<T['Body']>,
+  search: T.OutputOf<T['Search']>
+}
 
+export function validateRequest<R extends API.Request, T extends API.RequestDetails>(req: R, type: T) : ValidatedRequest<T> {
   try {
-    return validate(data, type)
+    return {
+      params: validate(req.query, T.exact(type.Params)),
+      body: validate(req.body, T.exact(type.Body)),
+      search: validate(req.query, T.exact(type.Search)),
+    }
   } catch (err) {
     if (err instanceof ValidationError) {
       throw ServerError.BadRequest.create(req, err.context)

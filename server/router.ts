@@ -1,21 +1,18 @@
 import { ServerError } from './errors'
 import { create } from './createable';
 import { API } from './runtypes';
+import { METHODS } from './http';
+import * as T from 'io-ts'
 
 type LifecycleHandler = (request: API.Request) => void | Promise<void>
-type RequestHandler<T extends {} = any> = (request: API.Request, response: API.Response<T>) => API.Response<T> | Promise<API.Response<T>>
+type RequestHandler<T extends API.ResponseDetails = any> = (
+  request: API.Request,
+  response: API.Response<T.OutputOf<T['Body']>>
+) => API.Response<T.OutputOf<T['Body']>> | Promise<API.Response<T.OutputOf<T['Body']>>>
 
 const enum LIFECYCLES {
   BEFORE,
   AFTER,
-}
-
-const enum METHODS {
-  GET = 'GET',
-  POST = 'POST',
-  PUT = 'PUT',
-  PATCH = 'PATCH',
-  DELETE = 'DELETE',
 }
 
 export class Router {
@@ -35,19 +32,19 @@ export class Router {
   }
 
   // method handlers
-  get<R extends {} = {}>(handler: RequestHandler<R>) {
+  get<R extends API.ResponseDetails>(responseDetails: R, handler: RequestHandler<R>) {
     this.methodHandlers.set(METHODS.GET, handler)
   }
-  post<R extends {} = {}>(handler: RequestHandler<R>) {
+  post<R extends API.ResponseDetails>(responseDetails: R, handler: RequestHandler<R>) {
     this.methodHandlers.set(METHODS.POST, handler)
   }
-  put<R extends {} = {}>(handler: RequestHandler<R>) {
+  put<R extends API.ResponseDetails>(responseDetails: R, handler: RequestHandler<R>) {
     this.methodHandlers.set(METHODS.PUT, handler)
   }
-  patch<R extends {} = {}>(handler: RequestHandler<R>) {
+  patch<R extends API.ResponseDetails>(responseDetails: R, handler: RequestHandler<R>) {
     this.methodHandlers.set(METHODS.PATCH, handler)
   }
-  delete<R extends {} = {}>(handler: RequestHandler<R>) {
+  delete<R extends API.ResponseDetails>(responseDetails: R, handler: RequestHandler<R>) {
     this.methodHandlers.set(METHODS.DELETE, handler)
   }
 

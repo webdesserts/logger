@@ -13,17 +13,17 @@ const model = ProjectModel.create(db)
 router.before(async () => { await db.connect() })
 router.after(async () => { await db.disconnect() })
 
-router.get<Types.Project.Response.FindJSON>(async (req, res) => {
+router.get(Types.Project.Response.Find, async (req, res) => {
   const { user } = await authenticate(req)
-  const { query } = validateRequest(req, Types.Project.Request.Find)
-  const project = await model.find(query.name, user)
+  const { params } = validateRequest(req, Types.Project.Request.Find)
+  const project = await model.find(params.name, user)
   return res.status(200).json({ project })
 })
 
-router.delete<Types.Project.Response.DeleteJSON>(async (req, res) => {
+router.delete(Types.Project.Response.Delete, async (req, res) => {
   const { user } = await authenticate(req)
-  const { query } = validateRequest(req, Types.Project.Request.Delete)
-  const wasDeleted = await model.delete(query.name, user)
+  const { params } = validateRequest(req, Types.Project.Request.Delete)
+  const wasDeleted = await model.delete(params.name, user)
   if (wasDeleted) {
     return res.status(204).json({})
   } else {

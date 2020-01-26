@@ -12,13 +12,13 @@ const model = SectorModel.create(db)
 router.before(async () => await db.connect())
 router.after(async () => await db.disconnect())
 
-router.get<Types.Sector.Response.FindAllJSON>(async (req, res) => {
+router.get(Types.Sector.Response.FindAll, async (req, res) => {
   const { user } = await authenticate(req)
   const sectors = await model.findAll(user)
   return res.status(200).json({ sectors })
 })
 
-router.post<Types.Sector.Response.CreateJSON>(async (req, res) => {
+router.post(Types.Sector.Response.Create, async (req, res) => {
   const { user } = await authenticate(req)
   const { body } = validateRequest(req, Types.Sector.Request.Create)
   const sector = await model.find(body.name, user)
