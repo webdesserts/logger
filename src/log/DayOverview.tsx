@@ -10,7 +10,7 @@ export { DayOverview };
 type DayOverviewProps = {
   day: DateTime,
   entries: EntriesState,
-  active_entry: ActiveEntryState
+  active_entry: ActiveEntryState | null
 }
 
 function DayOverview ({ day, entries, active_entry } : DayOverviewProps) {
@@ -27,7 +27,7 @@ function DayOverview ({ day, entries, active_entry } : DayOverviewProps) {
         <Styles.Field>
           <Styles.FieldLabel>Day</Styles.FieldLabel>
           <Styles.FieldItem>
-            {active_entry.start ? <Counter since={active_entry.start} plus={duration} displayUnit='hours'/> : hours} hrs | {entries.length} logs
+            {active_entry ? <Counter since={active_entry.start} plus={duration} displayUnit='hours'/> : hours} hrs | {entries.length} logs
           </Styles.FieldItem>
         </Styles.Field>
         <Styles.Field>

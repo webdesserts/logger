@@ -5,13 +5,15 @@ import { App } from './App';
 import { PaletteProvider } from './commands';
 import { LogProvider } from './log/Log';
 import { ThemeProvider } from 'styled-components'
-import { AuthProvider } from './utils/auth'
+import { AuthProvider } from './log/stores/user'
 
 const authConfig: React.ComponentProps<typeof AuthProvider> = {
-  domain: "webdesserts.auth0.com",
-  client_id: "qzkUBg5FvbWNVSflQ52aRS5RQq6jR1Ef",
-  redirect_uri: window.location.href,
-  audience: 'logger-api'
+  config: {
+    domain: "webdesserts.auth0.com",
+    client_id: "qzkUBg5FvbWNVSflQ52aRS5RQq6jR1Ef",
+    redirect_uri: window.location.href,
+    audience: 'logger-api'
+  }
 }
 
 let Root = (

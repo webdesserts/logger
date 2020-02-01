@@ -4,7 +4,7 @@ import produce from 'immer';
 export { Store }
 
 type Provider<S, T extends Store<S>> = React.FunctionComponent<ProviderProps<S, T>>
-type ProviderProps<S, M extends Store<S>> = { store: M, children: React.ReactChild }
+type ProviderProps<S, M extends Store<S>> = { store: M, children: React.ReactNode }
 type StoreClass<T> = { new(...args: any[]) : T }
 
 type StateCallback<S> = ((state: S) => S | void)

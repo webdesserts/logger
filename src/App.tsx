@@ -5,33 +5,21 @@ import DesignSystem from './design-system/DesignSystem'
 import { Palette, Subject, Command } from './commands/Palette';
 import { useActiveEntry } from './log/stores/active_entry';
 import { useEntries } from './log/stores/entries';
-import { useAuth } from './utils/auth';
+import { useUser } from './log/stores/user';
 import * as Styled from './App.styles'
 import { useSubjectTrigger } from './commands';
 
 export function App() {
-  let { isLoading, user, isAuthenticated, loginWithRedirect, logout, getTokenSilently } = useAuth()
-  let active_entry = useActiveEntry()
+  let user = useUser()
+  let activeEntry = useActiveEntry()
   let entries = useEntries()
   useSubjectTrigger('Account')
 
-  useEffect(() => {
-    if (isAuthenticated) {
-      getTokenSilently().then((token) => {
-        console.log({ token })
-      })
-    }
-  }, [isAuthenticated])
-
-  if (isLoading) {
+  if (user.state.isLoading) {
     return <Styled.App>Loading...</Styled.App>
   }
 
-  console.log({
-    isAuthenticated,
-    isLoading,
-    user
-  })
+  console.log('User:', user.state)
 
   return (
     <Styled.App>
@@ -41,8 +29,8 @@ export function App() {
       </Router>
       <Palette>
         <Subject type="Account">
-          <Command name="login" description="Log in or Register to Logger" enabled={!isAuthenticated} onSubmit={loginWithRedirect}/>
-          <Command name="logout" description="Log out of your account" enabled={isAuthenticated} onSubmit={logout}/>
+          <Command name="login" description="Log in or Register to Logger" enabled={!user.state.isAuthenticated} onSubmit={user.login}/>
+          <Command name="logout" description="Log out of your account" enabled={user.state.isAuthenticated} onSubmit={user.logout}/>
         </Subject>
         <Subject type="Log">
           <Command name="start" description="Starts a new Entry" params={
@@ -54,13 +42,13 @@ export function App() {
                 description: { type: 'string', required: true },
               } as const
           }} onSubmit={async (data) => {
-            await active_entry.start(data)
+            await activeEntry.start(data, user)
           }}/>
         </Subject>
 
         <Subject type="Entry (Active)">
           <Command name="stop" description="Stops the log" onSubmit={async () => {
-            await active_entry.stop()
+            await activeEntry.stop(user)
           }} />
         </Subject>
 

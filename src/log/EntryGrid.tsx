@@ -10,7 +10,7 @@ import { Counter } from './Counter';
 export { EntryGrid };
 
 interface EntryGridProps {
-  activeEntry: ActiveEntryState
+  activeEntry: ActiveEntryState | null
   entries: EntriesState
 }
 
@@ -26,7 +26,7 @@ function EntryGrid (props: EntryGridProps) {
 
   return (
     <Styles.Entries>
-      <ActiveEntryRow key={activeEntry.id} entry={activeEntry} />
+      {activeEntry ? <ActiveEntryRow key={activeEntry.id} entry={activeEntry} /> : null}
       {rows}
     </Styles.Entries>
   )

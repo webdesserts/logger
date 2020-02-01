@@ -1,8 +1,7 @@
-import { Entry } from './entries'
-import nanoid from 'nanoid'
 import { Store } from '../../utils/store';
 import { DateTime } from 'luxon';
-import { sleep } from '../../utils/sleep'
+import { API, Types } from '../../../server/runtypes';
+import { UserStore } from './user';
 
 /*=======*\
 *  Types  *
@@ -13,47 +12,73 @@ export interface ActiveEntryState {
   sector: string,
   project: string,
   description: string,
-  start: DateTime | null
+  start: DateTime
 }
+
+type StartData = { sector: string, project: string, description: string }
+type UpdateData = { sector: string, project: string, description: string, start: DateTime }
+
+/*==========*\
+*  Fetchers  *
+\*==========*/
+
+const fetchStop = API.createFetcher(
+  Types.ActiveEntry.Request.Stop,
+  Types.ActiveEntry.Response.Stop
+)
+
+const fetchStart = API.createFetcher(
+  Types.ActiveEntry.Request.Start,
+  Types.ActiveEntry.Response.Start
+);
+
+const fetchFind = API.createFetcher(
+  Types.ActiveEntry.Request.Find,
+  Types.ActiveEntry.Response.Find
+);
+
+const fetchUpdate = API.createFetcher(
+  Types.ActiveEntry.Request.Update,
+  Types.ActiveEntry.Response.Update
+);
 
 /*=======*\
 *  Store  *
 \*=======*/
 
-export class ActiveEntryStore extends Store<ActiveEntryState> {
-  static initialState: ActiveEntryState = {
-    id: nanoid(8),
-    sector: "",
-    project: "",
-    description: "",
-    start: null
-  };
+export class ActiveEntryStore extends Store<ActiveEntryState | null> {
+  static initialState: ActiveEntryState | null = null
 
-  async start(data: { sector: string; description: string; project: string }) {
-    await sleep(1000)
-    this.produceState(draft => {
-      draft.sector = data.sector;
-      draft.project = data.project;
-      draft.description = data.description;
-      draft.start = DateTime.local();
-    });
+  init() {
+    console.log(this.state)
   }
 
-  async update(changes: Partial<ActiveEntryState>) {
-    await sleep(1000)
-    this.produceState(draft => Object.assign(draft, changes));
+  async fetch(user: UserStore) {
+    const res = await fetchFind({}, user.state.token)
+    if ("error" in res) return null
+    this.setState(() => res.activeEntry)
+    return res.activeEntry
   }
 
-  async stop() {
-    await sleep(1000)
-    this.produceState(draft => {
-      draft.id = nanoid(8);
-      draft.description = "";
-      draft.start = null;
-    });
-    return this.state.start
-      ? ({ ...this.state, end: DateTime.local() } as Entry)
-      : null;
+  async start(data: StartData, user: UserStore) {
+    const res = await fetchStart({ ...data, start: DateTime.local() }, user.state.token)
+    if ("error" in res) return null
+    this.setState(() => res.activeEntry)
+    return res.activeEntry
+  }
+
+  async stop(user: UserStore) {
+    const res = await fetchStop({ end: DateTime.local() }, user.state.token)
+    if ("error" in res) return null
+    this.setState(() => res.activeEntry)
+    return res.entry
+  }
+
+  async update(changes: UpdateData, user: UserStore) {
+    const res = await fetchUpdate(changes, user.state.token)
+    if ("error" in res) return null
+    this.setState(() => res.activeEntry)
+    return res.activeEntry
   }
 }
 

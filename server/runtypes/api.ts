@@ -8,23 +8,25 @@ type LibResponse = Response
 type LibRequest = Request
 
 export namespace API {
-  export function createFetcher<I extends API.RequestDetails, O extends API.ResponseDetails>(
+  export function createFetcher<I extends API.RequestDetails<any>, O extends API.ResponseDetails<any>>(
     Req: I,
     Res: O 
-  ) : (data: RequestDetailsData<I>) => Promise<O['Body']> {
-    return async (data: RequestDetailsData<I>, bearer?: string) => {
+  ) : (data: RequestDetailsData<I>, bearer?: string | null) => Promise<ReturnType<ServerError['toJSON']> | T.TypeOf<O['Body']>> {
+    return async (data, bearer) => {
       const { path, method } = Req
       const params = Req.Params.encode(data)
-      const url = new URL(replaceParams(path, params), '/api')
+      console.log(path)
+      const pathname = '/api' + replaceParams(path, params);
+      console.log(method, pathname)
       const headers = new Headers()
 
       headers.set('Content-Type', 'application/json')
       if (bearer) headers.set('authorization', `Bearer ${bearer}`)
-
-      const response = await fetch(url.pathname, {
+      const body = Req.Body.encode(data)
+      const response = await fetch(pathname, {
         method,
         headers,
-        body: JSON.stringify(Req.Body.encode(data))
+        body: body && Object.entries(body).length ? JSON.stringify(body) : null
       });
 
       const result = validate(await response.json(), Res.Body);
@@ -35,40 +37,34 @@ export namespace API {
   }
 
   function replaceParams(path: string, params: { [key: string]: string }) : string  {
-    return path.split('/').map((segment) => {
+    return path.split('/').map((segment) => (
       segment.startsWith(':') ? params[segment.substr(1)] : segment
-    }).join('/')
+    )).join('/')
   }
 
   type RequestDetailsData<R extends API.RequestDetails> = T.TypeOf<R['Body']> & T.TypeOf<R['Params']> & T.TypeOf<R['Search']>
 
   type MixedOrEmptyObjectType<T extends T.HasProps | undefined> = T extends T.HasProps ? T : T.TypeC<{}>;
 
-  export interface RequestDetails<
-    M extends METHODS = any,
-    T extends RequestTypes = any,
-  > {
-    method: M;
+  export interface RequestDetails<C extends RequestProps & RequestTypes = any> {
+    method: C['method'];
     readonly path: string;
-    Params: MixedOrEmptyObjectType<T['params']>;
-    Body: MixedOrEmptyObjectType<T['body']>;
-    Search: MixedOrEmptyObjectType<T['search']>;
+    Params: MixedOrEmptyObjectType<C['params']>;
+    Body: MixedOrEmptyObjectType<C['body']>;
+    Search: MixedOrEmptyObjectType<C['search']>;
   }
 
   type RequestProps = { method: METHODS, path: string }
   type RequestTypes = { params?: T.HasProps, body?: T.HasProps, search?: T.HasProps }
 
-  export function RequestDetails<
-    P extends RequestProps,
-    T extends RequestTypes,
-  >(config: P & T): RequestDetails<P['method'], T> {
+  export function RequestDetails<C extends RequestProps & RequestTypes>(config: C): RequestDetails<C> {
     return {
       method: config.method,
       path: config.path,
       Params: config.params || T.type({}),
       Body: config.body || T.type({}),
       Search: config.search || T.type({})
-    } as RequestDetails<P['method'], T>;
+    } as RequestDetails<C>;
   }
 
   export interface ResponseDetails<T extends ResponseTypes = any> { Body: MixedOrEmptyObjectType<T['body']>; }

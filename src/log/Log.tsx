@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import * as Styles from './Log.styles';
 import { EntryGrid } from './EntryGrid';
 import { DayOverview } from './DayOverview'
@@ -7,7 +7,7 @@ import { EntriesProvider, Entry, useEntries, EntriesStore } from './stores/entri
 import { ActiveEntryProvider, useActiveEntry, ActiveEntryStore } from './stores/active_entry';
 import { RouteComponentProps } from '@reach/router'
 import { useSubjectTrigger } from '../commands';
-import { useAuth } from '../utils/auth';
+import { useUser } from './stores/user';
 
 export { Log, LogProvider }
 
@@ -18,10 +18,15 @@ function getInterval(entry: Entry) : Interval {
 }
 
 function Log (props: LogProps) {
-  let { user, isAuthenticated } = useAuth()
-  let active_entry = useActiveEntry()
+  let user = useUser()
+  let { isAuthenticated } = user.state
+  let activeEntry = useActiveEntry()
   let entries = useEntries()
-  useSubjectTrigger('Log', { enabled: isAuthenticated })
+  useSubjectTrigger('Log', { enabled: user.state.isAuthenticated })
+
+  useEffect(() => {
+    if (isAuthenticated) activeEntry.fetch(user)
+  }, [isAuthenticated])
 
   if (!isAuthenticated) return null
 
@@ -31,8 +36,8 @@ function Log (props: LogProps) {
 
   return (
     <Styles.Log>
-      <DayOverview day={day_start} entries={day_log} active_entry={active_entry.state} />
-      <EntryGrid activeEntry={active_entry.state} entries={entries.state} />
+      <DayOverview day={day_start} entries={day_log} active_entry={activeEntry.state} />
+      <EntryGrid activeEntry={activeEntry.state} entries={entries.state} />
     </Styles.Log>
   );
 }
@@ -43,11 +48,11 @@ type LogProviderProps = {
 
 function LogProvider({ children }: LogProviderProps) {
   let entries = EntriesStore.useState(EntriesStore.initialState)
-  let active_entry = ActiveEntryStore.useState(ActiveEntryStore.initialState)
+  let activeEntry = ActiveEntryStore.useState(ActiveEntryStore.initialState)
 
   return (
     <EntriesProvider store={entries}>
-      <ActiveEntryProvider store={active_entry}>
+      <ActiveEntryProvider store={activeEntry}>
         <>{children}</>
       </ActiveEntryProvider>
     </EntriesProvider>
