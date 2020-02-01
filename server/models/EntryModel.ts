@@ -6,11 +6,15 @@ import { ProjectModel } from './ProjectModel'
 import { Types, API } from '../runtypes'
 import { pipe } from 'fp-ts/lib/pipeable'
 import { mapDatesToISOStrings } from '../runtypes/shared'
+import * as T from 'io-ts'
 
 const include: EntryInclude = { project: true, sector: true }
 
+type UpdateData = T.TypeOf<typeof Types.Entry.Request.Update.Body>
+type CreateData = T.TypeOf<typeof Types.Entry.Request.Create.Body>
+
 export class EntryModel extends Model {
-  async create (data: Types.Entry.RequestBody.Create, user: API.UserData) {
+  async create (data: CreateData, user: API.UserData) {
     const author = user.id
     const sector = await SectorModel.create(this.db).generateCreateOrConnectQuery(data.sector, user)
     const project = await ProjectModel.create(this.db).generateCreateOrConnectQuery(data.project, user)
@@ -22,7 +26,7 @@ export class EntryModel extends Model {
     return EntryModel.serialize(entry)
   }
 
-  async update (id: string, data: Types.Entry.RequestBody.Update, user: API.UserData)  {
+  async update (id: string, data: UpdateData, user: API.UserData)  {
     const { sector, project, start, end, ...otherData } = data
     const author = user.id
     const query: EntryUpdateArgs = {

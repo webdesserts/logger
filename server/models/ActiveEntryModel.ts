@@ -7,11 +7,16 @@ import { DateTime } from 'luxon'
 import { pipe } from 'fp-ts/lib/pipeable'
 import { mapDatesToISOStrings } from '../runtypes/shared'
 import { EntryModel } from './EntryModel'
+import * as T from 'io-ts'
 
 const include = { project: true, sector: true } as const
 
+type StartData = T.TypeOf<typeof Types.ActiveEntry.Request.Start.Body>
+type StopData = T.TypeOf<typeof Types.ActiveEntry.Request.Stop.Body>
+type UpdateData = T.TypeOf<typeof Types.ActiveEntry.Request.Update.Body>
+
 export class ActiveEntryModel extends Model {
-  async start (data: Types.ActiveEntry.RequestBody.Start, user: Types.API.UserData) {
+  async start (data: StartData, user: Types.API.UserData) {
     const author = user.id
     const sector = await SectorModel.create(this.db).generateCreateOrConnectQuery(data.sector, user)
     const project = await ProjectModel.create(this.db).generateCreateOrConnectQuery(data.project, user)
@@ -24,7 +29,7 @@ export class ActiveEntryModel extends Model {
     return ActiveEntryModel.serialize(activeEntry)
   }
 
-  async stop (data: Types.ActiveEntry.RequestBody.Stop, user: API.UserData) {
+  async stop (data: StopData, user: API.UserData) {
     const author = user.id
     const where = { author }
     const activeEntry = await this.db.activeEntries.findOne({ where, include })
@@ -44,7 +49,7 @@ export class ActiveEntryModel extends Model {
   }
 
 
-  async update (data: Types.ActiveEntry.RequestBody.Update, user: API.UserData)  {
+  async update (data: UpdateData, user: API.UserData)  {
     const { sector, project, start, ...otherData } = data
     const author = user.id
 

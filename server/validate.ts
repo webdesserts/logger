@@ -22,9 +22,9 @@ export function validate<A, O, I>(data: I, type: T.Decoder<I, A>) : A {
 }
 
 type ValidatedRequest<T extends API.RequestDetails> = {
-  params: T.OutputOf<T['Params']>,
-  body: T.OutputOf<T['Body']>,
-  search: T.OutputOf<T['Search']>
+  params: T.TypeOf<T['Params']>,
+  body: T.TypeOf<T['Body']>,
+  search: T.TypeOf<T['Search']>
 }
 
 export function validateRequest<R extends API.Request, T extends API.RequestDetails>(req: R, type: T) : ValidatedRequest<T> {
