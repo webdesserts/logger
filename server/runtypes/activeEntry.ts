@@ -46,7 +46,10 @@ export namespace ActiveEntry {
 
   export namespace Response {
     export const Start = API.ResponseDetails({
-      body: T.type({ activeEntry: Data })
+      body: T.type({
+        entry: T.union([ Entry.Data, T.null ]),
+        activeEntry: Data
+      })
     })
     export const Stop = API.ResponseDetails({
       body: T.type({
@@ -65,3 +68,4 @@ export namespace ActiveEntry {
     });
   }
 }
+
