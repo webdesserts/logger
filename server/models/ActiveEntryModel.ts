@@ -36,11 +36,12 @@ export class ActiveEntryModel extends Model {
     if (!activeEntry) return null
 
     // prisma's "now()" default is broken so we're using this for now
+    const { id, ...otherData } = activeEntry
     const sector = SectorModel.generateConnectQuery(activeEntry.sector)
     const project = ProjectModel.generateConnectQuery(activeEntry.project)
     const end = (data.end || DateTime.local()).toJSDate()
     const entry = await this.db.entries.create({
-      data: { ...activeEntry, sector, project, end },
+      data: { ...otherData, sector, project, end },
       include
     })
     await this.delete(user)
