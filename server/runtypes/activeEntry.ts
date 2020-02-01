@@ -2,7 +2,6 @@ import * as T from 'io-ts'
 import { API } from './api'
 import { DateTimeFromISOString } from './shared'
 import { Entry } from './entries'
-import { METHODS } from '../http'
 
 export namespace ActiveEntry {
   export const Data = T.type({
@@ -21,21 +20,21 @@ export namespace ActiveEntry {
     const { id, ...data } = Data.props
 
     export const Find = API.RequestDetails({
-      method: METHODS.GET,
+      method: 'GET',
       path: "/log/active"
     });
     export const Start = API.RequestDetails({
-      method: METHODS.POST,
+      method: 'POST',
       path: "/log/active/start",
       body: T.type({ ...data })
     });
     export const Stop = API.RequestDetails({
-      method: METHODS.PATCH,
-      path: "log/active/stop",
+      method: 'PATCH',
+      path: "/log/active/stop",
       body: T.type({ end: DateTimeFromISOString })
     });
     export const Update = API.RequestDetails({
-      method: METHODS.PATCH,
+      method: 'PATCH',
       path: "/log/active",
       body: T.partial({ ...data })
     });

@@ -1,6 +1,5 @@
 import * as T from 'io-ts'
 import { API } from './api'
-import { METHODS } from '../http'
 
 export namespace Project {
   const Data = T.type({
@@ -9,21 +8,21 @@ export namespace Project {
 
   export namespace Request {
     export const Create = API.RequestDetails({
-      method: METHODS.POST,
+      method: 'POST',
       path: "/projects",
       body: Data
     });
     export const FindAll = API.RequestDetails({
-      method: METHODS.GET,
+      method: 'GET',
       path: "/projects"
     });
     export const Find = API.RequestDetails({
-      method: METHODS.GET,
+      method: 'GET',
       path: "/projects/:name",
       params: Data
     });
     export const Delete = API.RequestDetails({
-      method: METHODS.DELETE,
+      method: 'DELETE',
       path: "/projects/:name",
       params: Data
     });

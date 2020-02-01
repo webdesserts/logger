@@ -1,7 +1,1 @@
-export const enum METHODS {
-  GET = 'GET',
-  POST = 'POST',
-  PUT = 'PUT',
-  PATCH = 'PATCH',
-  DELETE = 'DELETE',
-}
+export type METHODS = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE'

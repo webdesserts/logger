@@ -9,21 +9,21 @@ export namespace Sector {
 
   export namespace Request {
     export const Create = API.RequestDetails({
-      method: METHODS.POST,
+      method: 'POST',
       path: "/sectors",
       body: Data
     });
     export const FindAll = API.RequestDetails({
-      method: METHODS.GET,
+      method: 'GET',
       path: "/sectors"
     });
     export const Find = API.RequestDetails({
-      method: METHODS.GET,
+      method: 'GET',
       path: "/sectors/:name",
       params: Data
     });
     export const Delete = API.RequestDetails({
-      method: METHODS.DELETE,
+      method: 'DELETE',
       path: "/sectors/:name",
       params: Data
     });

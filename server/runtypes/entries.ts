@@ -17,31 +17,31 @@ export namespace Entry {
     const { id, ...bodyProps } = Data.props
 
     export const Create = API.RequestDetails({
-      method: METHODS.POST,
+      method: 'POST',
       path: "/log",
       body: T.type({ ...bodyProps })
     });
 
     export const FindAll = API.RequestDetails({
-      method: METHODS.GET,
+      method: 'GET',
       path: "/log"
     });
 
     export const Find = API.RequestDetails({
-      method: METHODS.GET,
+      method: 'GET',
       path: "/log:id",
       params: T.type({ id })
     });
 
     export const Update = API.RequestDetails({
-      method: METHODS.PATCH,
+      method: 'PATCH',
       path: "/log/:id",
       params: T.type({ id }),
       body: T.partial({ ...bodyProps })
     });
 
     export const Delete = API.RequestDetails({
-      method: METHODS.DELETE,
+      method: 'DELETE',
       path: "/log/:id",
       params: T.type({ id })
     });

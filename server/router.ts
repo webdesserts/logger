@@ -33,19 +33,19 @@ export class Router {
 
   // method handlers
   get<R extends API.ResponseDetails>(responseDetails: R, handler: RequestHandler<R>) {
-    this.methodHandlers.set(METHODS.GET, handler)
+    this.methodHandlers.set('GET', handler)
   }
   post<R extends API.ResponseDetails>(responseDetails: R, handler: RequestHandler<R>) {
-    this.methodHandlers.set(METHODS.POST, handler)
+    this.methodHandlers.set('POST', handler)
   }
   put<R extends API.ResponseDetails>(responseDetails: R, handler: RequestHandler<R>) {
-    this.methodHandlers.set(METHODS.PUT, handler)
+    this.methodHandlers.set('PUT', handler)
   }
   patch<R extends API.ResponseDetails>(responseDetails: R, handler: RequestHandler<R>) {
-    this.methodHandlers.set(METHODS.PATCH, handler)
+    this.methodHandlers.set('PATCH', handler)
   }
   delete<R extends API.ResponseDetails>(responseDetails: R, handler: RequestHandler<R>) {
-    this.methodHandlers.set(METHODS.DELETE, handler)
+    this.methodHandlers.set('DELETE', handler)
   }
 
   // routing
@@ -80,11 +80,11 @@ export interface RouterOptions {
 function isValidMethod(method?: string): method is METHODS {
   return (
     Boolean(method) && (
-      method === METHODS.GET ||
-      method === METHODS.POST ||
-      method === METHODS.PUT ||
-      method === METHODS.PATCH ||
-      method === METHODS.DELETE
+      method === 'GET' ||
+      method === 'POST' ||
+      method === 'PUT' ||
+      method === 'PATCH' ||
+      method === 'DELETE'
     )
   );
 }
