@@ -1,7 +1,7 @@
 import * as T from 'io-ts'
 import { DateTime } from 'luxon'
 import { either } from 'fp-ts/lib/Either'
-import { fromEntries } from 'lodash'
+import { fromPairs } from 'lodash'
 
 export const DateTimeFromISOString = new T.Type<DateTime, string, unknown>(
   "DateTimeFromISOString",
@@ -16,7 +16,7 @@ export const DateTimeFromISOString = new T.Type<DateTime, string, unknown>(
 )
 
 export function mapDatesToISOStrings<O extends { [key: string]: any }>(obj: O) : { [K in keyof O]: O[K] extends Date ? string : O[K] } {
-  return fromEntries(Object.entries(obj).map(([key, value]) =>
+  return fromPairs(Object.entries(obj).map(([key, value]) =>
     value instanceof Date
       ? [key, DateTime.fromJSDate(value).toISO()]
       : [key, value]
