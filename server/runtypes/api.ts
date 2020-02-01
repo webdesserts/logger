@@ -74,10 +74,10 @@ export namespace API {
   export interface ResponseDetails<T extends ResponseTypes = any> { Body: MixedOrEmptyObjectType<T['body']>; }
   type ResponseTypes = { body?: T.HasProps }
 
-  export function ResponseDetails<T extends RequestTypes>(types: ResponseTypes) : ResponseDetails {
+  export function ResponseDetails<T extends ResponseTypes>(types: T) : ResponseDetails<T> {
     return {
       Body: types.body || T.type({})
-    }
+    } as ResponseDetails<T>
   }
 
   export const ResponseError: T.Type<ServerError.JSON> = T.type({
