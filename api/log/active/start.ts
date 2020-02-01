@@ -2,10 +2,10 @@ import { Types } from '../../../server/runtypes'
 import { validateRequest } from "../../../server/validate";
 import { authenticate } from "../../../server/authenticate";
 import { Router } from "../../../server/router";
-import { Photon } from '@prisma/photon';
+import { PrismaClient } from '@prisma/client';
 import { ActiveEntryModel } from "../../../server/models/ActiveEntryModel";
 
-const db = new Photon()
+const db = new PrismaClient()
 const model = ActiveEntryModel.create(db)
 const router = Router.create()
 

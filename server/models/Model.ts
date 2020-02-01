@@ -1,7 +1,7 @@
 import { create } from '../createable'
-import { Photon } from '@prisma/photon'
+import { PrismaClient } from '@prisma/client'
 
 export class Model {
   static create = create
-  constructor(protected db: Photon) {}
+  constructor(protected db: PrismaClient) {}
 }

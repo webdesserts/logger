@@ -1,4 +1,4 @@
-import { Entry, EntryInclude, EntryUpdateArgs } from '@prisma/photon'
+import { Entry, EntryInclude, EntryUpdateArgs } from '@prisma/client'
 import { filterUnauthored } from '../authenticate'
 import { Model } from './Model'
 import { SectorModel } from './SectorModel'

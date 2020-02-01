@@ -1,6 +1,8 @@
 import { API } from '../runtypes'
 import { Model } from './Model'
-import { ProjectCreateOneWithoutProjectInput, Project } from '@prisma/photon'
+import { Project, ProjectCreateOneWithoutActiveEntriesInput, ProjectCreateOneWithoutEntriesInput  } from '@prisma/client'
+
+type ProjectCreateOne = ProjectCreateOneWithoutActiveEntriesInput | ProjectCreateOneWithoutEntriesInput
 
 export class ProjectModel extends Model {
   async create(name: string, user: API.UserData) {
@@ -26,7 +28,7 @@ export class ProjectModel extends Model {
     return await this.db.projects.delete({ where })
   }
 
-  async generateCreateOrConnectQuery(name: string, user: API.UserData) : Promise<ProjectCreateOneWithoutProjectInput> {
+  async generateCreateOrConnectQuery(name: string, user: API.UserData) : Promise<ProjectCreateOne> {
     const project = await this.find(name, user)
     if (project) {
       return ProjectModel.generateConnectQuery(project)
@@ -37,7 +39,7 @@ export class ProjectModel extends Model {
     }
   }
 
-  static generateConnectQuery(project: Project) : ProjectCreateOneWithoutProjectInput {
+  static generateConnectQuery(project: Project) : ProjectCreateOne {
     const { author, name } = project
     const author_name = { author, name }
     return { connect: { author_name } }

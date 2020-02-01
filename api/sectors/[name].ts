@@ -2,11 +2,11 @@ import { Types } from '../../server/runtypes'
 import { validateRequest } from "../../server/validate";
 import { authenticate } from "../../server/authenticate";
 import { Router } from "../../server/router";
-import { Photon } from '@prisma/photon';
+import { PrismaClient } from '@prisma/client';
 import { ServerError } from '../../server/errors';
 import { SectorModel } from '../../server/models/SectorModel';
 
-const db = new Photon()
+const db = new PrismaClient()
 const router = Router.create()
 const model = SectorModel.create(db)
 

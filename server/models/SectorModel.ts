@@ -1,6 +1,8 @@
 import { API } from '../runtypes'
 import { Model } from './Model'
-import { Sector, SectorCreateOneWithoutSectorInput } from '@prisma/photon'
+import { Sector, SectorCreateOneWithoutActiveEntriesInput, SectorCreateOneWithoutEntriesInput } from '@prisma/client'
+
+type SectorCreateOne = SectorCreateOneWithoutActiveEntriesInput | SectorCreateOneWithoutEntriesInput
 
 export class SectorModel extends Model {
   async create(name: string, user: API.UserData) {
@@ -26,7 +28,7 @@ export class SectorModel extends Model {
     return await this.db.sectors.delete({ where })
   }
 
-  async generateCreateOrConnectQuery(name: string, user: API.UserData) : Promise<SectorCreateOneWithoutSectorInput> {
+  async generateCreateOrConnectQuery(name: string, user: API.UserData) : Promise<SectorCreateOne> {
     const sector = await this.find(name, user)
     if (sector) {
       return SectorModel.generateConnectQuery(sector)
@@ -37,7 +39,7 @@ export class SectorModel extends Model {
     }
   }
 
-  static generateConnectQuery(sector: Sector) : SectorCreateOneWithoutSectorInput {
+  static generateConnectQuery(sector: Sector) : SectorCreateOne {
     const { author, name } = sector
     const author_name = { author, name }
     return { connect: { author_name } }

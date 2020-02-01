@@ -1,4 +1,4 @@
-import { ActiveEntryUpdateInput, ActiveEntry } from '@prisma/photon'
+import { ActiveEntryUpdateInput, ActiveEntry } from '@prisma/client'
 import { API, Types } from '../runtypes'
 import { Model } from './Model'
 import { SectorModel } from './SectorModel'
