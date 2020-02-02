@@ -1335,10 +1335,10 @@
     "@webassemblyjs/wast-parser" "1.8.5"
     "@xtuc/long" "4.2.2"
 
-"@webdesserts/app-scripts@^0.5.0":
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/@webdesserts/app-scripts/-/app-scripts-0.5.0.tgz#fc9b9198270d4ad2931683aac2a71a1a8b6bc22e"
-  integrity sha512-kgOEmKetAim6NPdZtsyUq5hAROvN1HKjFXB3/lDEFbCK+CyMSkH6Ekg7pgu89M68pzuNBdozTY01vHSyObbDXw==
+"@webdesserts/app-scripts@^0.6.0":
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/@webdesserts/app-scripts/-/app-scripts-0.6.0.tgz#1c60af2fb2f8f167a7feb8863cd98a55508e5171"
+  integrity sha512-xYRDM32EXGEKk55fQA/KSxfWEFQF9/tlawNgcBL/AeKs3RQ4mBH798Js6q8SkIWV70A0Eznn2fXy9utCl2pS8w==
   dependencies:
     "@babel/core" "^7.5.4"
     "@babel/plugin-proposal-class-properties" "^7.5.0"
