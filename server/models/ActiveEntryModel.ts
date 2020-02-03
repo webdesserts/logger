@@ -22,7 +22,7 @@ export class ActiveEntryModel extends Model {
     const project = await ProjectModel.create(this.db).generateCreateOrConnectQuery(data.project, user)
     // prisma's "now()" default is broken so we're using this for now
     const start = (data.start || DateTime.local()).toJSDate()
-    const activeEntry = await this.db.activeEntries.create({
+    const activeEntry = await this.db.activeEntry.create({
       data: { ...data, author, sector, project, start },
       include
     })
@@ -32,7 +32,7 @@ export class ActiveEntryModel extends Model {
   async stop (data: StopData, user: API.UserData) {
     const author = user.id
     const where = { author }
-    const activeEntry = await this.db.activeEntries.findOne({ where, include })
+    const activeEntry = await this.db.activeEntry.findOne({ where, include })
     if (!activeEntry) return null
 
     // prisma's "now()" default is broken so we're using this for now
@@ -40,7 +40,7 @@ export class ActiveEntryModel extends Model {
     const sector = SectorModel.generateConnectQuery(activeEntry.sector)
     const project = ProjectModel.generateConnectQuery(activeEntry.project)
     const end = (data.end || DateTime.local()).toJSDate()
-    const entry = await this.db.entries.create({
+    const entry = await this.db.entry.create({
       data: { ...otherData, sector, project, end },
       include
     })
@@ -62,7 +62,7 @@ export class ActiveEntryModel extends Model {
     if (project) { queryData.project = await ProjectModel.create(this.db).generateCreateOrConnectQuery(project, user) }
     if (start) { queryData.start = start.toJSDate() }
 
-    const activeEntry = await this.db.activeEntries.update({
+    const activeEntry = await this.db.activeEntry.update({
       where: { author },
       data: queryData,
       include
@@ -73,7 +73,7 @@ export class ActiveEntryModel extends Model {
   async find(user: API.UserData) {
     const author = user.id
     const where = { author }
-    const activeEntry = await this.db.activeEntries.findOne({ where, include })
+    const activeEntry = await this.db.activeEntry.findOne({ where, include })
     return activeEntry && ActiveEntryModel.serialize(activeEntry)
   }
 
@@ -81,7 +81,7 @@ export class ActiveEntryModel extends Model {
     if (await this.find(user)) {
       const author = user.id
       const where = { author }
-      await this.db.activeEntries.delete({ where })
+      await this.db.activeEntry.delete({ where })
       return true
     }
     return false

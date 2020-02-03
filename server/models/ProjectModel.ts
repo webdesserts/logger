@@ -7,25 +7,25 @@ type ProjectCreateOne = ProjectCreateOneWithoutActiveEntriesInput | ProjectCreat
 export class ProjectModel extends Model {
   async create(name: string, user: API.UserData) {
     const data = { name, author: user.id }
-    return await this.db.projects.create({ data })
+    return await this.db.project.create({ data })
   }
 
   async find(name: string, user: API.UserData) {
     const author_name = { name, author: user.id }
     const where = { author_name }
-    return await this.db.projects.findOne({ where })
+    return await this.db.project.findOne({ where })
   }
 
   async findAll(user: API.UserData) {
     const where = { author: user.id }
-    const projects = await this.db.projects.findMany({ where })
+    const projects = await this.db.project.findMany({ where })
     return projects.map((p) => p.name)
   }
 
   async delete(name: string, user: API.UserData) {
     const author_name = { name, author: user.id }
     const where = { author_name }
-    return await this.db.projects.delete({ where })
+    return await this.db.project.delete({ where })
   }
 
   async generateCreateOrConnectQuery(name: string, user: API.UserData) : Promise<ProjectCreateOne> {

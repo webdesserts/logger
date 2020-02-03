@@ -20,7 +20,7 @@ export class EntryModel extends Model {
     const project = await ProjectModel.create(this.db).generateCreateOrConnectQuery(data.project, user)
     const start = data.start.toJSDate()
     const end = data.end.toJSDate() 
-    const entry = await this.db.entries.create({
+    const entry = await this.db.entry.create({
       data: { ...data, author, sector, project, start, end }
     })
     return EntryModel.serialize(entry)
@@ -41,20 +41,20 @@ export class EntryModel extends Model {
     if (project) { query.data.project = await ProjectModel.create(this.db).generateCreateOrConnectQuery(project, user) }
     if (start) { query.data.start = start.toJSDate() }
     if (end) { query.data.end = end.toJSDate() }
-    const entry = await this.db.entries.update(query)
+    const entry = await this.db.entry.update(query)
     return EntryModel.serialize(entry)
   }
 
   async findAll(user: API.UserData) {
     const where = { author: user.id }
     const orderBy = { end: 'desc' } as const
-    const entries = await this.db.entries({ where, orderBy, include })
+    const entries = await this.db.entry.findMany({ where, orderBy, include })
     return entries.map(EntryModel.serialize)
   }
 
   async findById(id: string, user: API.UserData) {
     const where = { id }
-    const entry = await this.db.entries.findOne({ where, include })
+    const entry = await this.db.entry.findOne({ where, include })
     const authorizedEntry /*lol*/ = filterUnauthored(entry, user)
     return authorizedEntry && EntryModel.serialize(authorizedEntry)
   }
@@ -62,7 +62,7 @@ export class EntryModel extends Model {
   async delete(id: string, user: API.UserData) : Promise<boolean> {
     if (await this.findById(id, user)) {
       const where = { id }
-      await this.db.entries.delete({ where })
+      await this.db.entry.delete({ where })
       return true
     }
     return false

@@ -7,25 +7,25 @@ type SectorCreateOne = SectorCreateOneWithoutActiveEntriesInput | SectorCreateOn
 export class SectorModel extends Model {
   async create(name: string, user: API.UserData) {
     const data = { name, author: user.id }
-    return await this.db.sectors.create({ data })
+    return await this.db.sector.create({ data })
   }
 
   async find(name: string, user: API.UserData) {
     const author_name = { name, author: user.id }
     const where = { author_name }
-    return await this.db.sectors.findOne({ where })
+    return await this.db.sector.findOne({ where })
   }
 
   async findAll(user: API.UserData) {
     const where = { author: user.id }
-    const sectors = await this.db.sectors.findMany({ where })
+    const sectors = await this.db.sector.findMany({ where })
     return sectors.map((s) => s.name)
   }
 
   async delete(name: string, user: API.UserData) {
     const author_name = { name, author: user.id }
     const where = { author_name }
-    return await this.db.sectors.delete({ where })
+    return await this.db.sector.delete({ where })
   }
 
   async generateCreateOrConnectQuery(name: string, user: API.UserData) : Promise<SectorCreateOne> {

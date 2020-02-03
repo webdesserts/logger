@@ -3,12 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
-    "prisma2": "2.0.0-preview020.3"
+    "prisma2": "2.0.0-preview021"
   },
   "dependencies": {
     "@auth0/auth0-spa-js": "^1.6.0",
     "@now/node": "^1.3.0",
-    "@prisma/client": "^2.0.0-preview020.3",
+    "@prisma/client": "^2.0.0-preview021",
     "@reach/router": "^1.2.1",
     "@types/jest": "^24.0.0",
     "@types/luxon": "^1.4.0",
@@ -40,7 +40,7 @@
     "build": "app-scripts build",
     "dev": "app-scripts dev --port $PORT --debug",
     "watch": "app-scripts watch",
-    "dev:db": "prisma2 dev",
+    "db": "prisma2",
     "postinstall": "prisma2 generate"
   }
 }
