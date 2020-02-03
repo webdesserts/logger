@@ -13,7 +13,7 @@ export { Palette }
 
 type SubjectElement = React.ReactElement<SubjectProps, typeof Subject>
 type Props = {
-  children?: SubjectElement | Array<SubjectElement>
+  children?: SubjectElement | SubjectElement[]
 }
 
 function Palette(props: Props) {
@@ -27,7 +27,7 @@ function Palette(props: Props) {
   let commands = CommandsStore.useState(CommandsStore.initialState)
   let [search, setSearch] = useState("")
   
-  let children: SubjectElement[] = props.children ? React.Children.toArray(props.children) : []
+  let children: SubjectElement[] = props.children ? ([] as SubjectElement[]).concat(props.children) : []
 
   let matchingCommands = commands.state
     .filter(matchesSearch(search))
