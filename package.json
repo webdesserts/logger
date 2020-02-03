@@ -40,6 +40,7 @@
     "build": "app-scripts build",
     "dev": "app-scripts dev --port $PORT --debug",
     "watch": "app-scripts watch",
-    "db": "prisma2"
+    "db": "prisma2",
+    "postinstall": "prisma2 generate"
   }
 }
