@@ -35,7 +35,6 @@ export function App() {
         <Subject type="Log">
           <Command name="start" description="Starts a new Entry" params={
             async () => {
-              await sleep(300)
               return {
                 sector: { type: 'string', required: true },
                 project: { type: 'string', required: true },
@@ -54,10 +53,10 @@ export function App() {
 
         <Subject.WithId type="Entry">{(id: string) => {
           return <>
-            <Command name="delete" description="Deletes an entry" onSubmit={async () => entries.delete(id)} />
+            <Command name="delete" description="Deletes an entry" onSubmit={async () => await entries.delete(id, user)} />
             <Command name="edit" description="Edits an existing Entry"
               params={async () => {
-                const entry = await entries.find(id)
+                const entry = await entries.fetchOne(id, user)
                 if (!entry) throw Error(`Could not find entry with id: ${id}`)
                 return {
                   sector: { type: 'string', required: true, defaultValue: entry.sector },
@@ -67,7 +66,9 @@ export function App() {
                   end: { type: 'time', required: true, defaultValue: entry.end }
                 } as const
               }}
-              onSubmit={async (data) => entries.update(id, data)} />
+              onSubmit={async (data) => {
+                await entries.update(id, data, user)
+              }} />
           </>
         }}
         </Subject.WithId>
@@ -75,5 +76,3 @@ export function App() {
     </Styled.App>
   )
 }
-
-const sleep = (duration: number) => new Promise((resolve) => window.setTimeout(resolve, duration))

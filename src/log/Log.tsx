@@ -25,7 +25,10 @@ function Log (props: LogProps) {
   useSubjectTrigger('Log', { enabled: user.state.isAuthenticated })
 
   useEffect(() => {
-    if (isAuthenticated) activeEntry.fetch(user)
+    if (isAuthenticated) {
+      activeEntry.fetch(user)
+      entries.fetchAll(user)
+    }
   }, [isAuthenticated])
 
   if (!isAuthenticated) return null
