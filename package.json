@@ -29,7 +29,7 @@
     "luxon": "^1.4.4",
     "nanoid": "^2.0.0",
     "node-sass": "^4.9.4",
-    "now": "^16.7.3",
+    "now": "^17.0.3",
     "react": "^16.8.1",
     "react-dom": "^16.8.1",
     "regenerator-runtime": "^0.13.3",
