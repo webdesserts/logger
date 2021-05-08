@@ -25,7 +25,7 @@
     "io-ts": "^2.0.2",
     "jsonwebtoken": "^8.5.1",
     "jwks-rsa": "^1.6.0",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "luxon": "^1.4.4",
     "nanoid": "^2.0.0",
     "node-sass": "^4.9.4",
